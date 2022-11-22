@@ -1,3 +1,8 @@
+// Matvey Gladkikh is the author and contributors are welcome! 
+// https://github.com/matveynator/curl-go
+// You are free to modify, use and distribute this software.
+// Distributed under GNU General public license.
+
 package main
 
 import (
