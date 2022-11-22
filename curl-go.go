@@ -15,12 +15,12 @@ var TIMEOUT,CONNECT_TIMEOUT int
 func init() {
 
   USERAGENT = "curl-go"
-  TIMEOUT = 5
-  CONNECT_TIMEOUT = 5
+  TIMEOUT = 15
+  CONNECT_TIMEOUT = 15
   LANG = "en-us"
 
   flagVersion := flag.Bool("version", false, "Output version information")
-  flagTimeout := flag.Int("timeout", 5, "Set connect and operation timeout")
+  flagTimeout := flag.Int("timeout", 15, "Set connect and operation timeout")
   flagUserAgent := flag.String("useragent", "curl-go", "Set user agent")
   flagLang := flag.String("lang","en-us", "Set Accept-Language header")
   flag.Parse()
@@ -34,7 +34,7 @@ func init() {
     os.Exit(0)
   }
 
-  if *flagTimeout != 5 {
+  if *flagTimeout != 15 {
     TIMEOUT = *flagTimeout
   }
 
