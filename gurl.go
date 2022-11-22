@@ -1,5 +1,5 @@
 // Matvey Gladkikh is the author and contributors are welcome! 
-// https://github.com/matveynator/curl-go
+// https://github.com/matveynator/gurl
 // You are free to modify, use and distribute this software.
 // Distributed under GNU General public license.
 
@@ -19,14 +19,14 @@ var TIMEOUT,CONNECT_TIMEOUT int
 
 func init() {
 
-  USERAGENT = "curl-go"
+  USERAGENT = "gurl"
   TIMEOUT = 15
   CONNECT_TIMEOUT = 15
   LANG = "en-us"
 
   flagVersion := flag.Bool("version", false, "Output version information")
   flagTimeout := flag.Int("timeout", 15, "Set connect and operation timeout")
-  flagUserAgent := flag.String("useragent", "curl-go", "Set user agent")
+  flagUserAgent := flag.String("useragent", "gurl", "Set user agent")
   flagLang := flag.String("lang","en-us", "Set Accept-Language header")
   flag.Parse()
 
@@ -43,7 +43,7 @@ func init() {
     TIMEOUT = *flagTimeout
   }
 
-  if *flagUserAgent != "curl-go" {
+  if *flagUserAgent != "gurl" {
     USERAGENT = *flagUserAgent
   }
 
