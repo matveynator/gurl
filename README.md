@@ -1,4 +1,4 @@
-# curl-go "CURL-like" utility written in pure GO with embedded SSL support.
+# curl-go "CURL-like" utility written in pure GO (GOLANG) with embedded SSL support.
 
 - ## [↓ Download latest version of CURL-GO.](http://files.matveynator.ru/curl-go/) 
 
