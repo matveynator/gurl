@@ -26,4 +26,4 @@ curl --connect-timeout 5 'http://files.matveynator.ru/curl-go/0.1-001/mac/amd64/
 curl --connect-timeout 5 'http://files.matveynator.ru/curl-go/0.1-001/mac/386/curl-go' > /usr/local/bin/curl-go; chmod +x /usr/local/bin/curl-go;
 ```
 
-## Check all versions [here]: (there are a lot! :) )(http://files.matveynator.ru/curl-go/) 
+## Check all versions [ here ]: (there are a lot! :) ) 
