@@ -14,7 +14,6 @@ var TIMEOUT,CONNECT_TIMEOUT int
 
 func init() {
 
-  VERSION = "0.1"
   USERAGENT = "curl-go"
   TIMEOUT = 5
   CONNECT_TIMEOUT = 5
@@ -29,6 +28,8 @@ func init() {
   if *flagVersion  {
     if VERSION != "" {
       fmt.Println("Version:", VERSION)
+    } else {
+      fmt.Println("Version: unknown")
     }
     os.Exit(0)
   }
