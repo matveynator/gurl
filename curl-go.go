@@ -70,10 +70,19 @@ func main() {
     "Accept-Encoding": "gzip,deflate,sdch",
   })
 
-  res, _ := httpclient.
+  res, err := httpclient.
   WithHeader("Accept-Language", LANG).
   Get(URL)
 
-  body, _ := res.ToString()
+  if err != nil {
+    fmt.Println("Error: ", err)
+    os.Exit(1)
+  }
+
+  body, err := res.ToString()
+  if err != nil {
+    fmt.Println("Error: ", err)
+    os.Exit(1)
+  }
   fmt.Println(body)
 }
