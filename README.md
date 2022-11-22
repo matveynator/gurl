@@ -1,5 +1,4 @@
-# curl-go "CURL-like" utility written in pure GO (GOLANG) with embedded SSL support.
-
+# curl-go is a curl-like utility written in pure GO (GOLang), with embedded SSL support and no external libraries.
 
 ```
 curl-go --help
