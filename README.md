@@ -39,4 +39,37 @@ curl -L 'http://files.matveynator.ru/curl-go/latest/mac/amd64/curl-go' > /usr/lo
 curl -L 'http://files.matveynator.ru/curl-go/latest/mac/386/curl-go' > /usr/local/bin/curl-go; chmod +x /usr/local/bin/curl-go;
 ```
 
-## Check all versions [ here ](http://files.matveynator.ru/curl-go/). There are a lot! :)  
+## Check all versions [ here ](http://files.matveynator.ru/curl-go/). There are a lot! :) 
+
+```
+binaries/latest/linux/amd64/curl-go
+binaries/latest/linux/386/curl-go
+binaries/latest/linux/arm/curl-go
+binaries/latest/linux/arm64/curl-go
+binaries/latest/linux/mips64/curl-go
+binaries/latest/linux/mips64le/curl-go
+binaries/latest/linux/mips/curl-go
+binaries/latest/linux/mipsle/curl-go
+binaries/latest/linux/ppc64/curl-go
+binaries/latest/linux/ppc64le/curl-go
+binaries/latest/linux/s390x/curl-go
+binaries/latest/freebsd/amd64/curl-go
+binaries/latest/freebsd/386/curl-go
+binaries/latest/freebsd/arm/curl-go
+binaries/latest/netbsd/amd64/curl-go
+binaries/latest/netbsd/386/curl-go
+binaries/latest/netbsd/arm/curl-go
+binaries/latest/openbsd/amd64/curl-go
+binaries/latest/openbsd/386/curl-go
+binaries/latest/openbsd/arm/curl-go
+binaries/latest/solaris/amd64/curl-go
+binaries/latest/plan9/amd64/curl-go
+binaries/latest/plan9/386/curl-go
+binaries/latest/plan9/arm/curl-go
+binaries/latest/mac/amd64/curl-go
+binaries/latest/mac/386/curl-go
+binaries/latest/dragonfly/amd64/curl-go
+binaries/latest/windows/amd64/curl-go.exe
+binaries/latest/windows/386/curl-go.exe
+```
+
