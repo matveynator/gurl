@@ -1,5 +1,19 @@
 # curl-go "CURL-like" utility written in pure GO (GOLANG) with embedded SSL support.
 
+
+```
+./curl-go --help
+Usage of ./curl-go:
+  -lang string
+    	Set Accept-Language header (default "en-us")
+  -timeout int
+    	Set connect and operation timeout (default 5)
+  -useragent string
+    	Set user agent (default "curl-go")
+  -version
+    	Output version information
+```
+
 - ## [↓ Download latest version of CURL-GO.](http://files.matveynator.ru/curl-go/) 
 
 - Supported OS: Linix, Windows, Android, Mac, IOS, FreeBSD, DragonflyBSD, OpenBSD, NetBSD, Plan9, AIX, Solaris, Illumos
