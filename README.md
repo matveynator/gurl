@@ -2,12 +2,12 @@
 
 
 ```
-./curl-go --help
-Usage of ./curl-go:
+curl-go --help
+Usage of curl-go:
   -lang string
     	Set Accept-Language header (default "en-us")
   -timeout int
-    	Set connect and operation timeout (default 5)
+    	Set connect and operation timeout (default 15)
   -useragent string
     	Set user agent (default "curl-go")
   -version
