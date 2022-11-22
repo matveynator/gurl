@@ -13,7 +13,7 @@ Usage of curl-go:
     	Output version information
 ```
 
-## [↓ Download latest version of CURL-GO.](http://files.matveynator.ru/curl-go/) 
+## [↓ Download latest version of CURL-GO.](http://files.matveynator.ru/curl-go/latest/) 
 
 - Supported OS: [Linux](http://files.matveynator.ru/curl-go/latest/linux), [Windows](http://files.matveynator.ru/curl-go/latest/windows), [Android](http://files.matveynator.ru/curl-go/latest/android), [Mac](http://files.matveynator.ru/curl-go/latest/mac), [IOS](http://files.matveynator.ru/curl-go/latest/ios), [FreeBSD](http://files.matveynator.ru/curl-go/latest/freebsd), [DragonflyBSD](http://files.matveynator.ru/curl-go/latest/dragonfly), [OpenBSD](http://files.matveynator.ru/curl-go/latest/openbsd), [NetBSD](http://files.matveynator.ru/curl-go/latest/netbsd), [Plan9](http://files.matveynator.ru/curl-go/latest/plan9), [AIX](http://files.matveynator.ru/curl-go/latest/aix), [Solaris](http://files.matveynator.ru/curl-go/latest/solaris), [Illumos](http://files.matveynator.ru/curl-go/latest/illumos).
 - Supported architectures: x86-32, x86-64, ARM, ARM64, MIPS64, MIPS64le, MIPS, MIPSLE, PPC64, PPC64le, RISCv64, s390x. 
@@ -124,6 +124,6 @@ curl -L 'http://files.matveynator.ru/curl-go/latest/mac/386/curl-go' > /usr/loca
 
 [windows/arm64/curl-go.exe](http://files.matveynator.ru/curl-go/latest/windows/arm64/curl-go.exe)
 
-and many others!
+and [many](http://files.matveynator.ru/curl-go/latest/) others!
 
 
