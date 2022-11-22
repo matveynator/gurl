@@ -74,5 +74,6 @@ func main() {
   WithHeader("Accept-Language", LANG).
   Get(URL)
 
-  fmt.Println(res.ToString())
+  body, _ := res.ToString()
+  fmt.Println(body)
 }
