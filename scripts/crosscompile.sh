@@ -5,7 +5,6 @@ execution_file="gurl"
 
 go mod download
 go mod vendor
-go mod tidy
 
 cd ${git_root_path}/scripts;
 
