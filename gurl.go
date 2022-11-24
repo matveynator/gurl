@@ -28,14 +28,14 @@ func isFlagPassed(name string) bool {
 }
 
 func main() {
-	flagVersion := flag.Bool("version", false, "Output version information")
-	TIMEOUT := flag.Int("timeout", 15, "Set connect and operation timeout")
-	USERAGENT := flag.String("useragent", "gurl", "Set user agent")
+	flagVersion := flag.Bool("version", false, "Output version information.")
+	TIMEOUT := flag.Int("timeout", 60, "Set connect and operation timeout.")
+	USERAGENT := flag.String("useragent", "GURL (https://github.com/matveynator/gurl)", "Set user agent.")
 	LANG := flag.String("lang","en-us", "Set Accept-Language header")
-	PROXY := flag.String("proxy", "", "Set http proxy 'host:port', example: --proxy '127.0.0.1:8080'")
-	UNSAFE := flag.Bool("unsafe", false, "Disable TLS certificate checking")
-	HEAD := flag.Bool("head", false, "Perform HEAD request, example: --head http://matveynator.ru")
-	POST := flag.String("post", "", "Perform POST request, example: --post \"'name1':'value1','name2':'value2'\" http://matveynator.ru ")
+	PROXY := flag.String("proxy", "", "Set http proxy 'host:port', example: -proxy '127.0.0.1:8080'")
+	UNSAFE := flag.Bool("unsafe", false, "Disable strict certificate checking")
+	HEAD := flag.Bool("head", false, "Perform HEAD request.")
+	POST := flag.String("post", "", "Perform POST request, example: -post \"'name1':'value1','name2':'value2'\" http://matveynator.ru ")
 	flag.Parse()
 
 	if *flagVersion  {
