@@ -1,12 +1,19 @@
 # gurl is a curl-like utility written in pure GO (GOLang), with embedded SSL support and no external libraries.
 
 ```
-gurl --help
-Usage of gurl:
+Usage of ./gurl:
+  -head
+    	Perform HEAD request.
   -lang string
     	Set Accept-Language header (default "en-us")
+  -post string
+    	Perform POST request: -post 'name1':'value1','name2':'value2' 
+  -proxy string
+    	Set http proxy 'host:port' eg: '127.0.0.1:8080'
   -timeout int
     	Set connect and operation timeout (default 15)
+  -unsafe
+    	Disable TLS certificate checking.
   -useragent string
     	Set user agent (default "gurl")
   -version
