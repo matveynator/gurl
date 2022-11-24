@@ -1,4 +1,4 @@
-module curl-go
+module gurl
 
 go 1.19
 
