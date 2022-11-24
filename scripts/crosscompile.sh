@@ -37,4 +37,4 @@ do
 done
 
 #optional: publish to internet:
-rsync -avP ../binaries/* root@files.matveynator.ru:/home/files/public_html/gurl/
+rsync -avP ../binaries/* files@files.matveynator.ru:/home/files/public_html/gurl/
