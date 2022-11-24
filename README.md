@@ -1,23 +1,23 @@
 # gurl is a curl-like utility written in pure GO (GOLang), with embedded SSL support and no external libraries.
 
 ```
-Usage of ./gurl:
+Usage of /usr/local/bin/gurl:
   -head
     	Perform HEAD request.
   -lang string
     	Set Accept-Language header (default "en-us")
   -post string
-    	Perform POST request: -post 'name1':'value1','name2':'value2' 
+    	Perform POST request, example: -post "'name1':'value1','name2':'value2'" http://matveynator.ru 
   -proxy string
-    	Set http proxy 'host:port' eg: '127.0.0.1:8080'
+    	Set http proxy 'host:port', example: -proxy '127.0.0.1:8080'
   -timeout int
-    	Set connect and operation timeout (default 15)
+    	Set connect and operation timeout. (default 60)
   -unsafe
-    	Disable TLS certificate checking.
+    	Disable strict certificate checking
   -useragent string
-    	Set user agent (default "gurl")
+    	Set user agent. (default "GURL (https://github.com/matveynator/gurl)")
   -version
-    	Output version information
+    	Output version information.
 ```
 
 ## [↓ Download latest version of gurl.](http://files.matveynator.ru/gurl/latest/) 
