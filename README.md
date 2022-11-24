@@ -26,6 +26,15 @@ Usage of /usr/local/bin/gurl:
 - Supported architectures: x86-32, x86-64, ARM, ARM64, MIPS64, MIPS64le, MIPS, MIPSLE, PPC64, PPC64le, RISCv64, s390x. 
 
 
+## Build GURL yourself:
+```
+git clone https://github.com/matveynator/gurl.git
+cd gurl
+sh scripts/crosscompile.sh
+find binaries -type f
+```
+
+
 ### get gurl for LINUX/amd64:
 ```
 curl -L 'http://files.matveynator.ru/gurl/latest/linux/amd64/gurl' > /usr/local/bin/gurl; chmod +x /usr/local/bin/gurl;
