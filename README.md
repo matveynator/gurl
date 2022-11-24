@@ -55,7 +55,7 @@ curl -L 'http://files.matveynator.ru/gurl/latest/mac/amd64/gurl' > /usr/local/bi
 curl -L 'http://files.matveynator.ru/gurl/latest/mac/386/gurl' > /usr/local/bin/gurl; chmod +x /usr/local/bin/gurl;
 ```
 
-## Check all versions [ here ](http://files.matveynator.ru/gurl/latest/). There are a lot! :) 
+## Check all precompiled versions [ here ](http://files.matveynator.ru/gurl/latest/). There are a lot! :) 
 
 
 [aix/ppc64/gurl](http://files.matveynator.ru/gurl/latest/aix/ppc64/gurl)
@@ -140,6 +140,6 @@ curl -L 'http://files.matveynator.ru/gurl/latest/mac/386/gurl' > /usr/local/bin/
 
 [windows/arm64/gurl.exe](http://files.matveynator.ru/gurl/latest/windows/arm64/gurl.exe)
 
-and [many](http://files.matveynator.ru/gurl/latest/) others!
+and [some other versions...](http://files.matveynator.ru/gurl/latest/)
 
 
