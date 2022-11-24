@@ -31,7 +31,7 @@ GOLANG version 1.11 or later is required.
 ```
 git clone https://github.com/matveynator/gurl.git
 cd gurl
-sh scripts/crosscompile.sh
+bash scripts/crosscompile.sh
 find binaries -type f
 ```
 
