@@ -13,19 +13,29 @@ import (
 	"net/url"
 )
 
-var LANG,VERSION,USERAGENT,URL,PROXY string
-var TIMEOUT int
-var UNSAFE,HEAD,POST bool
+var VERSION string
+//var TIMEOUT int
+//var UNSAFE,HEAD bool
+
+func isFlagPassed(name string) bool {
+	found := false
+	flag.Visit(func(f *flag.Flag) {
+		if f.Name == name {
+			found = true
+		}
+	})
+	return found
+}
 
 func main() {
 	flagVersion := flag.Bool("version", false, "Output version information")
-	TIMEOUT = *flag.Int("timeout", 15, "Set connect and operation timeout")
-	USERAGENT := *flag.String("useragent", "gurl", "Set user agent")
-	LANG := *flag.String("lang","en-us", "Set Accept-Language header")
-	PROXY := *flag.String("proxy", "", "Set http proxy 'host:port' eg: '127.0.0.1:8080'")
-	UNSAFE = *flag.Bool("unsafe", false, "Disable TLS certificate checking.")
-	HEAD := *flag.Bool("head", false, "Perform HEAD request.")
-	POST := *flag.String("post", "", "Perform POST request: -post 'name1':'value1','name2':'value2' ")
+	TIMEOUT := flag.Int("timeout", 15, "Set connect and operation timeout")
+	USERAGENT := flag.String("useragent", "gurl", "Set user agent")
+	LANG := flag.String("lang","en-us", "Set Accept-Language header")
+	PROXY := flag.String("proxy", "", "Set http proxy 'host:port', example: --proxy '127.0.0.1:8080'")
+	UNSAFE := flag.Bool("unsafe", false, "Disable TLS certificate checking")
+	HEAD := flag.Bool("head", false, "Perform HEAD request, example: --head http://matveynator.ru")
+	POST := flag.String("post", "", "Perform POST request, example: --post \"'name1':'value1','name2':'value2'\" http://matveynator.ru ")
 	flag.Parse()
 
 	if *flagVersion  {
@@ -37,7 +47,7 @@ func main() {
 		os.Exit(0)
 	}
 
-	URL = flag.Arg(0)
+	URL := flag.Arg(0)
 	//validate URL:
 	u, err := url.Parse(URL)       
 	if err != nil {
@@ -51,27 +61,41 @@ func main() {
 	}
 
 	httpclient.Defaults(httpclient.Map{
-		"opt_useragent":   USERAGENT,
-		"opt_timeout":     TIMEOUT,
-		"opt_connecttimeout": TIMEOUT,
+		"opt_useragent":   *USERAGENT,
+		"opt_timeout":     *TIMEOUT,
+		"opt_connecttimeout": *TIMEOUT,
 		"Accept-Encoding": "gzip,deflate,sdch",
-		"Accept-Language": LANG,
+		"Accept-Language": *LANG,
 	})
 
-	if PROXY != "" {
+	if *PROXY != "" {
 		httpclient.Defaults(httpclient.Map{
-			httpclient.OPT_PROXY:   PROXY,
+			httpclient.OPT_PROXY:   *PROXY,
 		})
 	}
 
-	if UNSAFE == true {
+	if *UNSAFE == true {
 		httpclient.Defaults(httpclient.Map{
 			httpclient.OPT_UNSAFE_TLS:   true,
 		})
 	}
 
-	if HEAD == true {
+	if isFlagPassed("head")  {
+
 		res, err := httpclient.Head(URL)
+
+		if err != nil {
+			fmt.Println("Error: ", *HEAD, err)
+			os.Exit(1)
+		}
+
+		fmt.Printf("%#q\n", res)
+		os.Exit(0)
+	} 
+
+	if isFlagPassed("post") &&  *POST != "" {
+		res, err := httpclient.Post(URL, "map[string]string{" + *POST + "}")
+
 		if err != nil {
 			fmt.Println("Error: ", err)
 			os.Exit(1)
@@ -83,31 +107,20 @@ func main() {
 			os.Exit(1)
 		}
 		fmt.Println(body)
-	} else if POST != "" {
-		res, err := httpclient.Post(URL, "map[string]string{" + POST + "}")
-		if err != nil {
-			fmt.Println("Error: ", err)
-			os.Exit(1)
-		}
+		os.Exit(0)
+	} 
 
-		body, err := res.ToString()
-		if err != nil {
-			fmt.Println("Error: ", err)
-			os.Exit(1)
-		}
-		fmt.Println(body)
-	} else {
-		res, err := httpclient.Get(URL)
-		if err != nil {
-			fmt.Println("Error: ", err)
-			os.Exit(1)
-		}
-
-		body, err := res.ToString()
-		if err != nil {
-			fmt.Println("Error: ", err)
-			os.Exit(1)
-		}
-		fmt.Println(body)
+	res, err := httpclient.Get(URL)
+	if err != nil {
+		fmt.Println("Error: ", err)
+		os.Exit(1)
 	}
+
+	body, err := res.ToString()
+	if err != nil {
+		fmt.Println("Error: ", err)
+		os.Exit(1)
+	}
+	fmt.Println(body)
+	os.Exit(0)
 }
