@@ -2,6 +2,10 @@
 version="0.1-002"
 git_root_path=`git rev-parse --show-toplevel`
 execution_file="gurl"
+
+go mod download
+go mod tidy
+
 cd ${git_root_path}/scripts;
 
 mkdir -p ${git_root_path}/binaries/${version};
