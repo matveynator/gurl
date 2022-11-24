@@ -26,7 +26,8 @@ Usage of /usr/local/bin/gurl:
 - Supported architectures: x86-32, x86-64, ARM, ARM64, MIPS64, MIPS64le, MIPS, MIPSLE, PPC64, PPC64le, RISCv64, s390x. 
 
 
-## Build GURL yourself:
+### build gurl yourself 
+GOLANG version 1.11 or later is required.
 ```
 git clone https://github.com/matveynator/gurl.git
 cd gurl
