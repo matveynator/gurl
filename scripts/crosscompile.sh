@@ -1,5 +1,5 @@
 #!/bin/bash
-version="0.1-001"
+version="0.1-002"
 git_root_path=`git rev-parse --show-toplevel`
 execution_file="gurl"
 cd ${git_root_path}/scripts;
