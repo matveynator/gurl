@@ -28,7 +28,8 @@ func isFlagPassed(name string) bool {
 }
 
 func main() {
-	flagVersion := flag.Bool("version", false, "Output version information.")
+
+  flagVersion := flag.Bool("version", false, "Output version information.")
 	TIMEOUT := flag.Int("timeout", 60, "Set connect and operation timeout.")
 	USERAGENT := flag.String("useragent", "GURL (https://github.com/matveynator/gurl)", "Set user agent.")
 	LANG := flag.String("lang","en-us", "Set Accept-Language header")
@@ -36,8 +37,11 @@ func main() {
 	UNSAFE := flag.Bool("unsafe", false, "Disable strict certificate checking")
 	HEAD := flag.Bool("head", false, "Perform HEAD request.")
 	POST := flag.String("post", "", "Perform POST request, example: -post \"'name1':'value1','name2':'value2'\" http://matveynator.ru ")
-	flag.Parse()
 
+  //process all flags
+  flag.Parse()
+
+  //show version
 	if *flagVersion  {
 		if VERSION != "" {
 			fmt.Println("Version:", VERSION)
@@ -55,11 +59,18 @@ func main() {
 		os.Exit(1)
 	} 
 
+	//validate target
+	//need better validation of POST values to check errors.
 	if u.Scheme != "http" && u.Scheme != "https" {
-		fmt.Println("Error: url scheme should be http:// or https:// - ", URL)
+		if isFlagPassed("post") {
+			fmt.Println("Error: empty or malformed POST request.")
+		} else {
+			fmt.Println("Error: target URL scheme should be http:// or https://. You provided: \"",URL,"\"")
+		}
 		os.Exit(1)
-	}
+	} 
 
+  //configure client
 	httpclient.Defaults(httpclient.Map{
 		"opt_useragent":   *USERAGENT,
 		"opt_timeout":     *TIMEOUT,
@@ -68,31 +79,33 @@ func main() {
 		"Accept-Language": *LANG,
 	})
 
+  //set proxy if needed:
 	if *PROXY != "" {
 		httpclient.Defaults(httpclient.Map{
 			httpclient.OPT_PROXY:   *PROXY,
 		})
 	}
 
+  //set skip SSL checks:
 	if *UNSAFE == true {
 		httpclient.Defaults(httpclient.Map{
 			httpclient.OPT_UNSAFE_TLS:   true,
 		})
 	}
 
+  //process HEAD request:
 	if isFlagPassed("head")  {
-
 		res, err := httpclient.Head(URL)
-
 		if err != nil {
 			fmt.Println("Error: ", *HEAD, err)
 			os.Exit(1)
 		}
-
 		fmt.Printf("%#q\n", res)
+		res.Body.Close()
 		os.Exit(0)
 	} 
 
+  //process POST request:
 	if isFlagPassed("post") &&  *POST != "" {
 		res, err := httpclient.Post(URL, "map[string]string{" + *POST + "}")
 
@@ -107,9 +120,11 @@ func main() {
 			os.Exit(1)
 		}
 		fmt.Println(body)
+		res.Body.Close()
 		os.Exit(0)
 	} 
-
+  
+	//finally process GET request:
 	res, err := httpclient.Get(URL)
 	if err != nil {
 		fmt.Println("Error: ", err)
@@ -122,5 +137,6 @@ func main() {
 		os.Exit(1)
 	}
 	fmt.Println(body)
+	res.Body.Close()
 	os.Exit(0)
 }
