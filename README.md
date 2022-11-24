@@ -31,10 +31,9 @@ GOLANG version 1.11 or later is required.
 ```
 git clone https://github.com/matveynator/gurl.git
 cd gurl
-bash scripts/crosscompile.sh
-find binaries -type f
+go build
+./gurl https://google.com
 ```
-
 
 ### get gurl for LINUX/amd64:
 ```
