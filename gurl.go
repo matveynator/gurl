@@ -9,13 +9,14 @@ import (
 	"fmt"
 	"flag"
 	"os"
-	"github.com/ddliu/go-httpclient"
+	"io"
+	"time"
+	"net/http"
 	"net/url"
+	"crypto/tls"
 )
 
 var VERSION string
-//var TIMEOUT int
-//var UNSAFE,HEAD bool
 
 func isFlagPassed(name string) bool {
 	found := false
@@ -29,19 +30,25 @@ func isFlagPassed(name string) bool {
 
 func main() {
 
-  flagVersion := flag.Bool("version", false, "Output version information.")
-	TIMEOUT := flag.Int("timeout", 60, "Set connect and operation timeout.")
+	var client *http.Client
+	tr := &http.Transport{}
+
+	flagVersion := flag.Bool("version", false, "Output version information.")
+	TIMEOUT := flag.Duration("timeout", 30*time.Second, "Set connect and operation timeout. Valid time units are: ns, us or µs, ms, s, m, h.")
 	USERAGENT := flag.String("useragent", "GURL (https://github.com/matveynator/gurl)", "Set user agent.")
-	LANG := flag.String("lang","en-us", "Set Accept-Language header")
-	PROXY := flag.String("proxy", "", "Set http proxy 'host:port', example: -proxy '127.0.0.1:8080'")
-	UNSAFE := flag.Bool("unsafe", false, "Disable strict certificate checking")
-	HEAD := flag.Bool("head", false, "Perform HEAD request.")
-	POST := flag.String("post", "", "Perform POST request, example: -post \"'name1':'value1','name2':'value2'\" http://matveynator.ru ")
+	LANG := flag.String("lang","", "Set Accept-Language header, for example: -lang en-US")
+	PROXY := flag.String("proxy", "", "Set http/https/socks5 proxy 'type://host:port', example: -proxy 'socks5://127.0.0.1:3128' -proxy 'http://127.0.0.1:8080'")
+	_ = flag.Bool("unsafe", false, "Disable strict TLS certificate checking.")
+	_ = flag.Bool("head", false, "Perform HEAD request.")
 
-  //process all flags
-  flag.Parse()
+	//process all flags
+	flag.Parse()
 
-  //show version
+	//set default transport pasrameters:
+	tr.MaxIdleConns = 10
+	tr.IdleConnTimeout = *TIMEOUT
+
+	//show version
 	if *flagVersion  {
 		if VERSION != "" {
 			fmt.Println("Version:", VERSION)
@@ -62,81 +69,86 @@ func main() {
 	//validate target
 	//need better validation of POST values to check errors.
 	if u.Scheme != "http" && u.Scheme != "https" {
-		if isFlagPassed("post") {
-			fmt.Println("Error: empty or malformed POST request.")
-		} else {
-			fmt.Println("Error: target URL scheme should be http:// or https://. You provided: \"",URL,"\"")
-		}
+		fmt.Println("Error: target URL scheme should be http:// or https://. You provided: \"",URL,"\"")
 		os.Exit(1)
 	} 
 
-  //configure client
-	httpclient.Defaults(httpclient.Map{
-		"opt_useragent":   *USERAGENT,
-		"opt_timeout":     *TIMEOUT,
-		"opt_connecttimeout": *TIMEOUT,
-		"Accept-Encoding": "gzip,deflate,sdch",
-		"Accept-Language": *LANG,
-	})
-
-  //set proxy if needed:
+	//set proxy if needed:
 	if *PROXY != "" {
-		httpclient.Defaults(httpclient.Map{
-			httpclient.OPT_PROXY:   *PROXY,
-		})
+		proxyUrl, err := url.Parse(*PROXY)
+		if err != nil {
+			fmt.Println("Error: ", err)
+			os.Exit(1)
+		}
+		tr.Proxy = http.ProxyURL(proxyUrl)
+	} else {
+		tr.Proxy = http.ProxyFromEnvironment
 	}
 
-  //set skip SSL checks:
-	if *UNSAFE == true {
-		httpclient.Defaults(httpclient.Map{
-			httpclient.OPT_UNSAFE_TLS:   true,
-		})
+	//set skip SSL checks:
+	if isFlagPassed("unsafe")  {
+	  tr.TLSClientConfig = &tls.Config{InsecureSkipVerify: false}
+	} else {
+		tr.TLSClientConfig = &tls.Config{InsecureSkipVerify: true}
 	}
 
-  //process HEAD request:
+	//create http client:
+	client = &http.Client{Transport: tr}
+
+	//process HEAD request:
 	if isFlagPassed("head")  {
-		res, err := httpclient.Head(URL)
-		if err != nil {
-			fmt.Println("Error: ", *HEAD, err)
-			os.Exit(1)
-		}
-		fmt.Printf("%#q\n", res)
-		res.Body.Close()
-		os.Exit(0)
-	} 
-
-  //process POST request:
-	if isFlagPassed("post") &&  *POST != "" {
-		res, err := httpclient.Post(URL, "map[string]string{" + *POST + "}")
-
+		req, err := http.NewRequest(http.MethodHead, URL, nil)
 		if err != nil {
 			fmt.Println("Error: ", err)
 			os.Exit(1)
 		}
 
-		body, err := res.ToString()
+		if isFlagPassed("lang") && (*LANG != "")  {
+			req.Header.Add("Accept-Language", *LANG)
+		}
+		req.Header.Set("User-Agent", string("'") + *USERAGENT + string("'"))
+
+		resp, err := client.Do(req)
 		if err != nil {
 			fmt.Println("Error: ", err)
 			os.Exit(1)
 		}
-		fmt.Println(body)
-		res.Body.Close()
-		os.Exit(0)
-	} 
-  
-	//finally process GET request:
-	res, err := httpclient.Get(URL)
-	if err != nil {
-		fmt.Println("Error: ", err)
-		os.Exit(1)
-	}
 
-	body, err := res.ToString()
-	if err != nil {
-		fmt.Println("Error: ", err)
-		os.Exit(1)
+		fmt.Println("Status:", resp.StatusCode)
+		for k, v := range resp.Header {
+			fmt.Print(k)
+			fmt.Print(" : ")
+			fmt.Println(v)
+		}
+
+		resp.Body.Close()
+		os.Exit(0)
+	} else {
+		req, err := http.NewRequest(http.MethodGet, URL, nil)
+		if err != nil {
+			fmt.Println("Error: ", err)
+			os.Exit(1)
+		}
+
+		if isFlagPassed("lang") && (*LANG != "")  {
+			req.Header.Add("Accept-Language", *LANG)
+		}
+		req.Header.Set("User-Agent", string('"') + *USERAGENT + string('"'))
+
+		resp, err := client.Do(req)
+		if err != nil {
+			fmt.Println("Error: ", err)
+			os.Exit(1)
+		}
+
+		_, err = io.Copy(os.Stdout, resp.Body)
+		if err != nil {
+			fmt.Println("Error: ", err)
+			os.Exit(1)
+		}
+
+		resp.Body.Close()
+		os.Exit(0)
+
 	}
-	fmt.Println(body)
-	res.Body.Close()
-	os.Exit(0)
 }

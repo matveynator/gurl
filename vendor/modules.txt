@@ -1,2 +1,0 @@
-# github.com/ddliu/go-httpclient v0.7.1
-github.com/ddliu/go-httpclient
