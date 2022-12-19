@@ -34,6 +34,15 @@ go build
 ./gurl https://google.com
 ```
 
+### how to add new feature?
+```
+- Fork it
+- Create your feature branch (git checkout -b my-new-feature)
+- Commit your changes (git commit -am 'Added some feature')
+- Push to the branch (git push origin my-new-feature)
+- Create new Pull Request
+``
+
 ### get gurl for LINUX/amd64:
 ```
 curl -L 'http://files.matveynator.ru/gurl/latest/linux/amd64/gurl' > /usr/local/bin/gurl; chmod +x /usr/local/bin/gurl;
