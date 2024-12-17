@@ -1,3 +1,6 @@
+<img src="https://github.com/matveynator/gurl/blob/master/gurl.png?raw=true" widht="100%" align="right"></img>
+
+
 # GURL: A Simple `curl` Alternative That Works Everywhere
 
 **GURL** is a lightweight command-line HTTP client with **no external dependencies**. It’s perfect for both modern and old systems, running smoothly without OpenSSL or other libraries. Whether you’re on a cutting-edge Linux server or ancient hardware, GURL just works.
