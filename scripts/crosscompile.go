@@ -74,7 +74,7 @@ func main() {
 				targetOSName = "mac"
 			}
 
-			outputDir := filepath.Join(binariesPath, "no-gui", targetOSName, arch)
+			outputDir := filepath.Join(binariesPath, targetOSName, arch)
 			err := os.MkdirAll(outputDir, os.ModePerm)
 			if err != nil {
 				log.Printf("Error creating output directory %s: %v", outputDir, err)
