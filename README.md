@@ -202,4 +202,3 @@ Combines `--timeout` for a 5-second limit and `--fail` to exit silently on HTTP 
 
 ---
 
-# GURL: A Simple `curl` Alternative That Works Everywhere
