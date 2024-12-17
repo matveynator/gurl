@@ -12,8 +12,8 @@
 You can download GURL using `curl` (no HTTPS required) for your platform. Replace `<ARCHIVE_URL>` with the appropriate link for your operating system and architecture from the table below:
 
 ```bash
-sudo curl -L http://files.zabiyaka.net/gurl/latest/<PLATFORM>/<ARCH>/gurl -o /usr/local/bin/gurl
-chmod +x /usr/local/bin/gurl
+sudo curl -L http://files.zabiyaka.net/gurl/latest/<PLATFORM>/<ARCH>/gurl -o /usr/local/bin/gurl; 
+sudo chmod +x /usr/local/bin/gurl;
 ```
 
 Replace `<PLATFORM>` and `<ARCH>` with your system’s name and architecture.
@@ -53,8 +53,7 @@ Here’s the updated table with **all links** properly included for each platfor
 
 1. **Download and Install for Linux x86_64**:
    ```bash
-   sudo curl -L http://files.zabiyaka.net/gurl/latest/linux/amd64/gurl -o /usr/local/bin/gurl
-   chmod +x /usr/local/bin/gurl
+   sudo curl -L http://files.zabiyaka.net/gurl/latest/linux/amd64/gurl -o /usr/local/bin/gurl; sudo chmod +x /usr/local/bin/gurl; 
    ```
 
 2. **Download and Install for Windows (PowerShell)**:
@@ -73,7 +72,7 @@ GURL supports clear and descriptive options to make usage intuitive. Here are pr
 ### 1. **Basic GET Request**
 
 ```bash
-gurl http://example.com
+gurl example.com
 ```
 Sends a simple GET request and outputs the response to the terminal.
 
