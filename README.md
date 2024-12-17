@@ -9,7 +9,7 @@
 You can download GURL using `curl` (no HTTPS required) for your platform. Replace `<ARCHIVE_URL>` with the appropriate link for your operating system and architecture from the table below:
 
 ```bash
-curl -L http://files.zabiyaka.net/gurl/latest/no-gui/<PLATFORM>/<ARCH>/gurl -o /usr/local/bin/gurl
+curl -L http://files.zabiyaka.net/gurl/latest/<PLATFORM>/<ARCH>/gurl -o /usr/local/bin/gurl
 chmod +x /usr/local/bin/gurl
 ```
 
@@ -25,20 +25,20 @@ Here’s the updated table with **all links** properly included for each platfor
 
 | **Operating System**                         | **Architectures and Download Links**                                                                                                      |
 |---------------------------------------------|-------------------------------------------------------------------------------------------------------------------------|
-| ![Linux](https://edent.github.io/SuperTinyIcons/images/svg/linux.svg) **Linux**       | [amd64](http://files.zabiyaka.net/gurl/binaries/latest/no-gui/linux/amd64/gurl) [386](http://files.zabiyaka.net/gurl/binaries/latest/no-gui/linux/386/gurl) [arm](http://files.zabiyaka.net/gurl/binaries/latest/no-gui/linux/arm/gurl) [arm64](http://files.zabiyaka.net/gurl/binaries/latest/no-gui/linux/arm64/gurl) [loong64](http://files.zabiyaka.net/gurl/binaries/latest/no-gui/linux/loong64/gurl) [mips](http://files.zabiyaka.net/gurl/binaries/latest/no-gui/linux/mips/gurl) [mipsle](http://files.zabiyaka.net/gurl/binaries/latest/no-gui/linux/mipsle/gurl) [mips64](http://files.zabiyaka.net/gurl/binaries/latest/no-gui/linux/mips64/gurl) [mips64le](http://files.zabiyaka.net/gurl/binaries/latest/no-gui/linux/mips64le/gurl) [ppc64](http://files.zabiyaka.net/gurl/binaries/latest/no-gui/linux/ppc64/gurl) [ppc64le](http://files.zabiyaka.net/gurl/binaries/latest/no-gui/linux/ppc64le/gurl) [riscv64](http://files.zabiyaka.net/gurl/binaries/latest/no-gui/linux/riscv64/gurl) [s390x](http://files.zabiyaka.net/gurl/binaries/latest/no-gui/linux/s390x/gurl) |
-| ![Windows](https://edent.github.io/SuperTinyIcons/images/svg/windows.svg) **Windows**  | [amd64](http://files.zabiyaka.net/gurl/binaries/latest/no-gui/windows/amd64/gurl.exe) [386](http://files.zabiyaka.net/gurl/binaries/latest/no-gui/windows/386/gurl.exe) [arm](http://files.zabiyaka.net/gurl/binaries/latest/no-gui/windows/arm/gurl.exe) [arm64](http://files.zabiyaka.net/gurl/binaries/latest/no-gui/windows/arm64/gurl.exe) |
-| ![macOS](https://edent.github.io/SuperTinyIcons/images/svg/apple.svg) **macOS**        | [amd64](http://files.zabiyaka.net/gurl/binaries/latest/no-gui/mac/amd64/gurl) [arm64](http://files.zabiyaka.net/gurl/binaries/latest/no-gui/mac/arm64/gurl)                        |
-| ![Android](https://edent.github.io/SuperTinyIcons/images/svg/android.svg) **Android**  | [arm64](http://files.zabiyaka.net/gurl/binaries/latest/no-gui/android/arm64/gurl)                                                |
-| **FreeBSD**                                  | [amd64](http://files.zabiyaka.net/gurl/binaries/latest/no-gui/freebsd/amd64/gurl) [386](http://files.zabiyaka.net/gurl/binaries/latest/no-gui/freebsd/386/gurl) [arm](http://files.zabiyaka.net/gurl/binaries/latest/no-gui/freebsd/arm/gurl) [arm64](http://files.zabiyaka.net/gurl/binaries/latest/no-gui/freebsd/arm64/gurl) [riscv64](http://files.zabiyaka.net/gurl/binaries/latest/no-gui/freebsd/riscv64/gurl) |
-| **OpenBSD**                                  | [amd64](http://files.zabiyaka.net/gurl/binaries/latest/no-gui/openbsd/amd64/gurl) [386](http://files.zabiyaka.net/gurl/binaries/latest/no-gui/openbsd/386/gurl) [arm](http://files.zabiyaka.net/gurl/binaries/latest/no-gui/openbsd/arm/gurl) [arm64](http://files.zabiyaka.net/gurl/binaries/latest/no-gui/openbsd/arm64/gurl) [ppc64](http://files.zabiyaka.net/gurl/binaries/latest/no-gui/openbsd/ppc64/gurl) [riscv64](http://files.zabiyaka.net/gurl/binaries/latest/no-gui/openbsd/riscv64/gurl) |
-| **NetBSD**                                   | [amd64](http://files.zabiyaka.net/gurl/binaries/latest/no-gui/netbsd/amd64/gurl) [386](http://files.zabiyaka.net/gurl/binaries/latest/no-gui/netbsd/386/gurl) [arm](http://files.zabiyaka.net/gurl/binaries/latest/no-gui/netbsd/arm/gurl) [arm64](http://files.zabiyaka.net/gurl/binaries/latest/no-gui/netbsd/arm64/gurl) |
-| **Solaris**                                  | [amd64](http://files.zabiyaka.net/gurl/binaries/latest/no-gui/solaris/amd64/gurl)                                                |
-| **Plan 9**                                   | [amd64](http://files.zabiyaka.net/gurl/binaries/latest/no-gui/plan9/amd64/gurl) [386](http://files.zabiyaka.net/gurl/binaries/latest/no-gui/plan9/386/gurl) [arm](http://files.zabiyaka.net/gurl/binaries/latest/no-gui/plan9/arm/gurl) |
-| **Illumos**                                  | [amd64](http://files.zabiyaka.net/gurl/binaries/latest/no-gui/illumos/amd64/gurl)                                                |
-| **DragonFlyBSD**                             | [amd64](http://files.zabiyaka.net/gurl/binaries/latest/no-gui/dragonfly/amd64/gurl)                                              |
-| **AIX**                                      | [ppc64](http://files.zabiyaka.net/gurl/binaries/latest/no-gui/aix/ppc64/gurl)                                                    |
-| **Wasm**                                     | [js/wasm](http://files.zabiyaka.net/gurl/binaries/latest/no-gui/js/wasm/gurl)                                                   |
-| **Wasi**                                     | [wasip1](http://files.zabiyaka.net/gurl/binaries/latest/no-gui/wasip1/wasm/gurl)                                                 |
+| ![Linux](https://edent.github.io/SuperTinyIcons/images/svg/linux.svg) **Linux**       | [amd64](http://files.zabiyaka.net/gurl/binaries/latest/linux/amd64/gurl) [386](http://files.zabiyaka.net/gurl/binaries/latest/linux/386/gurl) [arm](http://files.zabiyaka.net/gurl/binaries/latest/linux/arm/gurl) [arm64](http://files.zabiyaka.net/gurl/binaries/latest/linux/arm64/gurl) [loong64](http://files.zabiyaka.net/gurl/binaries/latest/linux/loong64/gurl) [mips](http://files.zabiyaka.net/gurl/binaries/latest/linux/mips/gurl) [mipsle](http://files.zabiyaka.net/gurl/binaries/latest/linux/mipsle/gurl) [mips64](http://files.zabiyaka.net/gurl/binaries/latest/linux/mips64/gurl) [mips64le](http://files.zabiyaka.net/gurl/binaries/latest/linux/mips64le/gurl) [ppc64](http://files.zabiyaka.net/gurl/binaries/latest/linux/ppc64/gurl) [ppc64le](http://files.zabiyaka.net/gurl/binaries/latest/linux/ppc64le/gurl) [riscv64](http://files.zabiyaka.net/gurl/binaries/latest/linux/riscv64/gurl) [s390x](http://files.zabiyaka.net/gurl/binaries/latest/linux/s390x/gurl) |
+| ![Windows](https://edent.github.io/SuperTinyIcons/images/svg/windows.svg) **Windows**  | [amd64](http://files.zabiyaka.net/gurl/binaries/latest/windows/amd64/gurl.exe) [386](http://files.zabiyaka.net/gurl/binaries/latest/windows/386/gurl.exe) [arm](http://files.zabiyaka.net/gurl/binaries/latest/windows/arm/gurl.exe) [arm64](http://files.zabiyaka.net/gurl/binaries/latest/windows/arm64/gurl.exe) |
+| ![macOS](https://edent.github.io/SuperTinyIcons/images/svg/apple.svg) **macOS**        | [amd64](http://files.zabiyaka.net/gurl/binaries/latest/mac/amd64/gurl) [arm64](http://files.zabiyaka.net/gurl/binaries/latest/mac/arm64/gurl)                        |
+| ![Android](https://edent.github.io/SuperTinyIcons/images/svg/android.svg) **Android**  | [arm64](http://files.zabiyaka.net/gurl/binaries/latest/android/arm64/gurl)                                                |
+| **FreeBSD**                                  | [amd64](http://files.zabiyaka.net/gurl/binaries/latest/freebsd/amd64/gurl) [386](http://files.zabiyaka.net/gurl/binaries/latest/freebsd/386/gurl) [arm](http://files.zabiyaka.net/gurl/binaries/latest/freebsd/arm/gurl) [arm64](http://files.zabiyaka.net/gurl/binaries/latest/freebsd/arm64/gurl) [riscv64](http://files.zabiyaka.net/gurl/binaries/latest/freebsd/riscv64/gurl) |
+| **OpenBSD**                                  | [amd64](http://files.zabiyaka.net/gurl/binaries/latest/openbsd/amd64/gurl) [386](http://files.zabiyaka.net/gurl/binaries/latest/openbsd/386/gurl) [arm](http://files.zabiyaka.net/gurl/binaries/latest/openbsd/arm/gurl) [arm64](http://files.zabiyaka.net/gurl/binaries/latest/openbsd/arm64/gurl) [ppc64](http://files.zabiyaka.net/gurl/binaries/latest/openbsd/ppc64/gurl) [riscv64](http://files.zabiyaka.net/gurl/binaries/latest/openbsd/riscv64/gurl) |
+| **NetBSD**                                   | [amd64](http://files.zabiyaka.net/gurl/binaries/latest/netbsd/amd64/gurl) [386](http://files.zabiyaka.net/gurl/binaries/latest/netbsd/386/gurl) [arm](http://files.zabiyaka.net/gurl/binaries/latest/netbsd/arm/gurl) [arm64](http://files.zabiyaka.net/gurl/binaries/latest/netbsd/arm64/gurl) |
+| **Solaris**                                  | [amd64](http://files.zabiyaka.net/gurl/binaries/latest/solaris/amd64/gurl)                                                |
+| **Plan 9**                                   | [amd64](http://files.zabiyaka.net/gurl/binaries/latest/plan9/amd64/gurl) [386](http://files.zabiyaka.net/gurl/binaries/latest/plan9/386/gurl) [arm](http://files.zabiyaka.net/gurl/binaries/latest/plan9/arm/gurl) |
+| **Illumos**                                  | [amd64](http://files.zabiyaka.net/gurl/binaries/latest/illumos/amd64/gurl)                                                |
+| **DragonFlyBSD**                             | [amd64](http://files.zabiyaka.net/gurl/binaries/latest/dragonfly/amd64/gurl)                                              |
+| **AIX**                                      | [ppc64](http://files.zabiyaka.net/gurl/binaries/latest/aix/ppc64/gurl)                                                    |
+| **Wasm**                                     | [js/wasm](http://files.zabiyaka.net/gurl/binaries/latest/js/wasm/gurl)                                                   |
+| **Wasi**                                     | [wasip1](http://files.zabiyaka.net/gurl/binaries/latest/wasip1/wasm/gurl)                                                 |
 
 ---
 
@@ -50,13 +50,13 @@ Here’s the updated table with **all links** properly included for each platfor
 
 1. **Download and Install for Linux x86_64**:
    ```bash
-   sudo curl -L http://files.zabiyaka.net/gurl/latest/no-gui/linux/amd64/gurl -o /usr/local/bin/gurl
+   sudo curl -L http://files.zabiyaka.net/gurl/latest/linux/amd64/gurl -o /usr/local/bin/gurl
    chmod +x /usr/local/bin/gurl
    ```
 
 2. **Download and Install for Windows (PowerShell)**:
    ```powershell
-   Invoke-WebRequest -Uri http://files.zabiyaka.net/gurl/latest/no-gui/windows/amd64/gurl.exe -OutFile gurl.exe
+   Invoke-WebRequest -Uri http://files.zabiyaka.net/gurl/latest/windows/amd64/gurl.exe -OutFile gurl.exe
    ```
 
 ---
