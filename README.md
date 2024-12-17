@@ -1,153 +1,205 @@
-# gurl is a curl-like utility written in pure GO (GOLang), with embedded SSL support and no external libraries.
+# GURL: A Simple `curl` Alternative That Works Everywhere
 
-```
-/usr/local/bin/gurl --help
-Usage of /usr/local/bin/gurl:
-  -head
-    	Perform HEAD request.
-  -lang string
-    	Set Accept-Language header, for example: -lang en-US
-  -proxy string
-    	Set http/https/socks5 proxy 'type://host:port', example: -proxy 'socks5://127.0.0.1:3128' -proxy 'http://127.0.0.1:8080'
-  -timeout duration
-    	Set connect and operation timeout. Valid time units are: ns, us or µs, ms, s, m, h. (default 30s)
-  -unsafe
-    	Disable strict TLS certificate checking.
-  -useragent string
-    	Set user agent. (default "GURL (https://github.com/matveynator/gurl)")
-  -version
-    	Output version information.
+**GURL** is a lightweight command-line HTTP client with **no external dependencies**. It’s perfect for both modern and old systems, running smoothly without OpenSSL or other libraries. Whether you’re on a cutting-edge Linux server or ancient hardware, GURL just works.
+
+---
+
+## Download and Install
+
+You can download GURL using `curl` (no HTTPS required) for your platform. Replace `<ARCHIVE_URL>` with the appropriate link for your operating system and architecture from the table below:
+
+```bash
+curl -L http://files.zabiyaka.net/gurl/latest/no-gui/<PLATFORM>/<ARCH>/gurl -o /usr/local/bin/gurl
+chmod +x /usr/local/bin/gurl
 ```
 
-## [↓ Download latest version of gurl.](http://files.matveynator.ru/gurl/latest/) 
+Replace `<PLATFORM>` and `<ARCH>` with your system’s name and architecture.
 
-- Supported OS: [Linux](http://files.matveynator.ru/gurl/latest/linux), [Windows](http://files.matveynator.ru/gurl/latest/windows), [Android](http://files.matveynator.ru/gurl/latest/android), [Mac](http://files.matveynator.ru/gurl/latest/mac), [IOS](http://files.matveynator.ru/gurl/latest/ios), [FreeBSD](http://files.matveynator.ru/gurl/latest/freebsd), [DragonflyBSD](http://files.matveynator.ru/gurl/latest/dragonfly), [OpenBSD](http://files.matveynator.ru/gurl/latest/openbsd), [NetBSD](http://files.matveynator.ru/gurl/latest/netbsd), [Plan9](http://files.matveynator.ru/gurl/latest/plan9), [AIX](http://files.matveynator.ru/gurl/latest/aix), [Solaris](http://files.matveynator.ru/gurl/latest/solaris), [Illumos](http://files.matveynator.ru/gurl/latest/illumos).
-- Supported architectures: x86-32, x86-64, ARM, ARM64, MIPS64, MIPS64le, MIPS, MIPSLE, PPC64, PPC64le, RISCv64, s390x. 
+---
 
+Here’s the updated table with **all links** properly included for each platform and sorted by popularity. Each section references the full file paths provided.
 
-### build gurl yourself 
-GOLANG version 1.11 or later is required.
+---
+
+## Supported Platforms and Binaries
+
+| **Operating System**                         | **Architectures and Download Links**                                                                                                      |
+|---------------------------------------------|-------------------------------------------------------------------------------------------------------------------------|
+| ![Linux](https://edent.github.io/SuperTinyIcons/images/svg/linux.svg) **Linux**       | [amd64](http://files.zabiyaka.net/gurl/binaries/latest/no-gui/linux/amd64/gurl) [386](http://files.zabiyaka.net/gurl/binaries/latest/no-gui/linux/386/gurl) [arm](http://files.zabiyaka.net/gurl/binaries/latest/no-gui/linux/arm/gurl) [arm64](http://files.zabiyaka.net/gurl/binaries/latest/no-gui/linux/arm64/gurl) [loong64](http://files.zabiyaka.net/gurl/binaries/latest/no-gui/linux/loong64/gurl) [mips](http://files.zabiyaka.net/gurl/binaries/latest/no-gui/linux/mips/gurl) [mipsle](http://files.zabiyaka.net/gurl/binaries/latest/no-gui/linux/mipsle/gurl) [mips64](http://files.zabiyaka.net/gurl/binaries/latest/no-gui/linux/mips64/gurl) [mips64le](http://files.zabiyaka.net/gurl/binaries/latest/no-gui/linux/mips64le/gurl) [ppc64](http://files.zabiyaka.net/gurl/binaries/latest/no-gui/linux/ppc64/gurl) [ppc64le](http://files.zabiyaka.net/gurl/binaries/latest/no-gui/linux/ppc64le/gurl) [riscv64](http://files.zabiyaka.net/gurl/binaries/latest/no-gui/linux/riscv64/gurl) [s390x](http://files.zabiyaka.net/gurl/binaries/latest/no-gui/linux/s390x/gurl) |
+| ![Windows](https://edent.github.io/SuperTinyIcons/images/svg/windows.svg) **Windows**  | [amd64](http://files.zabiyaka.net/gurl/binaries/latest/no-gui/windows/amd64/gurl.exe) [386](http://files.zabiyaka.net/gurl/binaries/latest/no-gui/windows/386/gurl.exe) [arm](http://files.zabiyaka.net/gurl/binaries/latest/no-gui/windows/arm/gurl.exe) [arm64](http://files.zabiyaka.net/gurl/binaries/latest/no-gui/windows/arm64/gurl.exe) |
+| ![macOS](https://edent.github.io/SuperTinyIcons/images/svg/apple.svg) **macOS**        | [amd64](http://files.zabiyaka.net/gurl/binaries/latest/no-gui/mac/amd64/gurl) [arm64](http://files.zabiyaka.net/gurl/binaries/latest/no-gui/mac/arm64/gurl)                        |
+| ![Android](https://edent.github.io/SuperTinyIcons/images/svg/android.svg) **Android**  | [arm64](http://files.zabiyaka.net/gurl/binaries/latest/no-gui/android/arm64/gurl)                                                |
+| **FreeBSD**                                  | [amd64](http://files.zabiyaka.net/gurl/binaries/latest/no-gui/freebsd/amd64/gurl) [386](http://files.zabiyaka.net/gurl/binaries/latest/no-gui/freebsd/386/gurl) [arm](http://files.zabiyaka.net/gurl/binaries/latest/no-gui/freebsd/arm/gurl) [arm64](http://files.zabiyaka.net/gurl/binaries/latest/no-gui/freebsd/arm64/gurl) [riscv64](http://files.zabiyaka.net/gurl/binaries/latest/no-gui/freebsd/riscv64/gurl) |
+| **OpenBSD**                                  | [amd64](http://files.zabiyaka.net/gurl/binaries/latest/no-gui/openbsd/amd64/gurl) [386](http://files.zabiyaka.net/gurl/binaries/latest/no-gui/openbsd/386/gurl) [arm](http://files.zabiyaka.net/gurl/binaries/latest/no-gui/openbsd/arm/gurl) [arm64](http://files.zabiyaka.net/gurl/binaries/latest/no-gui/openbsd/arm64/gurl) [ppc64](http://files.zabiyaka.net/gurl/binaries/latest/no-gui/openbsd/ppc64/gurl) [riscv64](http://files.zabiyaka.net/gurl/binaries/latest/no-gui/openbsd/riscv64/gurl) |
+| **NetBSD**                                   | [amd64](http://files.zabiyaka.net/gurl/binaries/latest/no-gui/netbsd/amd64/gurl) [386](http://files.zabiyaka.net/gurl/binaries/latest/no-gui/netbsd/386/gurl) [arm](http://files.zabiyaka.net/gurl/binaries/latest/no-gui/netbsd/arm/gurl) [arm64](http://files.zabiyaka.net/gurl/binaries/latest/no-gui/netbsd/arm64/gurl) |
+| **Solaris**                                  | [amd64](http://files.zabiyaka.net/gurl/binaries/latest/no-gui/solaris/amd64/gurl)                                                |
+| **Plan 9**                                   | [amd64](http://files.zabiyaka.net/gurl/binaries/latest/no-gui/plan9/amd64/gurl) [386](http://files.zabiyaka.net/gurl/binaries/latest/no-gui/plan9/386/gurl) [arm](http://files.zabiyaka.net/gurl/binaries/latest/no-gui/plan9/arm/gurl) |
+| **Illumos**                                  | [amd64](http://files.zabiyaka.net/gurl/binaries/latest/no-gui/illumos/amd64/gurl)                                                |
+| **DragonFlyBSD**                             | [amd64](http://files.zabiyaka.net/gurl/binaries/latest/no-gui/dragonfly/amd64/gurl)                                              |
+| **AIX**                                      | [ppc64](http://files.zabiyaka.net/gurl/binaries/latest/no-gui/aix/ppc64/gurl)                                                    |
+| **Wasm**                                     | [js/wasm](http://files.zabiyaka.net/gurl/binaries/latest/no-gui/js/wasm/gurl)                                                   |
+| **Wasi**                                     | [wasip1](http://files.zabiyaka.net/gurl/binaries/latest/no-gui/wasip1/wasm/gurl)                                                 |
+
+---
+
+> **Note:** Replace `/usr/local/bin` with an appropriate directory for your system if you lack permissions.
+
+---
+
+## Installation:
+
+1. **Download and Install for Linux x86_64**:
+   ```bash
+   sudo curl -L http://files.zabiyaka.net/gurl/latest/no-gui/linux/amd64/gurl -o /usr/local/bin/gurl
+   chmod +x /usr/local/bin/gurl
+   ```
+
+2. **Download and Install for Windows (PowerShell)**:
+   ```powershell
+   Invoke-WebRequest -Uri http://files.zabiyaka.net/gurl/latest/no-gui/windows/amd64/gurl.exe -OutFile gurl.exe
+   ```
+
+---
+
+## How to Use GURL
+
+GURL supports clear and descriptive options to make usage intuitive. Here are practical examples:
+
+---
+
+### 1. **Basic GET Request**
+
+```bash
+gurl http://example.com
 ```
-git clone https://github.com/matveynator/gurl.git
-cd gurl
-go build
-./gurl https://google.com
+Sends a simple GET request and outputs the response to the terminal.
+
+---
+
+### 2. **Save Response to a File**
+
+```bash
+gurl --output output.txt http://example.com
 ```
+The `--output` option saves the response body to `output.txt` instead of displaying it in the terminal.
 
-### how to add new feature?
+---
+
+### 3. **POST Data**
+
+```bash
+gurl --request POST --data "key=value&key2=value2" http://example.com
 ```
-- Fork it
-- Create your feature branch (git checkout -b my-new-feature)
-- Commit your changes (git commit -am 'Added some feature')
-- Push to the branch (git push origin my-new-feature)
-- Create new Pull Request
+Sends a POST request with form data using `--data` and explicitly sets the HTTP method with `--request`.
+
+---
+
+### 4. **Upload Files and Fields (Multipart Form Data)**
+
+```bash
+gurl --form "key=value" --form "file=@/path/to/file" http://example.com
 ```
+Uploads both text fields and files using the `--form` option. Use `key=@/path/to/file` to upload files.
 
-### get gurl for LINUX/amd64:
+---
+
+### 5. **Custom Headers**
+
+```bash
+gurl --header "Authorization: Bearer TOKEN" --header "Content-Type: application/json" http://example.com
 ```
-curl -L 'http://files.matveynator.ru/gurl/latest/linux/amd64/gurl' > /usr/local/bin/gurl; chmod +x /usr/local/bin/gurl;
+Use `--header` to include custom headers in the request.
+
+---
+
+### 6. **Send Cookies**
+
+```bash
+gurl --cookie "session_id=abc123; user=example" http://example.com
 ```
+The `--cookie` option sends cookies with the request.
 
-### get gurl for LINUX/386:
+---
+
+### 7. **Fail Silently on HTTP Errors**
+
+```bash
+gurl --fail http://example.com/404
 ```
-curl -L 'http://files.matveynator.ru/gurl/latest/linux/386/gurl' > /usr/local/bin/gurl; chmod +x /usr/local/bin/gurl;
+If an HTTP error (4xx or 5xx) is returned, GURL exits with a **non-zero error code** and suppresses the response body.
+
+---
+
+### 8. **HEAD Request**
+
+```bash
+gurl --head http://example.com
 ```
+The `--head` option retrieves only the response headers.
 
-### get gurl for MAC/amd64:
+---
+
+### 9. **Set User-Agent**
+
+```bash
+gurl --useragent "CustomUserAgent/1.0" http://example.com
 ```
-curl -L 'http://files.matveynator.ru/gurl/latest/mac/amd64/gurl' > /usr/local/bin/gurl; chmod +x /usr/local/bin/gurl;
+The `--useragent` option specifies a custom User-Agent header.
+
+---
+
+### 10. **Set a Timeout**
+
+```bash
+gurl --timeout 10s http://example.com
 ```
+The `--timeout` option sets the maximum time GURL will wait for a response (e.g., `10s`, `1m`).
 
-### get gurl for MAC/386:
+---
+
+### 11. **Download a File with Progress Display**
+
+```bash
+gurl http://example.com/file.txt --output file.txt
 ```
-curl -L 'http://files.matveynator.ru/gurl/latest/mac/386/gurl' > /usr/local/bin/gurl; chmod +x /usr/local/bin/gurl;
+When using `--output` to save a file, GURL automatically displays a download progress bar.
+
+---
+
+### 12. **Silent Mode for Scripting**
+
+```bash
+gurl --silent http://example.com > output.html
 ```
+The `--silent` option suppresses all output, including progress and headers, for clean scripting.
 
-## Check all precompiled versions [ here ](http://files.matveynator.ru/gurl/latest/). There are a lot! :) 
+---
 
+### 13. **Send JSON Data**
 
-[aix/ppc64/gurl](http://files.matveynator.ru/gurl/latest/aix/ppc64/gurl)
+```bash
+gurl --request POST --header "Content-Type: application/json" --data '{"key":"value"}' http://example.com
+```
+Combines `--header` for content type and `--data` for JSON payload.
 
-[android/arm64/gurl](http://files.matveynator.ru/gurl/latest/android/arm64/gurl)
+---
 
-[dragonfly/amd64/gurl](http://files.matveynator.ru/gurl/latest/dragonfly/amd64/gurl)
+### 14. **Verbose Output for Debugging**
 
-[freebsd/386/gurl](http://files.matveynator.ru/gurl/latest/freebsd/386/gurl)
+```bash
+gurl --verbose http://example.com
+```
+The `--verbose` option prints detailed request and response information, useful for debugging.
 
-[freebsd/amd64/gurl](http://files.matveynator.ru/gurl/latest/freebsd/amd64/gurl)
+---
 
-[freebsd/arm/gurl](http://files.matveynator.ru/gurl/latest/freebsd/arm/gurl)
+### 15. **Handle Timeouts and Failures**
 
-[freebsd/arm64/gurl](http://files.matveynator.ru/gurl/latest/freebsd/arm64/gurl)
+```bash
+gurl --timeout 5s --fail http://example.com
+```
+Combines `--timeout` for a 5-second limit and `--fail` to exit silently on HTTP errors.
 
-[illumos/amd64/gurl](http://files.matveynator.ru/gurl/latest/illumos/amd64/gurl)
+---
 
-[ios/amd64/gurl](http://files.matveynator.ru/gurl/latest/ios/amd64/gurl)
-
-[linux/386/gurl](http://files.matveynator.ru/gurl/latest/linux/386/gurl)
-
-[linux/amd64/gurl](http://files.matveynator.ru/gurl/latest/linux/amd64/gurl)
-
-[linux/arm/gurl](http://files.matveynator.ru/gurl/latest/linux/arm/gurl)
-
-[linux/arm64/gurl](http://files.matveynator.ru/gurl/latest/linux/arm64/gurl)
-
-[linux/mips/gurl](http://files.matveynator.ru/gurl/latest/linux/mips/gurl)
-
-[linux/mips64/gurl](http://files.matveynator.ru/gurl/latest/linux/mips64/gurl)
-
-[linux/mips64le/gurl](http://files.matveynator.ru/gurl/latest/linux/mips64le/gurl)
-
-[linux/mipsle/gurl](http://files.matveynator.ru/gurl/latest/linux/mipsle/gurl)
-
-[linux/ppc64/gurl](http://files.matveynator.ru/gurl/latest/linux/ppc64/gurl)
-
-[linux/ppc64le/gurl](http://files.matveynator.ru/gurl/latest/linux/ppc64le/gurl)
-
-[linux/s390x/gurl](http://files.matveynator.ru/gurl/latest/linux/s390x/gurl)
-
-[linux/riscv64/gurl](http://files.matveynator.ru/gurl/latest/linux/riscv64/gurl)
-
-[mac/amd64/gurl](http://files.matveynator.ru/gurl/latest/mac/amd64/gurl)
-
-[mac/arm64/gurl](http://files.matveynator.ru/gurl/latest/mac/arm64/gurl)
-
-[mac/386/gurl](http://files.matveynator.ru/gurl/latest/mac/386/gurl)
-
-[netbsd/386/gurl](http://files.matveynator.ru/gurl/latest/netbsd/386/gurl)
-
-[netbsd/amd64/gurl](http://files.matveynator.ru/gurl/latest/netbsd/amd64/gurl)
-
-[netbsd/arm/gurl](http://files.matveynator.ru/gurl/latest/netbsd/arm/gurl)
-
-[netbsd/arm64/gurl](http://files.matveynator.ru/gurl/latest/netbsd/arm/gurl)
-
-[openbsd/386/gurl](http://files.matveynator.ru/gurl/latest/openbsd/386/gurl)
-
-[openbsd/amd64/gurl](http://files.matveynator.ru/gurl/latest/openbsd/amd64/gurl)
-
-[openbsd/arm/gurl](http://files.matveynator.ru/gurl/latest/openbsd/arm/gurl)
-
-[openbsd/arm64/gurl](http://files.matveynator.ru/gurl/latest/openbsd/arm64/gurl)
-
-[openbsd/mips64/gurl](http://files.matveynator.ru/gurl/latest/openbsd/mips64/gurl)
-
-[plan9/386/gurl](http://files.matveynator.ru/gurl/latest/plan9/386/gurl)
-
-[plan9/amd64/gurl](http://files.matveynator.ru/gurl/latest/plan9/amd64/gurl)
-
-[plan9/arm/gurl](http://files.matveynator.ru/gurl/latest/plan9/arm/gurl)
-
-[solaris/amd64/gurl](http://files.matveynator.ru/gurl/latest/solaris/amd64/gurl)
-
-[windows/386/gurl.exe](http://files.matveynator.ru/gurl/latest/windows/386/gurl.exe)
-
-[windows/amd64/gurl.exe](http://files.matveynator.ru/gurl/latest/windows/amd64/gurl.exe)
-
-[windows/arm/gurl.exe](http://files.matveynator.ru/gurl/latest/windows/arm/gurl.exe)
-
-[windows/arm64/gurl.exe](http://files.matveynator.ru/gurl/latest/windows/arm64/gurl.exe)
-
-and [some other versions...](http://files.matveynator.ru/gurl/latest/)
-
-
+These examples highlight the simplicity and power of GURL. Whether you're downloading files, uploading data, or automating tasks, GURL gives you clear and reliable command-line control. 🚀
