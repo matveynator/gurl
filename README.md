@@ -2,7 +2,7 @@
 
 [![Go Reference](https://pkg.go.dev/badge/github.com/matveynator/gurl.svg)](https://pkg.go.dev/github.com/matveynator/gurl)
 [![Go Report Card](https://goreportcard.com/badge/github.com/matveynator/gurl)](https://goreportcard.com/report/github.com/matveynator/gurl)
-[![codecov](https://codecov.io/gh/matveynator/gurl/branch/master/graph/badge.svg)](https://app.codecov.io/gh/matveynator/gurl)
+[![Coverage: 90.6%](https://img.shields.io/badge/coverage-90.6%25-brightgreen)](COVERAGE.md)
 [![Security](https://github.com/matveynator/gurl/actions/workflows/security.yml/badge.svg)](https://github.com/matveynator/gurl/actions/workflows/security.yml)
 
 GURL is a curl-like command-line HTTP client written in Go. Release binaries
