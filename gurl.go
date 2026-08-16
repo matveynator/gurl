@@ -157,7 +157,8 @@ func execute(commandOptions options, processStreams streams) error {
 	if commandOptions.Verbose {
 		fmt.Fprintf(processStreams.Stderr, "> %s %s\n", request.Method, request.URL)
 	}
-	response, err := client.Do(request)
+	// Reaching the operator-selected URL is the purpose of this command-line client.
+	response, err := client.Do(request) // #nosec G704
 	if err != nil {
 		return fmt.Errorf("request failed: %w", err)
 	}
