@@ -1,277 +1,324 @@
-// Matvey Gladkikh is the author and contributors are welcome!
-// https://github.com/matveynator/gurl
-// You are free to modify, use and distribute this software.
-// Distributed under GNU General public license.
-
+// GURL is a curl-like command-line HTTP client distributed as a standalone Go binary.
 package main
 
 import (
-	"bytes"          // Handles byte slices for multipart data
-	"crypto/tls"     // Provides TLS configuration
-	"flag"           // Parses command-line flags
-	"fmt"            // Provides formatted I/O
-	"io"             // Provides interfaces for I/O primitives
-	"mime/multipart" // For creating multipart form data
-	"net/http"       // HTTP client for making requests
-	"net/url"        // URL parsing and handling
-	"os"             // OS-level functions and file handling
-	"strings"        // String manipulation functions
-	"sync/atomic"    // Atomic operations for safe concurrent updates
-	"time"           // Time handling utilities
+	"bytes"
+	"crypto/tls"
+	"errors"
+	"flag"
+	"fmt"
+	"io"
+	"mime/multipart"
+	"net/http"
+	"net/url"
+	"os"
+	"path/filepath"
+	"strings"
+	"time"
 )
 
-// ProgressReader wraps an io.Reader to report download progress.
-// It tracks the number of bytes read and outputs the progress percentage
-// when output is redirected to a file or not connected to a terminal.
-type ProgressReader struct {
-	Reader   io.Reader // The underlying reader
-	Total    int64     // Total size of the content (in bytes)
-	Progress int64     // Number of bytes read so far
+const defaultVersion = "dev"
+
+// version is replaced at build time. It is never mutated while the program runs.
+var version = defaultVersion
+
+type stringFlags []string
+
+func (flags *stringFlags) String() string {
+	return strings.Join(*flags, ", ")
 }
 
-// Read reads data into the provided buffer and updates the progress.
-func (p *ProgressReader) Read(b []byte) (int, error) {
-	n, err := p.Reader.Read(b)                                 // Read from the underlying reader
-	atomic.AddInt64(&p.Progress, int64(n))                     // Update progress atomically
-	percentage := float64(p.Progress) / float64(p.Total) * 100 // Calculate progress percentage
-	fmt.Fprintf(os.Stderr, "\rDownloaded: %d/%d bytes (%.2f%%)", p.Progress, p.Total, percentage)
-	return n, err // Return number of bytes read and any error
+func (flags *stringFlags) Set(flagValue string) error {
+	*flags = append(*flags, flagValue)
+	return nil
 }
 
-// ensureScheme ensures the URL has a valid scheme (http or https).
-// If no scheme is specified, it defaults to "http://".
-func ensureScheme(urlStr string) string {
-	if !strings.HasPrefix(urlStr, "http://") && !strings.HasPrefix(urlStr, "https://") {
-		return "http://" + urlStr
-	}
-	return urlStr
+type options struct {
+	URL                 string
+	Method              string
+	Timeout             time.Duration
+	UserAgent           string
+	SkipTLSVerification bool
+	RequestBody         string
+	FormFields          []string
+	Cookie              string
+	Head                bool
+	Headers             []string
+	OutputPath          string
+	FollowRedirects     bool
+	FailOnHTTPError     bool
+	Silent              bool
+	Verbose             bool
+	ShowVersion         bool
 }
 
-// isTerminal checks whether output is to a terminal or redirected to a file.
-func isTerminal(fd *os.File) bool {
-	stat, err := fd.Stat()
-	if err != nil {
-		return false
-	}
-	return (stat.Mode() & os.ModeCharDevice) != 0
+type streams struct {
+	Stdin  io.Reader
+	Stdout io.Writer
+	Stderr io.Writer
 }
-
-// prepareMultipartFormData prepares a multipart form body for file uploads and key=value fields.
-func prepareMultipartFormData(formFields []string) (io.Reader, string, error) {
-	body := &bytes.Buffer{}
-	writer := multipart.NewWriter(body)
-
-	for _, field := range formFields {
-		if strings.Contains(field, "=@") {
-			// Handle file field: key=@file
-			parts := strings.SplitN(field, "=@", 2)
-			if len(parts) != 2 {
-				return nil, "", fmt.Errorf("invalid form field: %s", field)
-			}
-			key, filePath := parts[0], parts[1]
-			file, err := os.Open(filePath)
-			if err != nil {
-				return nil, "", fmt.Errorf("error opening file '%s': %v", filePath, err)
-			}
-			defer file.Close()
-
-			part, err := writer.CreateFormFile(key, filePath)
-			if err != nil {
-				return nil, "", fmt.Errorf("error creating form file: %v", err)
-			}
-			if _, err = io.Copy(part, file); err != nil {
-				return nil, "", fmt.Errorf("error writing file to form: %v", err)
-			}
-		} else {
-			// Handle key=value field
-			parts := strings.SplitN(field, "=", 2)
-			if len(parts) != 2 {
-				return nil, "", fmt.Errorf("invalid form field: %s", field)
-			}
-			key, value := parts[0], parts[1]
-			if err := writer.WriteField(key, value); err != nil {
-				return nil, "", fmt.Errorf("error writing form field '%s': %v", key, err)
-			}
-		}
-	}
-
-	writer.Close()
-	return body, writer.FormDataContentType(), nil
-}
-
-// Global variable for version, initialized as "dev".
-var version = "dev"
 
 func main() {
-	// Define command-line flags
-	var (
-		flagVersion   = flag.Bool("version", false, "Show version")
-		flagTimeout   = flag.Duration("timeout", 30*time.Second, "Request timeout (-m)")
-		flagUserAgent = flag.String("useragent", "GURL", "Custom User-Agent header (-A)")
-		flagUnsafe    = flag.Bool("unsafe", false, "Disable SSL verification (-k)")
-		flagData      = flag.String("data", "", "POST data (-d)")
-		flagForm      = flag.String("F", "", "Multipart form data key=value or key=@file")
-		flagCookie    = flag.String("cookie", "", "Send cookies (-b)")
-		flagHead      = flag.Bool("head", false, "HEAD request (-I)")
-		flagHeader    = flag.String("header", "", "Custom header (-H)")
-		flagOutput    = flag.String("output", "", "Save output to file (-o)")
-		flagLocation  = flag.Bool("location", true, "Follow redirects (-L) (default: true)")
-		flagFail      = flag.Bool("fail", false, "Exit with error code on HTTP errors")
-		flagRequest   = flag.String("X", "GET", "Specify custom HTTP request method (-X)")
-	)
+	os.Exit(run(os.Args[1:], streams{Stdin: os.Stdin, Stdout: os.Stdout, Stderr: os.Stderr}))
+}
 
-	// Add alternative short flags for compatibility with curl
-	flag.BoolVar(flagVersion, "V", false, "Show version")
-	flag.DurationVar(flagTimeout, "m", 30*time.Second, "Request timeout")
-	flag.StringVar(flagUserAgent, "A", "GURL", "Custom User-Agent header")
-	flag.BoolVar(flagUnsafe, "k", false, "Disable SSL verification")
-	flag.StringVar(flagData, "d", "", "POST data")
-	flag.StringVar(flagCookie, "b", "", "Send cookies")
-	flag.BoolVar(flagHead, "I", false, "HEAD request")
-	flag.StringVar(flagHeader, "H", "", "Custom header")
-	flag.StringVar(flagOutput, "o", "", "Save output to file")
-	flag.BoolVar(flagLocation, "L", true, "Follow redirects")
-	// Parse the flags
-	flag.Parse()
-
-	// Show version and exit if the version flag is set
-	if *flagVersion {
-		fmt.Println("GURL version", version)
-		return
-	}
-
-	// Validate arguments: At least one URL is required
-	args := flag.Args()
-	if len(args) < 1 {
-		fmt.Println("Usage: gurl [options] <url>")
-		os.Exit(1)
-	}
-
-	// Ensure the URL has a proper scheme (http/https)
-	URL := ensureScheme(args[0])
-	u, err := url.Parse(URL)
+func run(arguments []string, processStreams streams) int {
+	commandOptions, err := parseOptions(arguments, processStreams.Stderr)
 	if err != nil {
-		fmt.Println("Invalid URL:", err)
-		return
+		return 2
+	}
+	if commandOptions.ShowVersion {
+		fmt.Fprintf(processStreams.Stdout, "gurl %s\n", version)
+		return 0
+	}
+	if commandOptions.URL == "" {
+		fmt.Fprintln(processStreams.Stderr, "usage: gurl [options] <url>")
+		return 2
 	}
 
-	// Configure HTTP transport with optional SSL verification
-	transport := &http.Transport{
-		TLSClientConfig: &tls.Config{InsecureSkipVerify: *flagUnsafe},
+	if err := execute(commandOptions, processStreams); err != nil {
+		var statusError *httpStatusError
+		if errors.As(err, &statusError) {
+			fmt.Fprintln(processStreams.Stderr, statusError)
+			return 22
+		}
+		fmt.Fprintf(processStreams.Stderr, "gurl: %v\n", err)
+		return 1
+	}
+	return 0
+}
+
+func parseOptions(arguments []string, errorOutput io.Writer) (options, error) {
+	commandOptions := options{}
+	flagSet := flag.NewFlagSet("gurl", flag.ContinueOnError)
+	flagSet.SetOutput(errorOutput)
+
+	flagSet.BoolVar(&commandOptions.ShowVersion, "version", false, "show version")
+	flagSet.BoolVar(&commandOptions.ShowVersion, "V", false, "show version")
+	flagSet.DurationVar(&commandOptions.Timeout, "timeout", 30*time.Second, "request timeout")
+	flagSet.DurationVar(&commandOptions.Timeout, "m", 30*time.Second, "request timeout")
+	flagSet.StringVar(&commandOptions.UserAgent, "useragent", "gurl/"+version, "User-Agent header")
+	flagSet.StringVar(&commandOptions.UserAgent, "A", "gurl/"+version, "User-Agent header")
+	flagSet.BoolVar(&commandOptions.SkipTLSVerification, "unsafe", false, "disable TLS certificate verification")
+	flagSet.BoolVar(&commandOptions.SkipTLSVerification, "k", false, "disable TLS certificate verification")
+	flagSet.StringVar(&commandOptions.RequestBody, "data", "", "request body")
+	flagSet.StringVar(&commandOptions.RequestBody, "d", "", "request body")
+	flagSet.Var((*stringFlags)(&commandOptions.FormFields), "form", "multipart field name=value or name=@file")
+	flagSet.Var((*stringFlags)(&commandOptions.FormFields), "F", "multipart field name=value or name=@file")
+	flagSet.StringVar(&commandOptions.Cookie, "cookie", "", "Cookie header")
+	flagSet.StringVar(&commandOptions.Cookie, "b", "", "Cookie header")
+	flagSet.BoolVar(&commandOptions.Head, "head", false, "send a HEAD request")
+	flagSet.BoolVar(&commandOptions.Head, "I", false, "send a HEAD request")
+	flagSet.Var((*stringFlags)(&commandOptions.Headers), "header", "request header")
+	flagSet.Var((*stringFlags)(&commandOptions.Headers), "H", "request header")
+	flagSet.StringVar(&commandOptions.OutputPath, "output", "", "write response body to a file")
+	flagSet.StringVar(&commandOptions.OutputPath, "o", "", "write response body to a file")
+	flagSet.BoolVar(&commandOptions.FollowRedirects, "location", false, "follow redirects")
+	flagSet.BoolVar(&commandOptions.FollowRedirects, "L", false, "follow redirects")
+	flagSet.BoolVar(&commandOptions.FailOnHTTPError, "fail", false, "fail on HTTP status 400 or greater")
+	flagSet.StringVar(&commandOptions.Method, "request", "", "HTTP request method")
+	flagSet.StringVar(&commandOptions.Method, "X", "", "HTTP request method")
+	flagSet.BoolVar(&commandOptions.Silent, "silent", false, "suppress progress output")
+	flagSet.BoolVar(&commandOptions.Silent, "s", false, "suppress progress output")
+	flagSet.BoolVar(&commandOptions.Verbose, "verbose", false, "print request and response details")
+	flagSet.BoolVar(&commandOptions.Verbose, "v", false, "print request and response details")
+
+	if err := flagSet.Parse(arguments); err != nil {
+		return options{}, err
+	}
+	if flagSet.NArg() > 0 {
+		commandOptions.URL = flagSet.Arg(0)
+	}
+	if flagSet.NArg() > 1 {
+		fmt.Fprintln(errorOutput, "gurl: only one URL may be requested at a time")
+		return options{}, errors.New("too many URLs")
+	}
+	return commandOptions, nil
+}
+
+func execute(commandOptions options, processStreams streams) error {
+	request, err := buildRequest(commandOptions)
+	if err != nil {
+		return err
 	}
 
-	// Configure the HTTP client with timeout and default redirect handling
-	client := &http.Client{
-		Transport: transport,
-		Timeout:   *flagTimeout,
-		CheckRedirect: func(req *http.Request, via []*http.Request) error {
-			if *flagLocation {
-				fmt.Fprintf(os.Stderr, "Redirected to: %s\n", req.URL)
-				return nil
-			}
+	transport := http.DefaultTransport.(*http.Transport).Clone()
+	if commandOptions.SkipTLSVerification {
+		// This explicit compatibility option is equivalent to curl -k and is never enabled by default.
+		transport.TLSClientConfig = &tls.Config{InsecureSkipVerify: true} // #nosec G402
+	}
+	client := &http.Client{Transport: transport, Timeout: commandOptions.Timeout}
+	if !commandOptions.FollowRedirects {
+		client.CheckRedirect = func(*http.Request, []*http.Request) error {
 			return http.ErrUseLastResponse
-		},
+		}
 	}
 
-	// Determine the HTTP method and prepare body
-	method := *flagRequest
-	var body io.Reader = nil
+	if commandOptions.Verbose {
+		fmt.Fprintf(processStreams.Stderr, "> %s %s\n", request.Method, request.URL)
+	}
+	response, err := client.Do(request)
+	if err != nil {
+		return fmt.Errorf("request failed: %w", err)
+	}
+	defer response.Body.Close()
+
+	if commandOptions.Verbose {
+		fmt.Fprintf(processStreams.Stderr, "< %s\n", response.Status)
+	}
+	if commandOptions.FailOnHTTPError && response.StatusCode >= http.StatusBadRequest {
+		return &httpStatusError{Status: response.Status}
+	}
+	if commandOptions.Head {
+		return writeHeaders(processStreams.Stdout, response)
+	}
+	return writeResponse(commandOptions, processStreams, response)
+}
+
+func buildRequest(commandOptions options) (*http.Request, error) {
+	requestURL, err := normalizeURL(commandOptions.URL)
+	if err != nil {
+		return nil, err
+	}
+
+	method := commandOptions.Method
+	if method == "" {
+		method = http.MethodGet
+	}
+	var requestBody io.Reader
 	contentType := ""
-
-	if *flagForm != "" {
-		fields := strings.Split(*flagForm, "&")
-		body, contentType, err = prepareMultipartFormData(fields)
-		if err != nil {
-			fmt.Println("Error preparing form data:", err)
-			return
+	if len(commandOptions.FormFields) > 0 {
+		requestBody, contentType, err = prepareMultipartForm(commandOptions.FormFields)
+		method = http.MethodPost
+	} else if commandOptions.RequestBody != "" {
+		requestBody = strings.NewReader(commandOptions.RequestBody)
+		if commandOptions.Method == "" {
+			method = http.MethodPost
 		}
-		method = http.MethodPost
-	} else if *flagData != "" {
-		method = http.MethodPost
-		body = strings.NewReader(*flagData)
 	}
-
-	// Create a new HTTP request
-	req, err := http.NewRequest(method, u.String(), body)
 	if err != nil {
-		fmt.Println("Error creating request:", err)
-		return
+		return nil, err
+	}
+	if commandOptions.Head {
+		method = http.MethodHead
 	}
 
-	// Set headers: User-Agent, custom headers, and cookies
-	req.Header.Set("User-Agent", *flagUserAgent)
+	// A URL supplied by the operator is the intended network destination of this CLI.
+	request, err := http.NewRequest(method, requestURL, requestBody) // #nosec G107
+	if err != nil {
+		return nil, fmt.Errorf("create request: %w", err)
+	}
+	request.Header.Set("User-Agent", commandOptions.UserAgent)
 	if contentType != "" {
-		req.Header.Set("Content-Type", contentType)
+		request.Header.Set("Content-Type", contentType)
 	}
-	if *flagHeader != "" {
-		parts := strings.SplitN(*flagHeader, ":", 2)
-		if len(parts) == 2 {
-			req.Header.Set(strings.TrimSpace(parts[0]), strings.TrimSpace(parts[1]))
+	if commandOptions.Cookie != "" {
+		request.Header.Set("Cookie", commandOptions.Cookie)
+	}
+	for _, header := range commandOptions.Headers {
+		name, headerValue, found := strings.Cut(header, ":")
+		if !found || strings.TrimSpace(name) == "" {
+			return nil, fmt.Errorf("invalid header %q: expected name:value", header)
 		}
+		request.Header.Add(strings.TrimSpace(name), strings.TrimSpace(headerValue))
 	}
-	if *flagCookie != "" {
-		req.Header.Set("Cookie", *flagCookie)
-	}
+	return request, nil
+}
 
-	// Execute the HTTP request
-	resp, err := client.Do(req)
+func normalizeURL(rawURL string) (string, error) {
+	if !strings.Contains(rawURL, "://") {
+		rawURL = "http://" + rawURL
+	}
+	parsedURL, err := url.Parse(rawURL)
 	if err != nil {
-		fmt.Println("Request error:", err)
-		return
+		return "", fmt.Errorf("parse URL: %w", err)
 	}
-	defer resp.Body.Close()
-
-	// Handle --fail flag: Exit on HTTP error statuses
-	if *flagFail && resp.StatusCode >= 400 {
-		fmt.Fprintf(os.Stderr, "HTTP error: %s\n", resp.Status)
-		os.Exit(22) // Exit with code 22 like curl
+	if parsedURL.Scheme != "http" && parsedURL.Scheme != "https" {
+		return "", fmt.Errorf("unsupported URL scheme %q", parsedURL.Scheme)
 	}
+	if parsedURL.Host == "" {
+		return "", errors.New("URL has no host")
+	}
+	return parsedURL.String(), nil
+}
 
-	// Print response headers if it's a HEAD request
-	if *flagHead {
-		fmt.Println("Response Headers:")
-		fmt.Println("Status:", resp.Status)
-		for k, v := range resp.Header {
-			fmt.Println(k, ":", v)
+func prepareMultipartForm(formFields []string) (io.Reader, string, error) {
+	requestBody := &bytes.Buffer{}
+	multipartWriter := multipart.NewWriter(requestBody)
+	for _, field := range formFields {
+		name, fieldValue, found := strings.Cut(field, "=")
+		if !found || name == "" {
+			return nil, "", fmt.Errorf("invalid form field %q: expected name=value", field)
 		}
-		return
+		if strings.HasPrefix(fieldValue, "@") {
+			if err := addMultipartFile(multipartWriter, name, strings.TrimPrefix(fieldValue, "@")); err != nil {
+				return nil, "", err
+			}
+			continue
+		}
+		if err := multipartWriter.WriteField(name, fieldValue); err != nil {
+			return nil, "", fmt.Errorf("write form field %q: %w", name, err)
+		}
 	}
+	if err := multipartWriter.Close(); err != nil {
+		return nil, "", fmt.Errorf("finish multipart request: %w", err)
+	}
+	return requestBody, multipartWriter.FormDataContentType(), nil
+}
 
-	// Check if output is redirected to a file or not a terminal
-	useProgress := *flagOutput != "" || !isTerminal(os.Stdout)
+func addMultipartFile(multipartWriter *multipart.Writer, name string, path string) error {
+	// Multipart upload paths are explicitly supplied by the local operator.
+	file, err := os.Open(path) // #nosec G304
+	if err != nil {
+		return fmt.Errorf("open form file %q: %w", path, err)
+	}
+	defer file.Close()
 
-	// Determine output destination (stdout or file)
-	var writer io.Writer = os.Stdout
-	if *flagOutput != "" {
-		file, err := os.Create(*flagOutput)
+	filePart, err := multipartWriter.CreateFormFile(name, filepath.Base(path))
+	if err != nil {
+		return fmt.Errorf("create multipart file %q: %w", name, err)
+	}
+	if _, err := io.Copy(filePart, file); err != nil {
+		return fmt.Errorf("copy form file %q: %w", path, err)
+	}
+	return nil
+}
+
+func writeHeaders(output io.Writer, response *http.Response) error {
+	if _, err := fmt.Fprintln(output, response.Status); err != nil {
+		return err
+	}
+	return response.Header.Write(output)
+}
+
+func writeResponse(commandOptions options, processStreams streams, response *http.Response) error {
+	output := processStreams.Stdout
+	var outputFile *os.File
+	if commandOptions.OutputPath != "" {
+		// The output path is explicitly supplied by the local operator.
+		file, err := os.Create(commandOptions.OutputPath) // #nosec G304
 		if err != nil {
-			fmt.Println("Error creating output file:", err)
-			return
+			return fmt.Errorf("create output file: %w", err)
 		}
-		defer file.Close()
-		writer = file
+		outputFile = file
+		output = file
+		defer outputFile.Close()
 	}
 
-	// Copy the response body with or without progress tracking
-	if useProgress {
-		total := resp.ContentLength
-		if total <= 0 {
-			total = 1 // Prevent division by zero for unknown content lengths
-		}
-		progressReader := &ProgressReader{Reader: resp.Body, Total: total}
-		_, err = io.Copy(writer, progressReader)
-	} else {
-		_, err = io.Copy(writer, resp.Body)
-	}
-
-	// Handle errors during file writing
+	written, err := io.Copy(output, response.Body)
 	if err != nil {
-		fmt.Println("Download error:", err)
-		return
+		return fmt.Errorf("write response: %w", err)
 	}
+	if commandOptions.OutputPath != "" && !commandOptions.Silent {
+		fmt.Fprintf(processStreams.Stderr, "downloaded %d bytes to %s\n", written, commandOptions.OutputPath)
+	}
+	return nil
+}
 
-	// Print a completion message if progress was enabled
-	if useProgress {
-		fmt.Fprintln(os.Stderr, "\nDownload completed successfully.")
-	}
+type httpStatusError struct {
+	Status string
+}
+
+func (statusError *httpStatusError) Error() string {
+	return "HTTP error: " + statusError.Status
 }

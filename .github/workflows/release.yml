@@ -1,0 +1,95 @@
+name: Release
+
+on:
+  workflow_run:
+    workflows: [Security]
+    types: [completed]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
+
+jobs:
+  release:
+    name: release
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      (github.event.workflow_run.conclusion == 'success' &&
+      github.event.workflow_run.event == 'push' &&
+      github.event.workflow_run.head_branch == 'master')
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Select verified commit
+        id: commit
+        env:
+          WORKFLOW_COMMIT: ${{ github.event.workflow_run.head_sha }}
+          DISPATCH_COMMIT: ${{ github.sha }}
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_run" ]; then
+            echo "sha=${WORKFLOW_COMMIT}" >> "${GITHUB_OUTPUT}"
+          else
+            echo "sha=${DISPATCH_COMMIT}" >> "${GITHUB_OUTPUT}"
+          fi
+      - name: Checkout verified commit
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ steps.commit.outputs.sha }}
+          fetch-depth: 0
+      - name: Set up Go
+        uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
+        with:
+          go-version: "1.26.6"
+          cache: true
+      - name: Validate release request
+        id: release
+        env:
+          RELEASE_COMMIT: ${{ steps.commit.outputs.sha }}
+        run: |
+          subject="$(git show -s --format=%s "${RELEASE_COMMIT}")"
+          if [ "${subject}" != "stable release" ]; then
+            echo "publish=false" >> "${GITHUB_OUTPUT}"
+            exit 0
+          fi
+          version="$(tr -d '\r\n' < VERSION)"
+          if [[ ! "${version}" =~ ^v1\.([0-9]+)\.([0-9]+)$ ]]; then
+            echo "VERSION must contain a major-version-1 semantic version" >&2
+            exit 1
+          fi
+          if git rev-parse --verify --quiet "refs/tags/${version}" >/dev/null; then
+            echo "Release tag ${version} already exists" >&2
+            exit 1
+          fi
+          echo "publish=true" >> "${GITHUB_OUTPUT}"
+          echo "version=${version}" >> "${GITHUB_OUTPUT}"
+      - name: Build static release binaries
+        if: steps.release.outputs.publish == 'true'
+        env:
+          RELEASE_VERSION: ${{ steps.release.outputs.version }}
+        run: go run ./scripts/crosscompile -output dist -version "${RELEASE_VERSION}"
+      - name: Create checksums
+        if: steps.release.outputs.publish == 'true'
+        run: cd dist && sha256sum gurl_* > SHA256SUMS
+      - name: Create immutable tag
+        if: steps.release.outputs.publish == 'true'
+        env:
+          RELEASE_COMMIT: ${{ steps.commit.outputs.sha }}
+          RELEASE_VERSION: ${{ steps.release.outputs.version }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git tag -a "${RELEASE_VERSION}" "${RELEASE_COMMIT}" -m "${RELEASE_VERSION}"
+          git push origin "refs/tags/${RELEASE_VERSION}"
+      - name: Publish GitHub Release
+        if: steps.release.outputs.publish == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_VERSION: ${{ steps.release.outputs.version }}
+        run: >-
+          gh release create "${RELEASE_VERSION}" dist/*
+          --verify-tag
+          --title "GURL ${RELEASE_VERSION}"
+          --generate-notes
+          --latest
