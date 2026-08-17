@@ -3,7 +3,7 @@
 # GURL
 
 ### When CURL says your SSL library is too old — use GURL. 
-One file. Zero SSL dependencies.
+One file. Zero dependencies.
 
 <img width="100%" alt="GURL" src="https://github.com/matveynator/gurl/releases/download/v64/gurl.png" />
 <br>
@@ -49,6 +49,295 @@ If no protocol is specified, GURL uses `http://`:
 
 ```bash
 gurl example.com
+```
+
+---
+
+# Universal installer / Универсальная установка
+
+For Unix-like systems you can use one bootstrap installer.
+
+It detects the operating system and CPU architecture, downloads the correct GURL binary using an available native downloader, and selects the installation path automatically:
+
+* if the installer runs as **root** → `/bin/gurl`
+* if it runs as a normal user → `~/.local/bin/gurl`
+
+After installation it immediately prints ready-to-copy examples showing how to run GURL.
+
+### Install
+
+Normal user:
+
+```sh
+sh install-gurl.sh
+```
+
+System-wide:
+
+```sh
+sudo sh install-gurl.sh
+```
+
+### `install-gurl.sh`
+
+```sh
+#!/bin/sh
+
+set -u
+
+BASE_URL="${GURL_BASE_URL:-http://files.zabiyaka.net/gurl/latest}"
+
+have() {
+    command -v "$1" >/dev/null 2>&1
+}
+
+die() {
+    echo "gurl-install: $*" >&2
+    exit 1
+}
+
+say() {
+    echo "gurl-install: $*"
+}
+
+# Detect OS
+
+UNAME_S="$(uname -s 2>/dev/null || echo unknown)"
+
+case "$UNAME_S" in
+    Linux)
+        if [ -n "${ANDROID_ROOT:-}" ] ||
+           [ -n "${ANDROID_DATA:-}" ] ||
+           [ -n "${TERMUX_VERSION:-}" ]; then
+            OS="android"
+        else
+            OS="linux"
+        fi
+        ;;
+    Darwin) OS="mac" ;;
+    FreeBSD) OS="freebsd" ;;
+    OpenBSD) OS="openbsd" ;;
+    NetBSD) OS="netbsd" ;;
+    DragonFly) OS="dragonfly" ;;
+    SunOS)
+        SUN_VERSION="$(uname -v 2>/dev/null || true)"
+        if echo "$SUN_VERSION" | grep -i illumos >/dev/null 2>&1; then
+            OS="illumos"
+        elif [ -r /etc/release ] &&
+             grep -Ei 'illumos|OpenIndiana|OmniOS|SmartOS' /etc/release >/dev/null 2>&1; then
+            OS="illumos"
+        else
+            OS="solaris"
+        fi
+        ;;
+    AIX) OS="aix" ;;
+    *) die "unsupported operating system: $UNAME_S" ;;
+esac
+
+# Detect architecture
+
+if [ "$OS" = "aix" ]; then
+    ARCH="ppc64"
+else
+    UNAME_M="$(uname -m 2>/dev/null || echo unknown)"
+
+    case "$UNAME_M" in
+        x86_64|amd64) ARCH="amd64" ;;
+        i386|i486|i586|i686|x86) ARCH="386" ;;
+        aarch64|arm64) ARCH="arm64" ;;
+        armv4*|armv5*|armv6*|armv7*|armv8l|arm) ARCH="arm" ;;
+        loongarch64|loong64) ARCH="loong64" ;;
+        mips64el|mips64le) ARCH="mips64le" ;;
+        mips64) ARCH="mips64" ;;
+        mipsel|mipsle) ARCH="mipsle" ;;
+        mips) ARCH="mips" ;;
+        ppc64le|powerpc64le) ARCH="ppc64le" ;;
+        ppc64|powerpc64) ARCH="ppc64" ;;
+        riscv64) ARCH="riscv64" ;;
+        s390x) ARCH="s390x" ;;
+        *) die "unsupported CPU architecture: $UNAME_M" ;;
+    esac
+fi
+
+# Verify that this build exists
+
+case "$OS/$ARCH" in
+    linux/amd64|linux/arm64|linux/386|linux/arm|linux/loong64|\
+    linux/mips|linux/mipsle|linux/mips64|linux/mips64le|\
+    linux/ppc64|linux/ppc64le|linux/riscv64|linux/s390x|\
+    mac/amd64|mac/arm64|\
+    freebsd/amd64|freebsd/arm64|freebsd/386|freebsd/arm|freebsd/riscv64|\
+    openbsd/amd64|openbsd/arm64|openbsd/386|openbsd/arm|openbsd/ppc64|openbsd/riscv64|\
+    android/arm64|\
+    netbsd/amd64|netbsd/386|netbsd/arm|netbsd/arm64|\
+    solaris/amd64|illumos/amd64|dragonfly/amd64|aix/ppc64)
+        ;;
+    *) die "GURL binary is not available for $OS/$ARCH" ;;
+esac
+
+URL="$BASE_URL/$OS/$ARCH/gurl"
+
+say "detected platform: $OS/$ARCH"
+say "download: $URL"
+
+# Temporary directory
+
+TMPBASE="${TMPDIR:-/tmp}"
+TMP="$TMPBASE/gurl-install.$$"
+DOWNLOAD="$TMP/gurl"
+
+umask 077
+mkdir "$TMP" 2>/dev/null || die "cannot create temporary directory: $TMP"
+
+cleanup() {
+    rm -rf "$TMP" >/dev/null 2>&1 || true
+}
+
+trap cleanup EXIT HUP INT TERM
+
+# Download using the most suitable available tool
+
+download() {
+    if [ "$OS" = "freebsd" ] || [ "$OS" = "dragonfly" ]; then
+        if have fetch; then
+            say "using fetch"
+            fetch -o "$DOWNLOAD" "$URL" && return 0
+        fi
+    fi
+
+    if [ "$OS" = "openbsd" ] || [ "$OS" = "netbsd" ]; then
+        if have ftp; then
+            say "using ftp"
+            ftp -o "$DOWNLOAD" "$URL" && return 0
+        fi
+    fi
+
+    if [ -x /usr/sfw/bin/wget ]; then
+        say "using /usr/sfw/bin/wget"
+        /usr/sfw/bin/wget -O "$DOWNLOAD" "$URL" && return 0
+    fi
+
+    if have wget; then
+        say "using wget"
+        wget -O "$DOWNLOAD" "$URL" && return 0
+    fi
+
+    if have busybox && busybox wget --help >/dev/null 2>&1; then
+        say "using BusyBox wget"
+        busybox wget -O "$DOWNLOAD" "$URL" && return 0
+    fi
+
+    if have toybox && toybox wget --help >/dev/null 2>&1; then
+        say "using Toybox wget"
+        toybox wget -O "$DOWNLOAD" "$URL" && return 0
+    fi
+
+    if have curl; then
+        say "using curl"
+        curl -fL -o "$DOWNLOAD" "$URL" && return 0
+    fi
+
+    die "no usable HTTP downloader found.
+
+Tried:
+  fetch
+  ftp
+  wget
+  /usr/sfw/bin/wget
+  BusyBox wget
+  Toybox wget
+  curl
+
+Direct URL:
+  $URL"
+}
+
+download
+
+[ -s "$DOWNLOAD" ] || die "downloaded file is empty"
+
+chmod 755 "$DOWNLOAD" || die "cannot make downloaded GURL executable"
+
+# Root -> /bin, normal user -> ~/.local/bin
+
+IS_ROOT=0
+
+if have id && [ "$(id -u 2>/dev/null)" = "0" ]; then
+    IS_ROOT=1
+fi
+
+if [ "$IS_ROOT" = "1" ]; then
+    DESTDIR="/bin"
+else
+    [ -n "${HOME:-}" ] || die "HOME is not defined"
+    DESTDIR="$HOME/.local/bin"
+fi
+
+DEST="$DESTDIR/gurl"
+
+mkdir -p "$DESTDIR" || die "cannot create $DESTDIR"
+cp "$DOWNLOAD" "$DEST" || die "cannot install $DEST"
+chmod 755 "$DEST" || die "cannot chmod $DEST"
+
+say "installed: $DEST"
+
+"$DEST" -V || die "GURL was installed, but version test failed"
+
+# Print immediate help
+
+echo
+echo "============================================================"
+echo "GURL is ready"
+echo "============================================================"
+echo
+echo "Installed:"
+echo "  $DEST"
+echo
+echo "Try it now:"
+echo
+echo "  $DEST https://example.com"
+echo
+echo "Download a file:"
+echo
+echo "  $DEST -o file.zip https://example.com/file.zip"
+echo
+
+if [ "$IS_ROOT" = "1" ]; then
+    echo "System-wide command:"
+    echo
+    echo "  gurl https://example.com"
+else
+    case ":${PATH:-}:" in
+        *":$DESTDIR:"*)
+            echo "GURL is already in your PATH."
+            echo
+            echo "Run:"
+            echo
+            echo "  gurl https://example.com"
+            ;;
+        *)
+            echo "$DESTDIR is not in your PATH yet."
+            echo
+            echo "For this shell, run:"
+            echo
+            echo "  export PATH=\"$DESTDIR:\$PATH\""
+            echo
+            echo "Then:"
+            echo
+            echo "  gurl https://example.com"
+            echo
+            echo "To make it permanent, add the export line to your shell profile."
+            ;;
+    esac
+fi
+
+echo
+echo "Help:"
+echo "  gurl --help"
+echo
+echo "Version:"
+echo "  gurl -V"
+echo
 ```
 
 ---
