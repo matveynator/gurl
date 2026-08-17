@@ -55,12 +55,18 @@ gurl example.com
 
 # Downloads / Скачать
 
+Choose your platform and architecture below.
+
+Every target has a direct download link and a ready-to-copy terminal command.
+
+> The binary URLs intentionally use **HTTP**. This allows GURL to bootstrap old or minimal systems where HTTPS support, CA certificates, or the installed SSL/TLS libraries are too old to download the first copy securely over HTTPS.
+
 
 <details>
 <summary>
-  <img width="42" alt="linux" src="https://github.com/user-attachments/assets/bf3141b6-4c93-4fd6-b2d1-421b79876dcb" />
+  <img width="42" alt="Linux" src="https://github.com/user-attachments/assets/bf3141b6-4c93-4fd6-b2d1-421b79876dcb" />
   <b><big>Linux</big></b>
-  <sub>amd64 / arm64 / 386 / ARM / MIPS / RISC-V / PPC / s390x / LoongArch</sub>
+  <sub>amd64 / arm64 / 386 / ARM / LoongArch / MIPS / PPC64 / RISC-V / s390x</sub>
 </summary>
 
 <br>
@@ -70,13 +76,7 @@ gurl example.com
 [download](http://files.zabiyaka.net/gurl/latest/linux/amd64/gurl)
 
 ```bash
-sudo curl -L -o /usr/local/bin/gurl http://files.zabiyaka.net/gurl/latest/linux/amd64/gurl; sudo chmod +x /usr/local/bin/gurl
-```
-
-Or, if you already have an older GURL:
-
-```bash
-sudo gurl -o /usr/local/bin/gurl http://files.zabiyaka.net/gurl/latest/linux/amd64/gurl; sudo chmod +x /usr/local/bin/gurl
+sudo curl -fL -o /usr/local/bin/gurl http://files.zabiyaka.net/gurl/latest/linux/amd64/gurl && sudo chmod +x /usr/local/bin/gurl
 ```
 
 ### arm64 / aarch64
@@ -84,52 +84,96 @@ sudo gurl -o /usr/local/bin/gurl http://files.zabiyaka.net/gurl/latest/linux/amd
 [download](http://files.zabiyaka.net/gurl/latest/linux/arm64/gurl)
 
 ```bash
-sudo curl -L -o /usr/local/bin/gurl http://files.zabiyaka.net/gurl/latest/linux/arm64/gurl; sudo chmod +x /usr/local/bin/gurl
+sudo curl -fL -o /usr/local/bin/gurl http://files.zabiyaka.net/gurl/latest/linux/arm64/gurl && sudo chmod +x /usr/local/bin/gurl
 ```
 
 ### 386 / x86
 
 [download](http://files.zabiyaka.net/gurl/latest/linux/386/gurl)
 
+```bash
+sudo curl -fL -o /usr/local/bin/gurl http://files.zabiyaka.net/gurl/latest/linux/386/gurl && sudo chmod +x /usr/local/bin/gurl
+```
+
 ### ARM
 
 [download](http://files.zabiyaka.net/gurl/latest/linux/arm/gurl)
+
+```bash
+sudo curl -fL -o /usr/local/bin/gurl http://files.zabiyaka.net/gurl/latest/linux/arm/gurl && sudo chmod +x /usr/local/bin/gurl
+```
 
 ### LoongArch 64
 
 [download](http://files.zabiyaka.net/gurl/latest/linux/loong64/gurl)
 
+```bash
+sudo curl -fL -o /usr/local/bin/gurl http://files.zabiyaka.net/gurl/latest/linux/loong64/gurl && sudo chmod +x /usr/local/bin/gurl
+```
+
 ### MIPS
 
 [download](http://files.zabiyaka.net/gurl/latest/linux/mips/gurl)
+
+```bash
+sudo curl -fL -o /usr/local/bin/gurl http://files.zabiyaka.net/gurl/latest/linux/mips/gurl && sudo chmod +x /usr/local/bin/gurl
+```
 
 ### MIPS little-endian
 
 [download](http://files.zabiyaka.net/gurl/latest/linux/mipsle/gurl)
 
+```bash
+sudo curl -fL -o /usr/local/bin/gurl http://files.zabiyaka.net/gurl/latest/linux/mipsle/gurl && sudo chmod +x /usr/local/bin/gurl
+```
+
 ### MIPS64
 
 [download](http://files.zabiyaka.net/gurl/latest/linux/mips64/gurl)
+
+```bash
+sudo curl -fL -o /usr/local/bin/gurl http://files.zabiyaka.net/gurl/latest/linux/mips64/gurl && sudo chmod +x /usr/local/bin/gurl
+```
 
 ### MIPS64 little-endian
 
 [download](http://files.zabiyaka.net/gurl/latest/linux/mips64le/gurl)
 
+```bash
+sudo curl -fL -o /usr/local/bin/gurl http://files.zabiyaka.net/gurl/latest/linux/mips64le/gurl && sudo chmod +x /usr/local/bin/gurl
+```
+
 ### PowerPC 64
 
 [download](http://files.zabiyaka.net/gurl/latest/linux/ppc64/gurl)
+
+```bash
+sudo curl -fL -o /usr/local/bin/gurl http://files.zabiyaka.net/gurl/latest/linux/ppc64/gurl && sudo chmod +x /usr/local/bin/gurl
+```
 
 ### PowerPC 64 little-endian
 
 [download](http://files.zabiyaka.net/gurl/latest/linux/ppc64le/gurl)
 
+```bash
+sudo curl -fL -o /usr/local/bin/gurl http://files.zabiyaka.net/gurl/latest/linux/ppc64le/gurl && sudo chmod +x /usr/local/bin/gurl
+```
+
 ### RISC-V 64
 
 [download](http://files.zabiyaka.net/gurl/latest/linux/riscv64/gurl)
 
+```bash
+sudo curl -fL -o /usr/local/bin/gurl http://files.zabiyaka.net/gurl/latest/linux/riscv64/gurl && sudo chmod +x /usr/local/bin/gurl
+```
+
 ### IBM s390x
 
 [download](http://files.zabiyaka.net/gurl/latest/linux/s390x/gurl)
+
+```bash
+sudo curl -fL -o /usr/local/bin/gurl http://files.zabiyaka.net/gurl/latest/linux/s390x/gurl && sudo chmod +x /usr/local/bin/gurl
+```
 
 </details>
 
@@ -137,7 +181,7 @@ sudo curl -L -o /usr/local/bin/gurl http://files.zabiyaka.net/gurl/latest/linux/
 
 <details>
 <summary>
-  <img width="36" alt="mac" src="https://github.com/user-attachments/assets/946102b8-f043-494d-809a-a589e536ee9a" />
+  <img width="36" alt="macOS" src="https://github.com/user-attachments/assets/946102b8-f043-494d-809a-a589e536ee9a" />
   <b><big>macOS</big></b>
   <sub>Intel / Apple Silicon</sub>
 </summary>
@@ -149,7 +193,7 @@ sudo curl -L -o /usr/local/bin/gurl http://files.zabiyaka.net/gurl/latest/linux/
 [download](http://files.zabiyaka.net/gurl/latest/mac/amd64/gurl)
 
 ```bash
-sudo mkdir -p /usr/local/bin; sudo curl -L -o /usr/local/bin/gurl http://files.zabiyaka.net/gurl/latest/mac/amd64/gurl; sudo chmod +x /usr/local/bin/gurl
+sudo curl -fL -o /usr/local/bin/gurl http://files.zabiyaka.net/gurl/latest/mac/amd64/gurl && sudo chmod +x /usr/local/bin/gurl
 ```
 
 ### Apple Silicon / arm64
@@ -157,7 +201,7 @@ sudo mkdir -p /usr/local/bin; sudo curl -L -o /usr/local/bin/gurl http://files.z
 [download](http://files.zabiyaka.net/gurl/latest/mac/arm64/gurl)
 
 ```bash
-sudo mkdir -p /usr/local/bin; sudo curl -L -o /usr/local/bin/gurl http://files.zabiyaka.net/gurl/latest/mac/arm64/gurl; sudo chmod +x /usr/local/bin/gurl
+sudo curl -fL -o /usr/local/bin/gurl http://files.zabiyaka.net/gurl/latest/mac/arm64/gurl && sudo chmod +x /usr/local/bin/gurl
 ```
 
 </details>
@@ -166,19 +210,19 @@ sudo mkdir -p /usr/local/bin; sudo curl -L -o /usr/local/bin/gurl http://files.z
 
 <details>
 <summary>
-  <img width="42" alt="windows" src="https://github.com/user-attachments/assets/f6044001-95b0-4500-a4f6-1c3b08eb65fb" />
+  <img width="42" alt="Windows" src="https://github.com/user-attachments/assets/f6044001-95b0-4500-a4f6-1c3b08eb65fb" />
   <b><big>Windows</big></b>
   <sub>amd64 / arm64 / 386 / ARM</sub>
 </summary>
 
 <br>
 
-### amd64
+### amd64 / x86_64
 
 [download](http://files.zabiyaka.net/gurl/latest/windows/amd64/gurl.exe)
 
 ```powershell
-$p="$env:ProgramFiles\gurl\gurl.exe"; New-Item -ItemType Directory -Force -Path (Split-Path $p) | Out-Null; Invoke-WebRequest -Uri "http://files.zabiyaka.net/gurl/latest/windows/amd64/gurl.exe" -OutFile $p; & $p -V
+Invoke-WebRequest -Uri "http://files.zabiyaka.net/gurl/latest/windows/amd64/gurl.exe" -OutFile ".\\gurl.exe"; .\\gurl.exe -V
 ```
 
 ### arm64
@@ -186,16 +230,24 @@ $p="$env:ProgramFiles\gurl\gurl.exe"; New-Item -ItemType Directory -Force -Path 
 [download](http://files.zabiyaka.net/gurl/latest/windows/arm64/gurl.exe)
 
 ```powershell
-$p="$env:ProgramFiles\gurl\gurl.exe"; New-Item -ItemType Directory -Force -Path (Split-Path $p) | Out-Null; Invoke-WebRequest -Uri "http://files.zabiyaka.net/gurl/latest/windows/arm64/gurl.exe" -OutFile $p; & $p -V
+Invoke-WebRequest -Uri "http://files.zabiyaka.net/gurl/latest/windows/arm64/gurl.exe" -OutFile ".\\gurl.exe"; .\\gurl.exe -V
 ```
 
-### 386
+### 386 / x86
 
 [download](http://files.zabiyaka.net/gurl/latest/windows/386/gurl.exe)
+
+```powershell
+Invoke-WebRequest -Uri "http://files.zabiyaka.net/gurl/latest/windows/386/gurl.exe" -OutFile ".\\gurl.exe"; .\\gurl.exe -V
+```
 
 ### ARM
 
 [download](http://files.zabiyaka.net/gurl/latest/windows/arm/gurl.exe)
+
+```powershell
+Invoke-WebRequest -Uri "http://files.zabiyaka.net/gurl/latest/windows/arm/gurl.exe" -OutFile ".\\gurl.exe"; .\\gurl.exe -V
+```
 
 </details>
 
@@ -203,7 +255,7 @@ $p="$env:ProgramFiles\gurl\gurl.exe"; New-Item -ItemType Directory -Force -Path 
 
 <details>
 <summary>
-  <img width="42" alt="freebsd" src="https://github.com/user-attachments/assets/d35baaac-d296-41b1-a281-55dc761328e9" />
+  <img width="42" alt="FreeBSD" src="https://github.com/user-attachments/assets/d35baaac-d296-41b1-a281-55dc761328e9" />
   <b><big>FreeBSD</big></b>
   <sub>amd64 / arm64 / 386 / ARM / RISC-V</sub>
 </summary>
@@ -215,7 +267,7 @@ $p="$env:ProgramFiles\gurl\gurl.exe"; New-Item -ItemType Directory -Force -Path 
 [download](http://files.zabiyaka.net/gurl/latest/freebsd/amd64/gurl)
 
 ```bash
-sudo fetch -o /usr/local/bin/gurl http://files.zabiyaka.net/gurl/latest/freebsd/amd64/gurl; sudo chmod +x /usr/local/bin/gurl
+sudo fetch -o /usr/local/bin/gurl http://files.zabiyaka.net/gurl/latest/freebsd/amd64/gurl && sudo chmod +x /usr/local/bin/gurl
 ```
 
 ### arm64
@@ -223,20 +275,32 @@ sudo fetch -o /usr/local/bin/gurl http://files.zabiyaka.net/gurl/latest/freebsd/
 [download](http://files.zabiyaka.net/gurl/latest/freebsd/arm64/gurl)
 
 ```bash
-sudo fetch -o /usr/local/bin/gurl http://files.zabiyaka.net/gurl/latest/freebsd/arm64/gurl; sudo chmod +x /usr/local/bin/gurl
+sudo fetch -o /usr/local/bin/gurl http://files.zabiyaka.net/gurl/latest/freebsd/arm64/gurl && sudo chmod +x /usr/local/bin/gurl
 ```
 
 ### 386
 
 [download](http://files.zabiyaka.net/gurl/latest/freebsd/386/gurl)
 
+```bash
+sudo fetch -o /usr/local/bin/gurl http://files.zabiyaka.net/gurl/latest/freebsd/386/gurl && sudo chmod +x /usr/local/bin/gurl
+```
+
 ### ARM
 
 [download](http://files.zabiyaka.net/gurl/latest/freebsd/arm/gurl)
 
+```bash
+sudo fetch -o /usr/local/bin/gurl http://files.zabiyaka.net/gurl/latest/freebsd/arm/gurl && sudo chmod +x /usr/local/bin/gurl
+```
+
 ### RISC-V 64
 
 [download](http://files.zabiyaka.net/gurl/latest/freebsd/riscv64/gurl)
+
+```bash
+sudo fetch -o /usr/local/bin/gurl http://files.zabiyaka.net/gurl/latest/freebsd/riscv64/gurl && sudo chmod +x /usr/local/bin/gurl
+```
 
 </details>
 
@@ -244,7 +308,7 @@ sudo fetch -o /usr/local/bin/gurl http://files.zabiyaka.net/gurl/latest/freebsd/
 
 <details>
 <summary>
-  <img width="42" alt="openbsd" src="https://github.com/user-attachments/assets/11633d7e-5744-46da-ad2f-6e49c69e51de" />
+  <img width="42" alt="OpenBSD" src="https://github.com/user-attachments/assets/11633d7e-5744-46da-ad2f-6e49c69e51de" />
   <b><big>OpenBSD</big></b>
   <sub>amd64 / arm64 / 386 / ARM / PPC64 / RISC-V</sub>
 </summary>
@@ -256,7 +320,7 @@ sudo fetch -o /usr/local/bin/gurl http://files.zabiyaka.net/gurl/latest/freebsd/
 [download](http://files.zabiyaka.net/gurl/latest/openbsd/amd64/gurl)
 
 ```bash
-sudo ftp -o /usr/local/bin/gurl http://files.zabiyaka.net/gurl/latest/openbsd/amd64/gurl; sudo chmod +x /usr/local/bin/gurl
+sudo ftp -o /usr/local/bin/gurl http://files.zabiyaka.net/gurl/latest/openbsd/amd64/gurl && sudo chmod +x /usr/local/bin/gurl
 ```
 
 ### arm64
@@ -264,24 +328,40 @@ sudo ftp -o /usr/local/bin/gurl http://files.zabiyaka.net/gurl/latest/openbsd/am
 [download](http://files.zabiyaka.net/gurl/latest/openbsd/arm64/gurl)
 
 ```bash
-sudo ftp -o /usr/local/bin/gurl http://files.zabiyaka.net/gurl/latest/openbsd/arm64/gurl; sudo chmod +x /usr/local/bin/gurl
+sudo ftp -o /usr/local/bin/gurl http://files.zabiyaka.net/gurl/latest/openbsd/arm64/gurl && sudo chmod +x /usr/local/bin/gurl
 ```
 
 ### 386
 
 [download](http://files.zabiyaka.net/gurl/latest/openbsd/386/gurl)
 
+```bash
+sudo ftp -o /usr/local/bin/gurl http://files.zabiyaka.net/gurl/latest/openbsd/386/gurl && sudo chmod +x /usr/local/bin/gurl
+```
+
 ### ARM
 
 [download](http://files.zabiyaka.net/gurl/latest/openbsd/arm/gurl)
+
+```bash
+sudo ftp -o /usr/local/bin/gurl http://files.zabiyaka.net/gurl/latest/openbsd/arm/gurl && sudo chmod +x /usr/local/bin/gurl
+```
 
 ### PowerPC 64
 
 [download](http://files.zabiyaka.net/gurl/latest/openbsd/ppc64/gurl)
 
+```bash
+sudo ftp -o /usr/local/bin/gurl http://files.zabiyaka.net/gurl/latest/openbsd/ppc64/gurl && sudo chmod +x /usr/local/bin/gurl
+```
+
 ### RISC-V 64
 
 [download](http://files.zabiyaka.net/gurl/latest/openbsd/riscv64/gurl)
+
+```bash
+sudo ftp -o /usr/local/bin/gurl http://files.zabiyaka.net/gurl/latest/openbsd/riscv64/gurl && sudo chmod +x /usr/local/bin/gurl
+```
 
 </details>
 
@@ -289,52 +369,219 @@ sudo ftp -o /usr/local/bin/gurl http://files.zabiyaka.net/gurl/latest/openbsd/ar
 
 <details>
 <summary>
-  <b><big>Other platforms</big></b>
-  <sub>NetBSD / Android / Solaris / Plan 9 / Illumos / DragonFlyBSD / AIX / WebAssembly</sub>
+  <b><big>Android</big></b>
+  <sub>arm64</sub>
 </summary>
 
 <br>
 
-### Android
+### arm64
 
-**arm64** · [download](http://files.zabiyaka.net/gurl/latest/android/arm64/gurl)
+[download](http://files.zabiyaka.net/gurl/latest/android/arm64/gurl)
 
-### NetBSD
+```bash
+curl -fL -o gurl http://files.zabiyaka.net/gurl/latest/android/arm64/gurl && chmod +x gurl
+```
 
-**amd64** · [download](http://files.zabiyaka.net/gurl/latest/netbsd/amd64/gurl)  
-**386** · [download](http://files.zabiyaka.net/gurl/latest/netbsd/386/gurl)  
-**arm** · [download](http://files.zabiyaka.net/gurl/latest/netbsd/arm/gurl)  
-**arm64** · [download](http://files.zabiyaka.net/gurl/latest/netbsd/arm64/gurl)
+</details>
 
-### Solaris
+---
 
-**amd64** · [download](http://files.zabiyaka.net/gurl/latest/solaris/amd64/gurl)
+<details>
+<summary>
+  <b><big>NetBSD</big></b>
+  <sub>amd64 / 386 / ARM / arm64</sub>
+</summary>
 
-### Plan 9
+<br>
 
-**amd64** · [download](http://files.zabiyaka.net/gurl/latest/plan9/amd64/gurl)  
-**386** · [download](http://files.zabiyaka.net/gurl/latest/plan9/386/gurl)  
-**arm** · [download](http://files.zabiyaka.net/gurl/latest/plan9/arm/gurl)
+### amd64
 
-### Illumos
+[download](http://files.zabiyaka.net/gurl/latest/netbsd/amd64/gurl)
 
-**amd64** · [download](http://files.zabiyaka.net/gurl/latest/illumos/amd64/gurl)
+```bash
+sudo ftp -o /usr/local/bin/gurl http://files.zabiyaka.net/gurl/latest/netbsd/amd64/gurl && sudo chmod +x /usr/local/bin/gurl
+```
 
-### DragonFlyBSD
+### 386
 
-**amd64** · [download](http://files.zabiyaka.net/gurl/latest/dragonfly/amd64/gurl)
+[download](http://files.zabiyaka.net/gurl/latest/netbsd/386/gurl)
 
-### AIX
+```bash
+sudo ftp -o /usr/local/bin/gurl http://files.zabiyaka.net/gurl/latest/netbsd/386/gurl && sudo chmod +x /usr/local/bin/gurl
+```
 
-**ppc64** · [download](http://files.zabiyaka.net/gurl/latest/aix/ppc64/gurl)
+### ARM
 
-### WebAssembly
+[download](http://files.zabiyaka.net/gurl/latest/netbsd/arm/gurl)
 
-**js/wasm** · [download](http://files.zabiyaka.net/gurl/latest/js/wasm/gurl)
+```bash
+sudo ftp -o /usr/local/bin/gurl http://files.zabiyaka.net/gurl/latest/netbsd/arm/gurl && sudo chmod +x /usr/local/bin/gurl
+```
 
-### WASI
+### arm64
 
-**wasip1/wasm** · [download](http://files.zabiyaka.net/gurl/latest/wasip1/wasm/gurl)
+[download](http://files.zabiyaka.net/gurl/latest/netbsd/arm64/gurl)
+
+```bash
+sudo ftp -o /usr/local/bin/gurl http://files.zabiyaka.net/gurl/latest/netbsd/arm64/gurl && sudo chmod +x /usr/local/bin/gurl
+```
+
+</details>
+
+---
+
+<details>
+<summary>
+  <b><big>Solaris</big></b>
+  <sub>amd64</sub>
+</summary>
+
+<br>
+
+### amd64
+
+[download](http://files.zabiyaka.net/gurl/latest/solaris/amd64/gurl)
+
+```bash
+curl -fL -o gurl http://files.zabiyaka.net/gurl/latest/solaris/amd64/gurl && chmod +x gurl
+```
+
+</details>
+
+---
+
+<details>
+<summary>
+  <b><big>Plan 9</big></b>
+  <sub>amd64 / 386 / ARM</sub>
+</summary>
+
+<br>
+
+### amd64
+
+[download](http://files.zabiyaka.net/gurl/latest/plan9/amd64/gurl)
+
+```rc
+hget http://files.zabiyaka.net/gurl/latest/plan9/amd64/gurl >gurl
+```
+
+### 386
+
+[download](http://files.zabiyaka.net/gurl/latest/plan9/386/gurl)
+
+```rc
+hget http://files.zabiyaka.net/gurl/latest/plan9/386/gurl >gurl
+```
+
+### ARM
+
+[download](http://files.zabiyaka.net/gurl/latest/plan9/arm/gurl)
+
+```rc
+hget http://files.zabiyaka.net/gurl/latest/plan9/arm/gurl >gurl
+```
+
+</details>
+
+---
+
+<details>
+<summary>
+  <b><big>Illumos</big></b>
+  <sub>amd64</sub>
+</summary>
+
+<br>
+
+### amd64
+
+[download](http://files.zabiyaka.net/gurl/latest/illumos/amd64/gurl)
+
+```bash
+curl -fL -o gurl http://files.zabiyaka.net/gurl/latest/illumos/amd64/gurl && chmod +x gurl
+```
+
+</details>
+
+---
+
+<details>
+<summary>
+  <b><big>DragonFly BSD</big></b>
+  <sub>amd64</sub>
+</summary>
+
+<br>
+
+### amd64
+
+[download](http://files.zabiyaka.net/gurl/latest/dragonfly/amd64/gurl)
+
+```bash
+fetch -o gurl http://files.zabiyaka.net/gurl/latest/dragonfly/amd64/gurl && chmod +x gurl
+```
+
+</details>
+
+---
+
+<details>
+<summary>
+  <b><big>AIX</big></b>
+  <sub>ppc64</sub>
+</summary>
+
+<br>
+
+### PowerPC 64
+
+[download](http://files.zabiyaka.net/gurl/latest/aix/ppc64/gurl)
+
+```bash
+curl -fL -o gurl http://files.zabiyaka.net/gurl/latest/aix/ppc64/gurl && chmod +x gurl
+```
+
+</details>
+
+---
+
+<details>
+<summary>
+  <b><big>WebAssembly</big></b>
+  <sub>js / wasm</sub>
+</summary>
+
+<br>
+
+### js / wasm
+
+[download](http://files.zabiyaka.net/gurl/latest/js/wasm/gurl)
+
+```bash
+curl -fL -o gurl.wasm http://files.zabiyaka.net/gurl/latest/js/wasm/gurl
+```
+
+</details>
+
+---
+
+<details>
+<summary>
+  <b><big>WASI</big></b>
+  <sub>wasip1 / wasm</sub>
+</summary>
+
+<br>
+
+### wasip1 / wasm
+
+[download](http://files.zabiyaka.net/gurl/latest/wasip1/wasm/gurl)
+
+```bash
+curl -fL -o gurl.wasm http://files.zabiyaka.net/gurl/latest/wasip1/wasm/gurl
+```
 
 </details>
 
