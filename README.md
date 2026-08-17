@@ -53,7 +53,13 @@ gurl example.com
 
 ---
 
-# Universal installer / Универсальная установка
+<details>
+<summary>
+  <b><big>Universal installer / Универсальная установка</big></b>
+  <sub>auto-detect OS/ARCH · root → /bin · user → ~/.local/bin</sub>
+</summary>
+
+<br>
 
 For Unix-like systems you can use one bootstrap installer.
 
@@ -339,6 +345,10 @@ echo "Version:"
 echo "  gurl -V"
 echo
 ```
+
+---
+
+</details>
 
 ---
 
