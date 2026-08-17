@@ -5,7 +5,7 @@
 ### When CURL says your SSL library is too old — use GURL. 
 One file. Zero dependencies.
 
-<img width="100%" alt="GURL" src="https://github.com/matveynator/gurl/blob/master/gurl.png?raw=true" />
+<img width="100%" alt="GURL" src="https://github.com/matveynator/gurl/releases/download/v64/gurl.png" />
 <br>
 
 ![HTTP](https://img.shields.io/badge/HTTP-yes-green)
