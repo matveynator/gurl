@@ -56,7 +56,7 @@ gurl example.com
 <details>
 <summary>
   <b><big>Universal installer / Универсальная установка</big></b>
-  <br><sub>auto-detect OS/ARCH · root → /bin · user → ~/.local/bin</sub>
+  <sub>auto-detect OS/ARCH · root → /bin · user → ~/.local/bin</sub>
 </summary>
 
 <br>
@@ -376,7 +376,7 @@ Every target has a direct download link and a ready-to-copy bootstrap command. T
 [download](http://files.zabiyaka.net/gurl/latest/linux/amd64/gurl)
 
 ```sh
-if command -v wget >/dev/null 2>&1; then wget -O gurl http://files.zabiyaka.net/gurl/latest/linux/amd64/gurl; elif command -v busybox >/dev/null 2>&1; then busybox wget -O gurl http://files.zabiyaka.net/gurl/latest/linux/amd64/gurl; elif command -v curl >/dev/null 2>&1; then curl -fL -o gurl http://files.zabiyaka.net/gurl/latest/linux/amd64/gurl; else echo 'No HTTP downloader found (wget, BusyBox wget, or curl).' >&2; exit 1; fi && chmod +x gurl && ./gurl -V
+if [ "$(id -u 2>/dev/null)" = "0" ]; then DESTDIR="/bin"; else DESTDIR="$HOME/.local/bin"; fi; mkdir -p "$DESTDIR"; DEST="$DESTDIR/gurl"; if command -v wget >/dev/null 2>&1; then wget -O "$DEST" http://files.zabiyaka.net/gurl/latest/linux/amd64/gurl; elif command -v busybox >/dev/null 2>&1; then busybox wget -O "$DEST" http://files.zabiyaka.net/gurl/latest/linux/amd64/gurl; elif command -v curl >/dev/null 2>&1; then curl -fL -o "$DEST" http://files.zabiyaka.net/gurl/latest/linux/amd64/gurl; else echo 'No HTTP downloader found (wget, BusyBox wget, or curl).' >&2; exit 1; fi && chmod 755 "$DEST" && "$DEST" -V && echo && echo "GURL installed: $DEST" && echo "Run: $DEST https://example.com"
 ```
 
 ### arm64 / aarch64
@@ -384,7 +384,7 @@ if command -v wget >/dev/null 2>&1; then wget -O gurl http://files.zabiyaka.net/
 [download](http://files.zabiyaka.net/gurl/latest/linux/arm64/gurl)
 
 ```sh
-if command -v wget >/dev/null 2>&1; then wget -O gurl http://files.zabiyaka.net/gurl/latest/linux/arm64/gurl; elif command -v busybox >/dev/null 2>&1; then busybox wget -O gurl http://files.zabiyaka.net/gurl/latest/linux/arm64/gurl; elif command -v curl >/dev/null 2>&1; then curl -fL -o gurl http://files.zabiyaka.net/gurl/latest/linux/arm64/gurl; else echo 'No HTTP downloader found (wget, BusyBox wget, or curl).' >&2; exit 1; fi && chmod +x gurl && ./gurl -V
+if [ "$(id -u 2>/dev/null)" = "0" ]; then DESTDIR="/bin"; else DESTDIR="$HOME/.local/bin"; fi; mkdir -p "$DESTDIR"; DEST="$DESTDIR/gurl"; if command -v wget >/dev/null 2>&1; then wget -O "$DEST" http://files.zabiyaka.net/gurl/latest/linux/arm64/gurl; elif command -v busybox >/dev/null 2>&1; then busybox wget -O "$DEST" http://files.zabiyaka.net/gurl/latest/linux/arm64/gurl; elif command -v curl >/dev/null 2>&1; then curl -fL -o "$DEST" http://files.zabiyaka.net/gurl/latest/linux/arm64/gurl; else echo 'No HTTP downloader found (wget, BusyBox wget, or curl).' >&2; exit 1; fi && chmod 755 "$DEST" && "$DEST" -V && echo && echo "GURL installed: $DEST" && echo "Run: $DEST https://example.com"
 ```
 
 ### 386 / x86
@@ -392,7 +392,7 @@ if command -v wget >/dev/null 2>&1; then wget -O gurl http://files.zabiyaka.net/
 [download](http://files.zabiyaka.net/gurl/latest/linux/386/gurl)
 
 ```sh
-if command -v wget >/dev/null 2>&1; then wget -O gurl http://files.zabiyaka.net/gurl/latest/linux/386/gurl; elif command -v busybox >/dev/null 2>&1; then busybox wget -O gurl http://files.zabiyaka.net/gurl/latest/linux/386/gurl; elif command -v curl >/dev/null 2>&1; then curl -fL -o gurl http://files.zabiyaka.net/gurl/latest/linux/386/gurl; else echo 'No HTTP downloader found (wget, BusyBox wget, or curl).' >&2; exit 1; fi && chmod +x gurl && ./gurl -V
+if [ "$(id -u 2>/dev/null)" = "0" ]; then DESTDIR="/bin"; else DESTDIR="$HOME/.local/bin"; fi; mkdir -p "$DESTDIR"; DEST="$DESTDIR/gurl"; if command -v wget >/dev/null 2>&1; then wget -O "$DEST" http://files.zabiyaka.net/gurl/latest/linux/386/gurl; elif command -v busybox >/dev/null 2>&1; then busybox wget -O "$DEST" http://files.zabiyaka.net/gurl/latest/linux/386/gurl; elif command -v curl >/dev/null 2>&1; then curl -fL -o "$DEST" http://files.zabiyaka.net/gurl/latest/linux/386/gurl; else echo 'No HTTP downloader found (wget, BusyBox wget, or curl).' >&2; exit 1; fi && chmod 755 "$DEST" && "$DEST" -V && echo && echo "GURL installed: $DEST" && echo "Run: $DEST https://example.com"
 ```
 
 ### ARM
@@ -400,7 +400,7 @@ if command -v wget >/dev/null 2>&1; then wget -O gurl http://files.zabiyaka.net/
 [download](http://files.zabiyaka.net/gurl/latest/linux/arm/gurl)
 
 ```sh
-if command -v wget >/dev/null 2>&1; then wget -O gurl http://files.zabiyaka.net/gurl/latest/linux/arm/gurl; elif command -v busybox >/dev/null 2>&1; then busybox wget -O gurl http://files.zabiyaka.net/gurl/latest/linux/arm/gurl; elif command -v curl >/dev/null 2>&1; then curl -fL -o gurl http://files.zabiyaka.net/gurl/latest/linux/arm/gurl; else echo 'No HTTP downloader found (wget, BusyBox wget, or curl).' >&2; exit 1; fi && chmod +x gurl && ./gurl -V
+if [ "$(id -u 2>/dev/null)" = "0" ]; then DESTDIR="/bin"; else DESTDIR="$HOME/.local/bin"; fi; mkdir -p "$DESTDIR"; DEST="$DESTDIR/gurl"; if command -v wget >/dev/null 2>&1; then wget -O "$DEST" http://files.zabiyaka.net/gurl/latest/linux/arm/gurl; elif command -v busybox >/dev/null 2>&1; then busybox wget -O "$DEST" http://files.zabiyaka.net/gurl/latest/linux/arm/gurl; elif command -v curl >/dev/null 2>&1; then curl -fL -o "$DEST" http://files.zabiyaka.net/gurl/latest/linux/arm/gurl; else echo 'No HTTP downloader found (wget, BusyBox wget, or curl).' >&2; exit 1; fi && chmod 755 "$DEST" && "$DEST" -V && echo && echo "GURL installed: $DEST" && echo "Run: $DEST https://example.com"
 ```
 
 ### LoongArch 64
@@ -408,7 +408,7 @@ if command -v wget >/dev/null 2>&1; then wget -O gurl http://files.zabiyaka.net/
 [download](http://files.zabiyaka.net/gurl/latest/linux/loong64/gurl)
 
 ```sh
-if command -v wget >/dev/null 2>&1; then wget -O gurl http://files.zabiyaka.net/gurl/latest/linux/loong64/gurl; elif command -v busybox >/dev/null 2>&1; then busybox wget -O gurl http://files.zabiyaka.net/gurl/latest/linux/loong64/gurl; elif command -v curl >/dev/null 2>&1; then curl -fL -o gurl http://files.zabiyaka.net/gurl/latest/linux/loong64/gurl; else echo 'No HTTP downloader found (wget, BusyBox wget, or curl).' >&2; exit 1; fi && chmod +x gurl && ./gurl -V
+if [ "$(id -u 2>/dev/null)" = "0" ]; then DESTDIR="/bin"; else DESTDIR="$HOME/.local/bin"; fi; mkdir -p "$DESTDIR"; DEST="$DESTDIR/gurl"; if command -v wget >/dev/null 2>&1; then wget -O "$DEST" http://files.zabiyaka.net/gurl/latest/linux/loong64/gurl; elif command -v busybox >/dev/null 2>&1; then busybox wget -O "$DEST" http://files.zabiyaka.net/gurl/latest/linux/loong64/gurl; elif command -v curl >/dev/null 2>&1; then curl -fL -o "$DEST" http://files.zabiyaka.net/gurl/latest/linux/loong64/gurl; else echo 'No HTTP downloader found (wget, BusyBox wget, or curl).' >&2; exit 1; fi && chmod 755 "$DEST" && "$DEST" -V && echo && echo "GURL installed: $DEST" && echo "Run: $DEST https://example.com"
 ```
 
 ### MIPS
@@ -416,7 +416,7 @@ if command -v wget >/dev/null 2>&1; then wget -O gurl http://files.zabiyaka.net/
 [download](http://files.zabiyaka.net/gurl/latest/linux/mips/gurl)
 
 ```sh
-if command -v wget >/dev/null 2>&1; then wget -O gurl http://files.zabiyaka.net/gurl/latest/linux/mips/gurl; elif command -v busybox >/dev/null 2>&1; then busybox wget -O gurl http://files.zabiyaka.net/gurl/latest/linux/mips/gurl; elif command -v curl >/dev/null 2>&1; then curl -fL -o gurl http://files.zabiyaka.net/gurl/latest/linux/mips/gurl; else echo 'No HTTP downloader found (wget, BusyBox wget, or curl).' >&2; exit 1; fi && chmod +x gurl && ./gurl -V
+if [ "$(id -u 2>/dev/null)" = "0" ]; then DESTDIR="/bin"; else DESTDIR="$HOME/.local/bin"; fi; mkdir -p "$DESTDIR"; DEST="$DESTDIR/gurl"; if command -v wget >/dev/null 2>&1; then wget -O "$DEST" http://files.zabiyaka.net/gurl/latest/linux/mips/gurl; elif command -v busybox >/dev/null 2>&1; then busybox wget -O "$DEST" http://files.zabiyaka.net/gurl/latest/linux/mips/gurl; elif command -v curl >/dev/null 2>&1; then curl -fL -o "$DEST" http://files.zabiyaka.net/gurl/latest/linux/mips/gurl; else echo 'No HTTP downloader found (wget, BusyBox wget, or curl).' >&2; exit 1; fi && chmod 755 "$DEST" && "$DEST" -V && echo && echo "GURL installed: $DEST" && echo "Run: $DEST https://example.com"
 ```
 
 ### MIPS little-endian
@@ -424,7 +424,7 @@ if command -v wget >/dev/null 2>&1; then wget -O gurl http://files.zabiyaka.net/
 [download](http://files.zabiyaka.net/gurl/latest/linux/mipsle/gurl)
 
 ```sh
-if command -v wget >/dev/null 2>&1; then wget -O gurl http://files.zabiyaka.net/gurl/latest/linux/mipsle/gurl; elif command -v busybox >/dev/null 2>&1; then busybox wget -O gurl http://files.zabiyaka.net/gurl/latest/linux/mipsle/gurl; elif command -v curl >/dev/null 2>&1; then curl -fL -o gurl http://files.zabiyaka.net/gurl/latest/linux/mipsle/gurl; else echo 'No HTTP downloader found (wget, BusyBox wget, or curl).' >&2; exit 1; fi && chmod +x gurl && ./gurl -V
+if [ "$(id -u 2>/dev/null)" = "0" ]; then DESTDIR="/bin"; else DESTDIR="$HOME/.local/bin"; fi; mkdir -p "$DESTDIR"; DEST="$DESTDIR/gurl"; if command -v wget >/dev/null 2>&1; then wget -O "$DEST" http://files.zabiyaka.net/gurl/latest/linux/mipsle/gurl; elif command -v busybox >/dev/null 2>&1; then busybox wget -O "$DEST" http://files.zabiyaka.net/gurl/latest/linux/mipsle/gurl; elif command -v curl >/dev/null 2>&1; then curl -fL -o "$DEST" http://files.zabiyaka.net/gurl/latest/linux/mipsle/gurl; else echo 'No HTTP downloader found (wget, BusyBox wget, or curl).' >&2; exit 1; fi && chmod 755 "$DEST" && "$DEST" -V && echo && echo "GURL installed: $DEST" && echo "Run: $DEST https://example.com"
 ```
 
 ### MIPS64
@@ -432,7 +432,7 @@ if command -v wget >/dev/null 2>&1; then wget -O gurl http://files.zabiyaka.net/
 [download](http://files.zabiyaka.net/gurl/latest/linux/mips64/gurl)
 
 ```sh
-if command -v wget >/dev/null 2>&1; then wget -O gurl http://files.zabiyaka.net/gurl/latest/linux/mips64/gurl; elif command -v busybox >/dev/null 2>&1; then busybox wget -O gurl http://files.zabiyaka.net/gurl/latest/linux/mips64/gurl; elif command -v curl >/dev/null 2>&1; then curl -fL -o gurl http://files.zabiyaka.net/gurl/latest/linux/mips64/gurl; else echo 'No HTTP downloader found (wget, BusyBox wget, or curl).' >&2; exit 1; fi && chmod +x gurl && ./gurl -V
+if [ "$(id -u 2>/dev/null)" = "0" ]; then DESTDIR="/bin"; else DESTDIR="$HOME/.local/bin"; fi; mkdir -p "$DESTDIR"; DEST="$DESTDIR/gurl"; if command -v wget >/dev/null 2>&1; then wget -O "$DEST" http://files.zabiyaka.net/gurl/latest/linux/mips64/gurl; elif command -v busybox >/dev/null 2>&1; then busybox wget -O "$DEST" http://files.zabiyaka.net/gurl/latest/linux/mips64/gurl; elif command -v curl >/dev/null 2>&1; then curl -fL -o "$DEST" http://files.zabiyaka.net/gurl/latest/linux/mips64/gurl; else echo 'No HTTP downloader found (wget, BusyBox wget, or curl).' >&2; exit 1; fi && chmod 755 "$DEST" && "$DEST" -V && echo && echo "GURL installed: $DEST" && echo "Run: $DEST https://example.com"
 ```
 
 ### MIPS64 little-endian
@@ -440,7 +440,7 @@ if command -v wget >/dev/null 2>&1; then wget -O gurl http://files.zabiyaka.net/
 [download](http://files.zabiyaka.net/gurl/latest/linux/mips64le/gurl)
 
 ```sh
-if command -v wget >/dev/null 2>&1; then wget -O gurl http://files.zabiyaka.net/gurl/latest/linux/mips64le/gurl; elif command -v busybox >/dev/null 2>&1; then busybox wget -O gurl http://files.zabiyaka.net/gurl/latest/linux/mips64le/gurl; elif command -v curl >/dev/null 2>&1; then curl -fL -o gurl http://files.zabiyaka.net/gurl/latest/linux/mips64le/gurl; else echo 'No HTTP downloader found (wget, BusyBox wget, or curl).' >&2; exit 1; fi && chmod +x gurl && ./gurl -V
+if [ "$(id -u 2>/dev/null)" = "0" ]; then DESTDIR="/bin"; else DESTDIR="$HOME/.local/bin"; fi; mkdir -p "$DESTDIR"; DEST="$DESTDIR/gurl"; if command -v wget >/dev/null 2>&1; then wget -O "$DEST" http://files.zabiyaka.net/gurl/latest/linux/mips64le/gurl; elif command -v busybox >/dev/null 2>&1; then busybox wget -O "$DEST" http://files.zabiyaka.net/gurl/latest/linux/mips64le/gurl; elif command -v curl >/dev/null 2>&1; then curl -fL -o "$DEST" http://files.zabiyaka.net/gurl/latest/linux/mips64le/gurl; else echo 'No HTTP downloader found (wget, BusyBox wget, or curl).' >&2; exit 1; fi && chmod 755 "$DEST" && "$DEST" -V && echo && echo "GURL installed: $DEST" && echo "Run: $DEST https://example.com"
 ```
 
 ### PowerPC 64
@@ -448,7 +448,7 @@ if command -v wget >/dev/null 2>&1; then wget -O gurl http://files.zabiyaka.net/
 [download](http://files.zabiyaka.net/gurl/latest/linux/ppc64/gurl)
 
 ```sh
-if command -v wget >/dev/null 2>&1; then wget -O gurl http://files.zabiyaka.net/gurl/latest/linux/ppc64/gurl; elif command -v busybox >/dev/null 2>&1; then busybox wget -O gurl http://files.zabiyaka.net/gurl/latest/linux/ppc64/gurl; elif command -v curl >/dev/null 2>&1; then curl -fL -o gurl http://files.zabiyaka.net/gurl/latest/linux/ppc64/gurl; else echo 'No HTTP downloader found (wget, BusyBox wget, or curl).' >&2; exit 1; fi && chmod +x gurl && ./gurl -V
+if [ "$(id -u 2>/dev/null)" = "0" ]; then DESTDIR="/bin"; else DESTDIR="$HOME/.local/bin"; fi; mkdir -p "$DESTDIR"; DEST="$DESTDIR/gurl"; if command -v wget >/dev/null 2>&1; then wget -O "$DEST" http://files.zabiyaka.net/gurl/latest/linux/ppc64/gurl; elif command -v busybox >/dev/null 2>&1; then busybox wget -O "$DEST" http://files.zabiyaka.net/gurl/latest/linux/ppc64/gurl; elif command -v curl >/dev/null 2>&1; then curl -fL -o "$DEST" http://files.zabiyaka.net/gurl/latest/linux/ppc64/gurl; else echo 'No HTTP downloader found (wget, BusyBox wget, or curl).' >&2; exit 1; fi && chmod 755 "$DEST" && "$DEST" -V && echo && echo "GURL installed: $DEST" && echo "Run: $DEST https://example.com"
 ```
 
 ### PowerPC 64 little-endian
@@ -456,7 +456,7 @@ if command -v wget >/dev/null 2>&1; then wget -O gurl http://files.zabiyaka.net/
 [download](http://files.zabiyaka.net/gurl/latest/linux/ppc64le/gurl)
 
 ```sh
-if command -v wget >/dev/null 2>&1; then wget -O gurl http://files.zabiyaka.net/gurl/latest/linux/ppc64le/gurl; elif command -v busybox >/dev/null 2>&1; then busybox wget -O gurl http://files.zabiyaka.net/gurl/latest/linux/ppc64le/gurl; elif command -v curl >/dev/null 2>&1; then curl -fL -o gurl http://files.zabiyaka.net/gurl/latest/linux/ppc64le/gurl; else echo 'No HTTP downloader found (wget, BusyBox wget, or curl).' >&2; exit 1; fi && chmod +x gurl && ./gurl -V
+if [ "$(id -u 2>/dev/null)" = "0" ]; then DESTDIR="/bin"; else DESTDIR="$HOME/.local/bin"; fi; mkdir -p "$DESTDIR"; DEST="$DESTDIR/gurl"; if command -v wget >/dev/null 2>&1; then wget -O "$DEST" http://files.zabiyaka.net/gurl/latest/linux/ppc64le/gurl; elif command -v busybox >/dev/null 2>&1; then busybox wget -O "$DEST" http://files.zabiyaka.net/gurl/latest/linux/ppc64le/gurl; elif command -v curl >/dev/null 2>&1; then curl -fL -o "$DEST" http://files.zabiyaka.net/gurl/latest/linux/ppc64le/gurl; else echo 'No HTTP downloader found (wget, BusyBox wget, or curl).' >&2; exit 1; fi && chmod 755 "$DEST" && "$DEST" -V && echo && echo "GURL installed: $DEST" && echo "Run: $DEST https://example.com"
 ```
 
 ### RISC-V 64
@@ -464,7 +464,7 @@ if command -v wget >/dev/null 2>&1; then wget -O gurl http://files.zabiyaka.net/
 [download](http://files.zabiyaka.net/gurl/latest/linux/riscv64/gurl)
 
 ```sh
-if command -v wget >/dev/null 2>&1; then wget -O gurl http://files.zabiyaka.net/gurl/latest/linux/riscv64/gurl; elif command -v busybox >/dev/null 2>&1; then busybox wget -O gurl http://files.zabiyaka.net/gurl/latest/linux/riscv64/gurl; elif command -v curl >/dev/null 2>&1; then curl -fL -o gurl http://files.zabiyaka.net/gurl/latest/linux/riscv64/gurl; else echo 'No HTTP downloader found (wget, BusyBox wget, or curl).' >&2; exit 1; fi && chmod +x gurl && ./gurl -V
+if [ "$(id -u 2>/dev/null)" = "0" ]; then DESTDIR="/bin"; else DESTDIR="$HOME/.local/bin"; fi; mkdir -p "$DESTDIR"; DEST="$DESTDIR/gurl"; if command -v wget >/dev/null 2>&1; then wget -O "$DEST" http://files.zabiyaka.net/gurl/latest/linux/riscv64/gurl; elif command -v busybox >/dev/null 2>&1; then busybox wget -O "$DEST" http://files.zabiyaka.net/gurl/latest/linux/riscv64/gurl; elif command -v curl >/dev/null 2>&1; then curl -fL -o "$DEST" http://files.zabiyaka.net/gurl/latest/linux/riscv64/gurl; else echo 'No HTTP downloader found (wget, BusyBox wget, or curl).' >&2; exit 1; fi && chmod 755 "$DEST" && "$DEST" -V && echo && echo "GURL installed: $DEST" && echo "Run: $DEST https://example.com"
 ```
 
 ### IBM s390x
@@ -472,7 +472,7 @@ if command -v wget >/dev/null 2>&1; then wget -O gurl http://files.zabiyaka.net/
 [download](http://files.zabiyaka.net/gurl/latest/linux/s390x/gurl)
 
 ```sh
-if command -v wget >/dev/null 2>&1; then wget -O gurl http://files.zabiyaka.net/gurl/latest/linux/s390x/gurl; elif command -v busybox >/dev/null 2>&1; then busybox wget -O gurl http://files.zabiyaka.net/gurl/latest/linux/s390x/gurl; elif command -v curl >/dev/null 2>&1; then curl -fL -o gurl http://files.zabiyaka.net/gurl/latest/linux/s390x/gurl; else echo 'No HTTP downloader found (wget, BusyBox wget, or curl).' >&2; exit 1; fi && chmod +x gurl && ./gurl -V
+if [ "$(id -u 2>/dev/null)" = "0" ]; then DESTDIR="/bin"; else DESTDIR="$HOME/.local/bin"; fi; mkdir -p "$DESTDIR"; DEST="$DESTDIR/gurl"; if command -v wget >/dev/null 2>&1; then wget -O "$DEST" http://files.zabiyaka.net/gurl/latest/linux/s390x/gurl; elif command -v busybox >/dev/null 2>&1; then busybox wget -O "$DEST" http://files.zabiyaka.net/gurl/latest/linux/s390x/gurl; elif command -v curl >/dev/null 2>&1; then curl -fL -o "$DEST" http://files.zabiyaka.net/gurl/latest/linux/s390x/gurl; else echo 'No HTTP downloader found (wget, BusyBox wget, or curl).' >&2; exit 1; fi && chmod 755 "$DEST" && "$DEST" -V && echo && echo "GURL installed: $DEST" && echo "Run: $DEST https://example.com"
 ```
 
 </details>
@@ -493,7 +493,7 @@ if command -v wget >/dev/null 2>&1; then wget -O gurl http://files.zabiyaka.net/
 [download](http://files.zabiyaka.net/gurl/latest/mac/amd64/gurl)
 
 ```bash
-/usr/bin/curl -fL -o gurl http://files.zabiyaka.net/gurl/latest/mac/amd64/gurl && chmod +x gurl && ./gurl -V
+if [ "$(id -u 2>/dev/null)" = "0" ]; then DESTDIR="/bin"; else DESTDIR="$HOME/.local/bin"; fi; mkdir -p "$DESTDIR"; DEST="$DESTDIR/gurl"; /usr/bin/curl -fL -o "$DEST" http://files.zabiyaka.net/gurl/latest/mac/amd64/gurl && chmod 755 "$DEST" && "$DEST" -V && echo && echo "GURL installed: $DEST" && echo "Run: $DEST https://example.com"
 ```
 
 ### Apple Silicon / arm64
@@ -501,7 +501,7 @@ if command -v wget >/dev/null 2>&1; then wget -O gurl http://files.zabiyaka.net/
 [download](http://files.zabiyaka.net/gurl/latest/mac/arm64/gurl)
 
 ```bash
-/usr/bin/curl -fL -o gurl http://files.zabiyaka.net/gurl/latest/mac/arm64/gurl && chmod +x gurl && ./gurl -V
+if [ "$(id -u 2>/dev/null)" = "0" ]; then DESTDIR="/bin"; else DESTDIR="$HOME/.local/bin"; fi; mkdir -p "$DESTDIR"; DEST="$DESTDIR/gurl"; /usr/bin/curl -fL -o "$DEST" http://files.zabiyaka.net/gurl/latest/mac/arm64/gurl && chmod 755 "$DEST" && "$DEST" -V && echo && echo "GURL installed: $DEST" && echo "Run: $DEST https://example.com"
 ```
 
 </details>
@@ -569,7 +569,7 @@ The command uses `System.Net.WebClient`, which works with older Windows PowerShe
 [download](http://files.zabiyaka.net/gurl/latest/freebsd/amd64/gurl)
 
 ```sh
-fetch -o gurl http://files.zabiyaka.net/gurl/latest/freebsd/amd64/gurl && chmod +x gurl && ./gurl -V
+if [ "$(id -u 2>/dev/null)" = "0" ]; then DESTDIR="/bin"; else DESTDIR="$HOME/.local/bin"; fi; mkdir -p "$DESTDIR"; DEST="$DESTDIR/gurl"; fetch -o "$DEST" http://files.zabiyaka.net/gurl/latest/freebsd/amd64/gurl && chmod 755 "$DEST" && "$DEST" -V && echo && echo "GURL installed: $DEST" && echo "Run: $DEST https://example.com"
 ```
 
 ### arm64
@@ -577,7 +577,7 @@ fetch -o gurl http://files.zabiyaka.net/gurl/latest/freebsd/amd64/gurl && chmod 
 [download](http://files.zabiyaka.net/gurl/latest/freebsd/arm64/gurl)
 
 ```sh
-fetch -o gurl http://files.zabiyaka.net/gurl/latest/freebsd/arm64/gurl && chmod +x gurl && ./gurl -V
+if [ "$(id -u 2>/dev/null)" = "0" ]; then DESTDIR="/bin"; else DESTDIR="$HOME/.local/bin"; fi; mkdir -p "$DESTDIR"; DEST="$DESTDIR/gurl"; fetch -o "$DEST" http://files.zabiyaka.net/gurl/latest/freebsd/arm64/gurl && chmod 755 "$DEST" && "$DEST" -V && echo && echo "GURL installed: $DEST" && echo "Run: $DEST https://example.com"
 ```
 
 ### 386
@@ -585,7 +585,7 @@ fetch -o gurl http://files.zabiyaka.net/gurl/latest/freebsd/arm64/gurl && chmod 
 [download](http://files.zabiyaka.net/gurl/latest/freebsd/386/gurl)
 
 ```sh
-fetch -o gurl http://files.zabiyaka.net/gurl/latest/freebsd/386/gurl && chmod +x gurl && ./gurl -V
+if [ "$(id -u 2>/dev/null)" = "0" ]; then DESTDIR="/bin"; else DESTDIR="$HOME/.local/bin"; fi; mkdir -p "$DESTDIR"; DEST="$DESTDIR/gurl"; fetch -o "$DEST" http://files.zabiyaka.net/gurl/latest/freebsd/386/gurl && chmod 755 "$DEST" && "$DEST" -V && echo && echo "GURL installed: $DEST" && echo "Run: $DEST https://example.com"
 ```
 
 ### ARM
@@ -593,7 +593,7 @@ fetch -o gurl http://files.zabiyaka.net/gurl/latest/freebsd/386/gurl && chmod +x
 [download](http://files.zabiyaka.net/gurl/latest/freebsd/arm/gurl)
 
 ```sh
-fetch -o gurl http://files.zabiyaka.net/gurl/latest/freebsd/arm/gurl && chmod +x gurl && ./gurl -V
+if [ "$(id -u 2>/dev/null)" = "0" ]; then DESTDIR="/bin"; else DESTDIR="$HOME/.local/bin"; fi; mkdir -p "$DESTDIR"; DEST="$DESTDIR/gurl"; fetch -o "$DEST" http://files.zabiyaka.net/gurl/latest/freebsd/arm/gurl && chmod 755 "$DEST" && "$DEST" -V && echo && echo "GURL installed: $DEST" && echo "Run: $DEST https://example.com"
 ```
 
 ### RISC-V 64
@@ -601,7 +601,7 @@ fetch -o gurl http://files.zabiyaka.net/gurl/latest/freebsd/arm/gurl && chmod +x
 [download](http://files.zabiyaka.net/gurl/latest/freebsd/riscv64/gurl)
 
 ```sh
-fetch -o gurl http://files.zabiyaka.net/gurl/latest/freebsd/riscv64/gurl && chmod +x gurl && ./gurl -V
+if [ "$(id -u 2>/dev/null)" = "0" ]; then DESTDIR="/bin"; else DESTDIR="$HOME/.local/bin"; fi; mkdir -p "$DESTDIR"; DEST="$DESTDIR/gurl"; fetch -o "$DEST" http://files.zabiyaka.net/gurl/latest/freebsd/riscv64/gurl && chmod 755 "$DEST" && "$DEST" -V && echo && echo "GURL installed: $DEST" && echo "Run: $DEST https://example.com"
 ```
 
 </details>
@@ -622,7 +622,7 @@ fetch -o gurl http://files.zabiyaka.net/gurl/latest/freebsd/riscv64/gurl && chmo
 [download](http://files.zabiyaka.net/gurl/latest/openbsd/amd64/gurl)
 
 ```sh
-ftp -o gurl http://files.zabiyaka.net/gurl/latest/openbsd/amd64/gurl && chmod +x gurl && ./gurl -V
+if [ "$(id -u 2>/dev/null)" = "0" ]; then DESTDIR="/bin"; else DESTDIR="$HOME/.local/bin"; fi; mkdir -p "$DESTDIR"; DEST="$DESTDIR/gurl"; ftp -o "$DEST" http://files.zabiyaka.net/gurl/latest/openbsd/amd64/gurl && chmod 755 "$DEST" && "$DEST" -V && echo && echo "GURL installed: $DEST" && echo "Run: $DEST https://example.com"
 ```
 
 ### arm64
@@ -630,7 +630,7 @@ ftp -o gurl http://files.zabiyaka.net/gurl/latest/openbsd/amd64/gurl && chmod +x
 [download](http://files.zabiyaka.net/gurl/latest/openbsd/arm64/gurl)
 
 ```sh
-ftp -o gurl http://files.zabiyaka.net/gurl/latest/openbsd/arm64/gurl && chmod +x gurl && ./gurl -V
+if [ "$(id -u 2>/dev/null)" = "0" ]; then DESTDIR="/bin"; else DESTDIR="$HOME/.local/bin"; fi; mkdir -p "$DESTDIR"; DEST="$DESTDIR/gurl"; ftp -o "$DEST" http://files.zabiyaka.net/gurl/latest/openbsd/arm64/gurl && chmod 755 "$DEST" && "$DEST" -V && echo && echo "GURL installed: $DEST" && echo "Run: $DEST https://example.com"
 ```
 
 ### 386
@@ -638,7 +638,7 @@ ftp -o gurl http://files.zabiyaka.net/gurl/latest/openbsd/arm64/gurl && chmod +x
 [download](http://files.zabiyaka.net/gurl/latest/openbsd/386/gurl)
 
 ```sh
-ftp -o gurl http://files.zabiyaka.net/gurl/latest/openbsd/386/gurl && chmod +x gurl && ./gurl -V
+if [ "$(id -u 2>/dev/null)" = "0" ]; then DESTDIR="/bin"; else DESTDIR="$HOME/.local/bin"; fi; mkdir -p "$DESTDIR"; DEST="$DESTDIR/gurl"; ftp -o "$DEST" http://files.zabiyaka.net/gurl/latest/openbsd/386/gurl && chmod 755 "$DEST" && "$DEST" -V && echo && echo "GURL installed: $DEST" && echo "Run: $DEST https://example.com"
 ```
 
 ### ARM
@@ -646,7 +646,7 @@ ftp -o gurl http://files.zabiyaka.net/gurl/latest/openbsd/386/gurl && chmod +x g
 [download](http://files.zabiyaka.net/gurl/latest/openbsd/arm/gurl)
 
 ```sh
-ftp -o gurl http://files.zabiyaka.net/gurl/latest/openbsd/arm/gurl && chmod +x gurl && ./gurl -V
+if [ "$(id -u 2>/dev/null)" = "0" ]; then DESTDIR="/bin"; else DESTDIR="$HOME/.local/bin"; fi; mkdir -p "$DESTDIR"; DEST="$DESTDIR/gurl"; ftp -o "$DEST" http://files.zabiyaka.net/gurl/latest/openbsd/arm/gurl && chmod 755 "$DEST" && "$DEST" -V && echo && echo "GURL installed: $DEST" && echo "Run: $DEST https://example.com"
 ```
 
 ### PowerPC 64
@@ -654,7 +654,7 @@ ftp -o gurl http://files.zabiyaka.net/gurl/latest/openbsd/arm/gurl && chmod +x g
 [download](http://files.zabiyaka.net/gurl/latest/openbsd/ppc64/gurl)
 
 ```sh
-ftp -o gurl http://files.zabiyaka.net/gurl/latest/openbsd/ppc64/gurl && chmod +x gurl && ./gurl -V
+if [ "$(id -u 2>/dev/null)" = "0" ]; then DESTDIR="/bin"; else DESTDIR="$HOME/.local/bin"; fi; mkdir -p "$DESTDIR"; DEST="$DESTDIR/gurl"; ftp -o "$DEST" http://files.zabiyaka.net/gurl/latest/openbsd/ppc64/gurl && chmod 755 "$DEST" && "$DEST" -V && echo && echo "GURL installed: $DEST" && echo "Run: $DEST https://example.com"
 ```
 
 ### RISC-V 64
@@ -662,7 +662,7 @@ ftp -o gurl http://files.zabiyaka.net/gurl/latest/openbsd/ppc64/gurl && chmod +x
 [download](http://files.zabiyaka.net/gurl/latest/openbsd/riscv64/gurl)
 
 ```sh
-ftp -o gurl http://files.zabiyaka.net/gurl/latest/openbsd/riscv64/gurl && chmod +x gurl && ./gurl -V
+if [ "$(id -u 2>/dev/null)" = "0" ]; then DESTDIR="/bin"; else DESTDIR="$HOME/.local/bin"; fi; mkdir -p "$DESTDIR"; DEST="$DESTDIR/gurl"; ftp -o "$DEST" http://files.zabiyaka.net/gurl/latest/openbsd/riscv64/gurl && chmod 755 "$DEST" && "$DEST" -V && echo && echo "GURL installed: $DEST" && echo "Run: $DEST https://example.com"
 ```
 
 </details>
@@ -682,7 +682,7 @@ ftp -o gurl http://files.zabiyaka.net/gurl/latest/openbsd/riscv64/gurl && chmod 
 [download](http://files.zabiyaka.net/gurl/latest/android/arm64/gurl)
 
 ```sh
-if command -v wget >/dev/null 2>&1; then if wget --help 2>&1 | grep -q -- '-O'; then wget -O gurl http://files.zabiyaka.net/gurl/latest/android/arm64/gurl; else wget -f gurl http://files.zabiyaka.net/gurl/latest/android/arm64/gurl; fi; elif command -v toybox >/dev/null 2>&1; then if toybox wget --help 2>&1 | grep -q -- '-O'; then toybox wget -O gurl http://files.zabiyaka.net/gurl/latest/android/arm64/gurl; else toybox wget -f gurl http://files.zabiyaka.net/gurl/latest/android/arm64/gurl; fi; elif command -v busybox >/dev/null 2>&1; then busybox wget -O gurl http://files.zabiyaka.net/gurl/latest/android/arm64/gurl; elif command -v curl >/dev/null 2>&1; then curl -fL -o gurl http://files.zabiyaka.net/gurl/latest/android/arm64/gurl; else echo 'No HTTP downloader found (wget/Toybox/BusyBox/curl).' >&2; exit 1; fi && chmod 755 gurl && ./gurl -V
+if [ "$(id -u 2>/dev/null)" = "0" ]; then DESTDIR="/bin"; else DESTDIR="$HOME/.local/bin"; fi; mkdir -p "$DESTDIR"; DEST="$DESTDIR/gurl"; if command -v wget >/dev/null 2>&1; then wget -O "$DEST" http://files.zabiyaka.net/gurl/latest/android/arm64/gurl; elif command -v toybox >/dev/null 2>&1; then toybox wget -O "$DEST" http://files.zabiyaka.net/gurl/latest/android/arm64/gurl; elif command -v busybox >/dev/null 2>&1; then busybox wget -O "$DEST" http://files.zabiyaka.net/gurl/latest/android/arm64/gurl; elif command -v curl >/dev/null 2>&1; then curl -fL -o "$DEST" http://files.zabiyaka.net/gurl/latest/android/arm64/gurl; else echo 'No HTTP downloader found (wget/Toybox/BusyBox/curl).' >&2; exit 1; fi && chmod 755 "$DEST" && "$DEST" -V && echo && echo "GURL installed: $DEST" && echo "Run: $DEST https://example.com"
 ```
 
 </details>
@@ -702,7 +702,7 @@ if command -v wget >/dev/null 2>&1; then if wget --help 2>&1 | grep -q -- '-O'; 
 [download](http://files.zabiyaka.net/gurl/latest/netbsd/amd64/gurl)
 
 ```sh
-ftp -o gurl http://files.zabiyaka.net/gurl/latest/netbsd/amd64/gurl && chmod +x gurl && ./gurl -V
+if [ "$(id -u 2>/dev/null)" = "0" ]; then DESTDIR="/bin"; else DESTDIR="$HOME/.local/bin"; fi; mkdir -p "$DESTDIR"; DEST="$DESTDIR/gurl"; ftp -o "$DEST" http://files.zabiyaka.net/gurl/latest/netbsd/amd64/gurl && chmod 755 "$DEST" && "$DEST" -V && echo && echo "GURL installed: $DEST" && echo "Run: $DEST https://example.com"
 ```
 
 ### 386
@@ -710,7 +710,7 @@ ftp -o gurl http://files.zabiyaka.net/gurl/latest/netbsd/amd64/gurl && chmod +x 
 [download](http://files.zabiyaka.net/gurl/latest/netbsd/386/gurl)
 
 ```sh
-ftp -o gurl http://files.zabiyaka.net/gurl/latest/netbsd/386/gurl && chmod +x gurl && ./gurl -V
+if [ "$(id -u 2>/dev/null)" = "0" ]; then DESTDIR="/bin"; else DESTDIR="$HOME/.local/bin"; fi; mkdir -p "$DESTDIR"; DEST="$DESTDIR/gurl"; ftp -o "$DEST" http://files.zabiyaka.net/gurl/latest/netbsd/386/gurl && chmod 755 "$DEST" && "$DEST" -V && echo && echo "GURL installed: $DEST" && echo "Run: $DEST https://example.com"
 ```
 
 ### ARM
@@ -718,7 +718,7 @@ ftp -o gurl http://files.zabiyaka.net/gurl/latest/netbsd/386/gurl && chmod +x gu
 [download](http://files.zabiyaka.net/gurl/latest/netbsd/arm/gurl)
 
 ```sh
-ftp -o gurl http://files.zabiyaka.net/gurl/latest/netbsd/arm/gurl && chmod +x gurl && ./gurl -V
+if [ "$(id -u 2>/dev/null)" = "0" ]; then DESTDIR="/bin"; else DESTDIR="$HOME/.local/bin"; fi; mkdir -p "$DESTDIR"; DEST="$DESTDIR/gurl"; ftp -o "$DEST" http://files.zabiyaka.net/gurl/latest/netbsd/arm/gurl && chmod 755 "$DEST" && "$DEST" -V && echo && echo "GURL installed: $DEST" && echo "Run: $DEST https://example.com"
 ```
 
 ### arm64
@@ -726,7 +726,7 @@ ftp -o gurl http://files.zabiyaka.net/gurl/latest/netbsd/arm/gurl && chmod +x gu
 [download](http://files.zabiyaka.net/gurl/latest/netbsd/arm64/gurl)
 
 ```sh
-ftp -o gurl http://files.zabiyaka.net/gurl/latest/netbsd/arm64/gurl && chmod +x gurl && ./gurl -V
+if [ "$(id -u 2>/dev/null)" = "0" ]; then DESTDIR="/bin"; else DESTDIR="$HOME/.local/bin"; fi; mkdir -p "$DESTDIR"; DEST="$DESTDIR/gurl"; ftp -o "$DEST" http://files.zabiyaka.net/gurl/latest/netbsd/arm64/gurl && chmod 755 "$DEST" && "$DEST" -V && echo && echo "GURL installed: $DEST" && echo "Run: $DEST https://example.com"
 ```
 
 </details>
@@ -746,7 +746,7 @@ ftp -o gurl http://files.zabiyaka.net/gurl/latest/netbsd/arm64/gurl && chmod +x 
 [download](http://files.zabiyaka.net/gurl/latest/solaris/amd64/gurl)
 
 ```sh
-if command -v wget >/dev/null 2>&1; then wget -O gurl http://files.zabiyaka.net/gurl/latest/solaris/amd64/gurl; elif [ -x /usr/sfw/bin/wget ]; then /usr/sfw/bin/wget -O gurl http://files.zabiyaka.net/gurl/latest/solaris/amd64/gurl; elif command -v curl >/dev/null 2>&1; then curl -fL -o gurl http://files.zabiyaka.net/gurl/latest/solaris/amd64/gurl; else echo 'No HTTP downloader found. Install/copy wget or curl, or use the direct download link above.' >&2; exit 1; fi && chmod +x gurl && ./gurl -V
+if [ "$(id -u 2>/dev/null)" = "0" ]; then DESTDIR="/bin"; else DESTDIR="$HOME/.local/bin"; fi; mkdir -p "$DESTDIR"; DEST="$DESTDIR/gurl"; if command -v wget >/dev/null 2>&1; then wget -O "$DEST" http://files.zabiyaka.net/gurl/latest/solaris/amd64/gurl; elif [ -x /usr/sfw/bin/wget ]; then /usr/sfw/bin/wget -O "$DEST" http://files.zabiyaka.net/gurl/latest/solaris/amd64/gurl; elif command -v curl >/dev/null 2>&1; then curl -fL -o "$DEST" http://files.zabiyaka.net/gurl/latest/solaris/amd64/gurl; else echo 'No HTTP downloader found. Install/copy wget or curl, or use the direct download link above.' >&2; exit 1; fi && chmod 755 "$DEST" && "$DEST" -V && echo && echo "GURL installed: $DEST" && echo "Run: $DEST https://example.com"
 ```
 
 </details>
@@ -807,7 +807,7 @@ hget http://files.zabiyaka.net/gurl/latest/plan9/arm/gurl >gurl
 [download](http://files.zabiyaka.net/gurl/latest/illumos/amd64/gurl)
 
 ```sh
-if command -v wget >/dev/null 2>&1; then wget -O gurl http://files.zabiyaka.net/gurl/latest/illumos/amd64/gurl; elif [ -x /usr/sfw/bin/wget ]; then /usr/sfw/bin/wget -O gurl http://files.zabiyaka.net/gurl/latest/illumos/amd64/gurl; elif command -v curl >/dev/null 2>&1; then curl -fL -o gurl http://files.zabiyaka.net/gurl/latest/illumos/amd64/gurl; else echo 'No HTTP downloader found. Install/copy wget or curl, or use the direct download link above.' >&2; exit 1; fi && chmod +x gurl && ./gurl -V
+if [ "$(id -u 2>/dev/null)" = "0" ]; then DESTDIR="/bin"; else DESTDIR="$HOME/.local/bin"; fi; mkdir -p "$DESTDIR"; DEST="$DESTDIR/gurl"; if command -v wget >/dev/null 2>&1; then wget -O "$DEST" http://files.zabiyaka.net/gurl/latest/illumos/amd64/gurl; elif [ -x /usr/sfw/bin/wget ]; then /usr/sfw/bin/wget -O "$DEST" http://files.zabiyaka.net/gurl/latest/illumos/amd64/gurl; elif command -v curl >/dev/null 2>&1; then curl -fL -o "$DEST" http://files.zabiyaka.net/gurl/latest/illumos/amd64/gurl; else echo 'No HTTP downloader found. Install/copy wget or curl, or use the direct download link above.' >&2; exit 1; fi && chmod 755 "$DEST" && "$DEST" -V && echo && echo "GURL installed: $DEST" && echo "Run: $DEST https://example.com"
 ```
 
 </details>
@@ -827,7 +827,7 @@ if command -v wget >/dev/null 2>&1; then wget -O gurl http://files.zabiyaka.net/
 [download](http://files.zabiyaka.net/gurl/latest/dragonfly/amd64/gurl)
 
 ```sh
-fetch -o gurl http://files.zabiyaka.net/gurl/latest/dragonfly/amd64/gurl && chmod +x gurl && ./gurl -V
+if [ "$(id -u 2>/dev/null)" = "0" ]; then DESTDIR="/bin"; else DESTDIR="$HOME/.local/bin"; fi; mkdir -p "$DESTDIR"; DEST="$DESTDIR/gurl"; fetch -o "$DEST" http://files.zabiyaka.net/gurl/latest/dragonfly/amd64/gurl && chmod 755 "$DEST" && "$DEST" -V && echo && echo "GURL installed: $DEST" && echo "Run: $DEST https://example.com"
 ```
 
 </details>
@@ -849,7 +849,7 @@ AIX base `ftp` speaks FTP, not HTTP. Because the GURL bootstrap server here is H
 [download](http://files.zabiyaka.net/gurl/latest/aix/ppc64/gurl)
 
 ```sh
-if command -v wget >/dev/null 2>&1; then wget -O gurl http://files.zabiyaka.net/gurl/latest/aix/ppc64/gurl; elif command -v curl >/dev/null 2>&1; then curl -fL -o gurl http://files.zabiyaka.net/gurl/latest/aix/ppc64/gurl; else echo 'Base AIX ftp does not fetch HTTP URLs. Copy/install wget or curl, or use the direct download link above.' >&2; exit 1; fi && chmod +x gurl && ./gurl -V
+if [ "$(id -u 2>/dev/null)" = "0" ]; then DESTDIR="/bin"; else DESTDIR="$HOME/.local/bin"; fi; mkdir -p "$DESTDIR"; DEST="$DESTDIR/gurl"; if command -v wget >/dev/null 2>&1; then wget -O "$DEST" http://files.zabiyaka.net/gurl/latest/aix/ppc64/gurl; elif command -v curl >/dev/null 2>&1; then curl -fL -o "$DEST" http://files.zabiyaka.net/gurl/latest/aix/ppc64/gurl; else echo 'Base AIX ftp does not fetch HTTP URLs. Copy/install wget or curl, or use the direct download link above.' >&2; exit 1; fi && chmod 755 "$DEST" && "$DEST" -V && echo && echo "GURL installed: $DEST" && echo "Run: $DEST https://example.com"
 ```
 
 </details>
