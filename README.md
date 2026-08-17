@@ -24,20 +24,14 @@ One file. Zero dependencies.
 
 **GURL** is a small, standalone command-line HTTP/HTTPS client written in Go.
 
-It is designed for situations where you just need to download a file, call an HTTP endpoint, send POST data, or make a simple request — without installing `curl`, OpenSSL, or a collection of shared libraries.
+It is designed for situations where you just need to download a new software on an old system, call an HTTPS endpoint, send POST data, or make a simple request — without installing `curl`, OpenSSL, or a collection of shared libraries.
 
 TLS support is built into the binary through Go's standard library.
 
 This makes GURL especially useful for:
 
-* minimal Linux installations
-* recovery environments
-* old or unusual systems
-* containers
-* embedded systems
-* automation scripts
-* servers where `curl` or OpenSSL is unavailable
-* copying a single binary between machines
+* installing new software on old operating systems 
+* servers where `curl` or OpenSSL is unavailable or outdated
 
 Just download **one executable** and run it.
 
@@ -356,11 +350,8 @@ echo
 
 Choose your platform and architecture below.
 
-Every target has a direct download link and a ready-to-copy bootstrap command. The command downloads into the **current directory** first, so it does not require `root`, `sudo`, or a writable `/usr/local/bin`.
-
 > The binary URLs intentionally use **HTTP**. This is the bootstrap path for old or minimal systems where HTTPS tools, CA certificates, OpenSSL, or the installed TLS stack may be unavailable or obsolete. After downloading GURL, use GURL itself for HTTPS.
 
-> **Note:** a CPU architecture does not guarantee that a particular downloader is installed. Linux and Android blocks therefore auto-detect common downloaders. AIX has no universal base-system HTTP downloader, so its block uses `wget` or `curl` when available and otherwise stops with an explicit message. WebAssembly/WASI downloads are performed from the host shell.
 
 <details>
 <summary>
@@ -854,71 +845,6 @@ if [ "$(id -u 2>/dev/null)" = "0" ]; then DESTDIR="/bin"; else DESTDIR="$HOME/.l
 
 </details>
 
----
-
-<details>
-<summary>
-  <b><big>WebAssembly</big></b>
-  <br><sub>js / wasm</sub>
-</summary>
-
-<br>
-
-Run this command on the **host system** where the `.wasm` file will be stored.
-
-### js / wasm
-
-[download](http://files.zabiyaka.net/gurl/latest/js/wasm/gurl)
-
-```sh
-if command -v wget >/dev/null 2>&1; then wget -O gurl.wasm http://files.zabiyaka.net/gurl/latest/js/wasm/gurl; elif command -v busybox >/dev/null 2>&1; then busybox wget -O gurl.wasm http://files.zabiyaka.net/gurl/latest/js/wasm/gurl; elif command -v curl >/dev/null 2>&1; then curl -fL -o gurl.wasm http://files.zabiyaka.net/gurl/latest/js/wasm/gurl; else echo 'No HTTP downloader found (wget, BusyBox wget, or curl).' >&2; exit 1; fi
-```
-
-</details>
-
----
-
-<details>
-<summary>
-  <b><big>WASI</big></b>
-  <br><sub>wasip1 / wasm</sub>
-</summary>
-
-<br>
-
-Run this command on the **host system** where the `.wasm` file will be stored.
-
-### wasip1 / wasm
-
-[download](http://files.zabiyaka.net/gurl/latest/wasip1/wasm/gurl)
-
-```sh
-if command -v wget >/dev/null 2>&1; then wget -O gurl.wasm http://files.zabiyaka.net/gurl/latest/wasip1/wasm/gurl; elif command -v busybox >/dev/null 2>&1; then busybox wget -O gurl.wasm http://files.zabiyaka.net/gurl/latest/wasip1/wasm/gurl; elif command -v curl >/dev/null 2>&1; then curl -fL -o gurl.wasm http://files.zabiyaka.net/gurl/latest/wasip1/wasm/gurl; else echo 'No HTTP downloader found (wget, BusyBox wget, or curl).' >&2; exit 1; fi
-```
-
-</details>
-
----
-
-**All GitHub releases:**
-
-https://github.com/matveynator/gurl/releases
-
----
-
-## Why are the binary download links HTTP?
-
-This is intentional.
-
-One of GURL's use cases is bootstrapping old or minimal systems where HTTPS tools, CA certificates, OpenSSL, or even `curl` may not yet be available.
-
-The initial GURL binary can therefore be downloaded over plain HTTP.
-
-Once installed, GURL itself supports both HTTP and HTTPS:
-
-```bash
-gurl https://example.com
-```
 
 ---
 
@@ -970,12 +896,6 @@ gurl --output file.zip https://example.com/file.zip
 
 ```bash
 gurl https://example.com/script.sh | bash
-```
-
-For example:
-
-```bash
-gurl https://raw.githubusercontent.com/matveynator/sysadminscripts/main/label | bash
 ```
 
 ---
@@ -1204,22 +1124,9 @@ These are typical situations where GURL is useful:
 * I need to download one file but `curl` is not installed.
 * I need HTTPS but OpenSSL is unavailable.
 * I need a standalone HTTP client with no external runtime dependencies.
-* I need to bootstrap a minimal server.
 * I need an HTTP client for an old or unusual operating system.
 * I need the same command-line utility on Linux, BSD, macOS, and Windows.
-* I need a small binary I can copy to another machine.
-* I need GET and POST requests without installing a large package.
-* I need to download scripts during server provisioning.
-* I need to send JSON from a shell script.
-* I need to upload a file using multipart/form-data.
-* I need to call an HTTP API from a rescue environment.
-* I need HTTP downloads before HTTPS tooling is configured.
 * I need a curl-like utility compiled with TLS support already included.
-* I need a simple HTTP client for automation.
-
-In short:
-
-> “I just need `curl`, but it isn't there.”
 
 That's what **GURL** is for.
 
