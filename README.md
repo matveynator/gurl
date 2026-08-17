@@ -1,206 +1,699 @@
-<img src="https://github.com/matveynator/gurl/blob/master/gurl.png?raw=true" widht="100%" align="right"></img>
+<div align="center">
 
+# GURL
 
-# GURL: A Simple `curl` Alternative That Works Everywhere
+### A simple `curl` alternative that works almost everywhere.
 
-**GURL** is a lightweight command-line HTTP client with **no external dependencies**. It’s perfect for both modern and old systems, running smoothly without OpenSSL or other libraries. Whether you’re on a cutting-edge Linux server or ancient hardware, GURL just works.
+<img width="100%" alt="GURL" src="https://github.com/matveynator/gurl/blob/master/gurl.png?raw=true" />
+<br>
+
+![HTTP](https://img.shields.io/badge/HTTP-yes-green)
+![HTTPS](https://img.shields.io/badge/HTTPS-yes-green)
+![TLS](https://img.shields.io/badge/TLS-built--in-green)
+![Dependencies](https://img.shields.io/badge/external_dependencies-none-green)
+![Cross Platform](https://img.shields.io/badge/cross--platform-yes-green)
+
+[![Go Report Card](https://goreportcard.com/badge/github.com/matveynator/gurl)](https://goreportcard.com/report/github.com/matveynator/gurl)
+
+</div>
 
 ---
 
-## Download and Install
+## What is GURL?
 
-You can download GURL using `curl` (no HTTPS required) for your platform. Replace `<ARCHIVE_URL>` with the appropriate link for your operating system and architecture from the table below:
+**GURL** is a small, standalone command-line HTTP/HTTPS client written in Go.
+
+It is designed for situations where you just need to download a file, call an HTTP endpoint, send POST data, or make a simple request — without installing `curl`, OpenSSL, or a collection of shared libraries.
+
+TLS support is built into the binary through Go's standard library.
+
+This makes GURL especially useful for:
+
+* minimal Linux installations
+* recovery environments
+* old or unusual systems
+* containers
+* embedded systems
+* automation scripts
+* servers where `curl` or OpenSSL is unavailable
+* copying a single binary between machines
+
+Just download **one executable** and run it.
 
 ```bash
-sudo curl -L http://files.zabiyaka.net/gurl/latest/<PLATFORM>/<ARCH>/gurl -o /usr/local/bin/gurl; 
-sudo chmod +x /usr/local/bin/gurl;
+gurl https://example.com
 ```
 
-Replace `<PLATFORM>` and `<ARCH>` with your system’s name and architecture.
-
----
-
-Here’s the updated table with **all links** properly included for each platform and sorted by popularity. Each section references the full file paths provided.
-
----
-
-## Supported Platforms and Binaries
-
-| **Operating System**                         | **Architectures and Download Links**                                                                                                      |
-|---------------------------------------------|-------------------------------------------------------------------------------------------------------------------------|
-| ![Linux](https://edent.github.io/SuperTinyIcons/images/svg/linux.svg) **Linux**       | [amd64](http://files.zabiyaka.net/gurl/latest/linux/amd64/gurl) [386](http://files.zabiyaka.net/gurl/latest/linux/386/gurl) [arm](http://files.zabiyaka.net/gurl/latest/linux/arm/gurl) [arm64](http://files.zabiyaka.net/gurl/latest/linux/arm64/gurl) [loong64](http://files.zabiyaka.net/gurl/latest/linux/loong64/gurl) [mips](http://files.zabiyaka.net/gurl/latest/linux/mips/gurl) [mipsle](http://files.zabiyaka.net/gurl/latest/linux/mipsle/gurl) [mips64](http://files.zabiyaka.net/gurl/latest/linux/mips64/gurl) [mips64le](http://files.zabiyaka.net/gurl/latest/linux/mips64le/gurl) [ppc64](http://files.zabiyaka.net/gurl/latest/linux/ppc64/gurl) [ppc64le](http://files.zabiyaka.net/gurl/latest/linux/ppc64le/gurl) [riscv64](http://files.zabiyaka.net/gurl/latest/linux/riscv64/gurl) [s390x](http://files.zabiyaka.net/gurl/latest/linux/s390x/gurl) |
-| ![Windows](https://edent.github.io/SuperTinyIcons/images/svg/windows.svg) **Windows**  | [amd64](http://files.zabiyaka.net/gurl/latest/windows/amd64/gurl.exe) [386](http://files.zabiyaka.net/gurl/latest/windows/386/gurl.exe) [arm](http://files.zabiyaka.net/gurl/latest/windows/arm/gurl.exe) [arm64](http://files.zabiyaka.net/gurl/latest/windows/arm64/gurl.exe) |
-| ![macOS](https://edent.github.io/SuperTinyIcons/images/svg/apple.svg) **macOS**        | [amd64](http://files.zabiyaka.net/gurl/latest/mac/amd64/gurl) [arm64](http://files.zabiyaka.net/gurl/latest/mac/arm64/gurl)                        |
-| ![Android](https://edent.github.io/SuperTinyIcons/images/svg/android.svg) **Android**  | [arm64](http://files.zabiyaka.net/gurl/latest/android/arm64/gurl)                                                |
-| ![FreeBSD](https://edent.github.io/SuperTinyIcons/images/svg/freebsd.svg) **FreeBSD**                                  | [amd64](http://files.zabiyaka.net/gurl/latest/freebsd/amd64/gurl) [386](http://files.zabiyaka.net/gurl/latest/freebsd/386/gurl) [arm](http://files.zabiyaka.net/gurl/latest/freebsd/arm/gurl) [arm64](http://files.zabiyaka.net/gurl/latest/freebsd/arm64/gurl) [riscv64](http://files.zabiyaka.net/gurl/latest/freebsd/riscv64/gurl) |
-| **OpenBSD**                                  | [amd64](http://files.zabiyaka.net/gurl/latest/openbsd/amd64/gurl) [386](http://files.zabiyaka.net/gurl/latest/openbsd/386/gurl) [arm](http://files.zabiyaka.net/gurl/latest/openbsd/arm/gurl) [arm64](http://files.zabiyaka.net/gurl/latest/openbsd/arm64/gurl) [ppc64](http://files.zabiyaka.net/gurl/latest/openbsd/ppc64/gurl) [riscv64](http://files.zabiyaka.net/gurl/latest/openbsd/riscv64/gurl) |
-| ![NetBSD](https://edent.github.io/SuperTinyIcons/images/svg/netbsd.svg)  **NetBSD**                                   | [amd64](http://files.zabiyaka.net/gurl/latest/netbsd/amd64/gurl) [386](http://files.zabiyaka.net/gurl/latest/netbsd/386/gurl) [arm](http://files.zabiyaka.net/gurl/latest/netbsd/arm/gurl) [arm64](http://files.zabiyaka.net/gurl/latest/netbsd/arm64/gurl) |
-| **Solaris**                                  | [amd64](http://files.zabiyaka.net/gurl/latest/solaris/amd64/gurl)                                                |
-| **Plan 9**                                   | [amd64](http://files.zabiyaka.net/gurl/latest/plan9/amd64/gurl) [386](http://files.zabiyaka.net/gurl/latest/plan9/386/gurl) [arm](http://files.zabiyaka.net/gurl/latest/plan9/arm/gurl) |
-| **Illumos**                                  | [amd64](http://files.zabiyaka.net/gurl/latest/illumos/amd64/gurl)                                                |
-| **DragonFlyBSD**                             | [amd64](http://files.zabiyaka.net/gurl/latest/dragonfly/amd64/gurl)                                              |
-| **AIX**                                      | [ppc64](http://files.zabiyaka.net/gurl/latest/aix/ppc64/gurl)                                                    |
-| **Wasm**                                     | [js/wasm](http://files.zabiyaka.net/gurl/latest/js/wasm/gurl)                                                   |
-| **Wasi**                                     | [wasip1](http://files.zabiyaka.net/gurl/latest/wasip1/wasm/gurl)                                                 |
-
----
-
-> **Note:** Replace `/usr/local/bin` with an appropriate directory for your system if you lack permissions.
-
----
-
-## Installation:
-
-1. **Download and Install for Linux x86_64**:
-   ```bash
-   sudo curl -L http://files.zabiyaka.net/gurl/latest/linux/amd64/gurl -o /usr/local/bin/gurl; sudo chmod +x /usr/local/bin/gurl; 
-   ```
-
-2. **Download and Install for Windows (PowerShell)**:
-   ```powershell
-   Invoke-WebRequest -Uri http://files.zabiyaka.net/gurl/latest/windows/amd64/gurl.exe -OutFile gurl.exe
-   ```
-
----
-
-## How to Use GURL
-
-GURL supports clear and descriptive options to make usage intuitive. Here are practical examples:
-
----
-
-### 1. **Basic GET Request**
+If no protocol is specified, GURL uses `http://`:
 
 ```bash
 gurl example.com
 ```
-Sends a simple GET request and outputs the response to the terminal.
 
 ---
 
-### 2. **Save Response to a File**
+# Downloads / Скачать
+
+
+<details>
+<summary>
+  <img width="42" alt="linux" src="https://github.com/user-attachments/assets/bf3141b6-4c93-4fd6-b2d1-421b79876dcb" />
+  <b><big>Linux</big></b>
+  <sub>amd64 / arm64 / 386 / ARM / MIPS / RISC-V / PPC / s390x / LoongArch</sub>
+</summary>
+
+<br>
+
+### amd64 / x86_64
+
+[download](http://files.zabiyaka.net/gurl/latest/linux/amd64/gurl)
 
 ```bash
-gurl --output output.txt http://example.com
+sudo curl -L -o /usr/local/bin/gurl http://files.zabiyaka.net/gurl/latest/linux/amd64/gurl; sudo chmod +x /usr/local/bin/gurl
 ```
-The `--output` option saves the response body to `output.txt` instead of displaying it in the terminal.
 
----
-
-### 3. **POST Data**
+Or, if you already have an older GURL:
 
 ```bash
-gurl --request POST --data "key=value&key2=value2" http://example.com
+sudo gurl -o /usr/local/bin/gurl http://files.zabiyaka.net/gurl/latest/linux/amd64/gurl; sudo chmod +x /usr/local/bin/gurl
 ```
-Sends a POST request with form data using `--data` and explicitly sets the HTTP method with `--request`.
 
----
+### arm64 / aarch64
 
-### 4. **Upload Files and Fields (Multipart Form Data)**
+[download](http://files.zabiyaka.net/gurl/latest/linux/arm64/gurl)
 
 ```bash
-gurl --form "key=value" --form "file=@/path/to/file" http://example.com
+sudo curl -L -o /usr/local/bin/gurl http://files.zabiyaka.net/gurl/latest/linux/arm64/gurl; sudo chmod +x /usr/local/bin/gurl
 ```
-Uploads both text fields and files using the `--form` option. Use `key=@/path/to/file` to upload files.
+
+### 386 / x86
+
+[download](http://files.zabiyaka.net/gurl/latest/linux/386/gurl)
+
+### ARM
+
+[download](http://files.zabiyaka.net/gurl/latest/linux/arm/gurl)
+
+### LoongArch 64
+
+[download](http://files.zabiyaka.net/gurl/latest/linux/loong64/gurl)
+
+### MIPS
+
+[download](http://files.zabiyaka.net/gurl/latest/linux/mips/gurl)
+
+### MIPS little-endian
+
+[download](http://files.zabiyaka.net/gurl/latest/linux/mipsle/gurl)
+
+### MIPS64
+
+[download](http://files.zabiyaka.net/gurl/latest/linux/mips64/gurl)
+
+### MIPS64 little-endian
+
+[download](http://files.zabiyaka.net/gurl/latest/linux/mips64le/gurl)
+
+### PowerPC 64
+
+[download](http://files.zabiyaka.net/gurl/latest/linux/ppc64/gurl)
+
+### PowerPC 64 little-endian
+
+[download](http://files.zabiyaka.net/gurl/latest/linux/ppc64le/gurl)
+
+### RISC-V 64
+
+[download](http://files.zabiyaka.net/gurl/latest/linux/riscv64/gurl)
+
+### IBM s390x
+
+[download](http://files.zabiyaka.net/gurl/latest/linux/s390x/gurl)
+
+</details>
 
 ---
 
-### 5. **Custom Headers**
+<details>
+<summary>
+  <img width="36" alt="mac" src="https://github.com/user-attachments/assets/946102b8-f043-494d-809a-a589e536ee9a" />
+  <b><big>macOS</big></b>
+  <sub>Intel / Apple Silicon</sub>
+</summary>
+
+<br>
+
+### Intel / amd64
+
+[download](http://files.zabiyaka.net/gurl/latest/mac/amd64/gurl)
 
 ```bash
-gurl --header "Authorization: Bearer TOKEN" --header "Content-Type: application/json" http://example.com
+sudo mkdir -p /usr/local/bin; sudo curl -L -o /usr/local/bin/gurl http://files.zabiyaka.net/gurl/latest/mac/amd64/gurl; sudo chmod +x /usr/local/bin/gurl
 ```
-Use `--header` to include custom headers in the request.
 
----
+### Apple Silicon / arm64
 
-### 6. **Send Cookies**
+[download](http://files.zabiyaka.net/gurl/latest/mac/arm64/gurl)
 
 ```bash
-gurl --cookie "session_id=abc123; user=example" http://example.com
+sudo mkdir -p /usr/local/bin; sudo curl -L -o /usr/local/bin/gurl http://files.zabiyaka.net/gurl/latest/mac/arm64/gurl; sudo chmod +x /usr/local/bin/gurl
 ```
-The `--cookie` option sends cookies with the request.
+
+</details>
 
 ---
 
-### 7. **Fail Silently on HTTP Errors**
+<details>
+<summary>
+  <img width="42" alt="windows" src="https://github.com/user-attachments/assets/f6044001-95b0-4500-a4f6-1c3b08eb65fb" />
+  <b><big>Windows</big></b>
+  <sub>amd64 / arm64 / 386 / ARM</sub>
+</summary>
+
+<br>
+
+### amd64
+
+[download](http://files.zabiyaka.net/gurl/latest/windows/amd64/gurl.exe)
+
+```powershell
+$p="$env:ProgramFiles\gurl\gurl.exe"; New-Item -ItemType Directory -Force -Path (Split-Path $p) | Out-Null; Invoke-WebRequest -Uri "http://files.zabiyaka.net/gurl/latest/windows/amd64/gurl.exe" -OutFile $p; & $p -V
+```
+
+### arm64
+
+[download](http://files.zabiyaka.net/gurl/latest/windows/arm64/gurl.exe)
+
+```powershell
+$p="$env:ProgramFiles\gurl\gurl.exe"; New-Item -ItemType Directory -Force -Path (Split-Path $p) | Out-Null; Invoke-WebRequest -Uri "http://files.zabiyaka.net/gurl/latest/windows/arm64/gurl.exe" -OutFile $p; & $p -V
+```
+
+### 386
+
+[download](http://files.zabiyaka.net/gurl/latest/windows/386/gurl.exe)
+
+### ARM
+
+[download](http://files.zabiyaka.net/gurl/latest/windows/arm/gurl.exe)
+
+</details>
+
+---
+
+<details>
+<summary>
+  <img width="42" alt="freebsd" src="https://github.com/user-attachments/assets/d35baaac-d296-41b1-a281-55dc761328e9" />
+  <b><big>FreeBSD</big></b>
+  <sub>amd64 / arm64 / 386 / ARM / RISC-V</sub>
+</summary>
+
+<br>
+
+### amd64
+
+[download](http://files.zabiyaka.net/gurl/latest/freebsd/amd64/gurl)
 
 ```bash
-gurl --fail http://example.com/404
+sudo fetch -o /usr/local/bin/gurl http://files.zabiyaka.net/gurl/latest/freebsd/amd64/gurl; sudo chmod +x /usr/local/bin/gurl
 ```
-If an HTTP error (4xx or 5xx) is returned, GURL exits with a **non-zero error code** and suppresses the response body.
 
----
+### arm64
 
-### 8. **HEAD Request**
+[download](http://files.zabiyaka.net/gurl/latest/freebsd/arm64/gurl)
 
 ```bash
-gurl --head http://example.com
+sudo fetch -o /usr/local/bin/gurl http://files.zabiyaka.net/gurl/latest/freebsd/arm64/gurl; sudo chmod +x /usr/local/bin/gurl
 ```
-The `--head` option retrieves only the response headers.
+
+### 386
+
+[download](http://files.zabiyaka.net/gurl/latest/freebsd/386/gurl)
+
+### ARM
+
+[download](http://files.zabiyaka.net/gurl/latest/freebsd/arm/gurl)
+
+### RISC-V 64
+
+[download](http://files.zabiyaka.net/gurl/latest/freebsd/riscv64/gurl)
+
+</details>
 
 ---
 
-### 9. **Set User-Agent**
+<details>
+<summary>
+  <img width="42" alt="openbsd" src="https://github.com/user-attachments/assets/11633d7e-5744-46da-ad2f-6e49c69e51de" />
+  <b><big>OpenBSD</big></b>
+  <sub>amd64 / arm64 / 386 / ARM / PPC64 / RISC-V</sub>
+</summary>
+
+<br>
+
+### amd64
+
+[download](http://files.zabiyaka.net/gurl/latest/openbsd/amd64/gurl)
 
 ```bash
-gurl --useragent "CustomUserAgent/1.0" http://example.com
+sudo ftp -o /usr/local/bin/gurl http://files.zabiyaka.net/gurl/latest/openbsd/amd64/gurl; sudo chmod +x /usr/local/bin/gurl
 ```
-The `--useragent` option specifies a custom User-Agent header.
 
----
+### arm64
 
-### 10. **Set a Timeout**
+[download](http://files.zabiyaka.net/gurl/latest/openbsd/arm64/gurl)
 
 ```bash
-gurl --timeout 10s http://example.com
+sudo ftp -o /usr/local/bin/gurl http://files.zabiyaka.net/gurl/latest/openbsd/arm64/gurl; sudo chmod +x /usr/local/bin/gurl
 ```
-The `--timeout` option sets the maximum time GURL will wait for a response (e.g., `10s`, `1m`).
+
+### 386
+
+[download](http://files.zabiyaka.net/gurl/latest/openbsd/386/gurl)
+
+### ARM
+
+[download](http://files.zabiyaka.net/gurl/latest/openbsd/arm/gurl)
+
+### PowerPC 64
+
+[download](http://files.zabiyaka.net/gurl/latest/openbsd/ppc64/gurl)
+
+### RISC-V 64
+
+[download](http://files.zabiyaka.net/gurl/latest/openbsd/riscv64/gurl)
+
+</details>
 
 ---
 
-### 11. **Download a File with Progress Display**
+<details>
+<summary>
+  <b><big>Other platforms</big></b>
+  <sub>NetBSD / Android / Solaris / Plan 9 / Illumos / DragonFlyBSD / AIX / WebAssembly</sub>
+</summary>
+
+<br>
+
+### Android
+
+**arm64** · [download](http://files.zabiyaka.net/gurl/latest/android/arm64/gurl)
+
+### NetBSD
+
+**amd64** · [download](http://files.zabiyaka.net/gurl/latest/netbsd/amd64/gurl)  
+**386** · [download](http://files.zabiyaka.net/gurl/latest/netbsd/386/gurl)  
+**arm** · [download](http://files.zabiyaka.net/gurl/latest/netbsd/arm/gurl)  
+**arm64** · [download](http://files.zabiyaka.net/gurl/latest/netbsd/arm64/gurl)
+
+### Solaris
+
+**amd64** · [download](http://files.zabiyaka.net/gurl/latest/solaris/amd64/gurl)
+
+### Plan 9
+
+**amd64** · [download](http://files.zabiyaka.net/gurl/latest/plan9/amd64/gurl)  
+**386** · [download](http://files.zabiyaka.net/gurl/latest/plan9/386/gurl)  
+**arm** · [download](http://files.zabiyaka.net/gurl/latest/plan9/arm/gurl)
+
+### Illumos
+
+**amd64** · [download](http://files.zabiyaka.net/gurl/latest/illumos/amd64/gurl)
+
+### DragonFlyBSD
+
+**amd64** · [download](http://files.zabiyaka.net/gurl/latest/dragonfly/amd64/gurl)
+
+### AIX
+
+**ppc64** · [download](http://files.zabiyaka.net/gurl/latest/aix/ppc64/gurl)
+
+### WebAssembly
+
+**js/wasm** · [download](http://files.zabiyaka.net/gurl/latest/js/wasm/gurl)
+
+### WASI
+
+**wasip1/wasm** · [download](http://files.zabiyaka.net/gurl/latest/wasip1/wasm/gurl)
+
+</details>
+
+---
+
+**All GitHub releases:**
+
+https://github.com/matveynator/gurl/releases
+
+---
+
+## Why are the binary download links HTTP?
+
+This is intentional.
+
+One of GURL's use cases is bootstrapping old or minimal systems where HTTPS tools, CA certificates, OpenSSL, or even `curl` may not yet be available.
+
+The initial GURL binary can therefore be downloaded over plain HTTP.
+
+Once installed, GURL itself supports both HTTP and HTTPS:
 
 ```bash
-gurl http://example.com/file.txt --output file.txt
+gurl https://example.com
 ```
-When using `--output` to save a file, GURL automatically displays a download progress bar.
 
 ---
 
-### 12. **Silent Mode for Scripting**
+# Usage / Как пользоваться
+
+Basic syntax:
+
+```text
+gurl [options] <URL>
+```
+
+Simple GET request:
 
 ```bash
-gurl --silent http://example.com > output.html
+gurl https://example.com
 ```
-The `--silent` option suppresses all output, including progress and headers, for clean scripting.
 
----
-
-### 13. **Send JSON Data**
+A URL without a scheme automatically uses HTTP:
 
 ```bash
-gurl --request POST --header "Content-Type: application/json" --data '{"key":"value"}' http://example.com
+gurl example.com
 ```
-Combines `--header` for content type and `--data` for JSON payload.
 
----
-
-### 14. **Verbose Output for Debugging**
+Equivalent to:
 
 ```bash
-gurl --verbose http://example.com
+gurl http://example.com
 ```
-The `--verbose` option prints detailed request and response information, useful for debugging.
 
 ---
 
-### 15. **Handle Timeouts and Failures**
+## Examples / Примеры
+
+### Download a file
 
 ```bash
-gurl --timeout 5s --fail http://example.com
+gurl -o file.zip https://example.com/file.zip
 ```
-Combines `--timeout` for a 5-second limit and `--fail` to exit silently on HTTP errors.
+
+or:
+
+```bash
+gurl --output file.zip https://example.com/file.zip
+```
 
 ---
 
+### Use GURL in shell scripts
+
+```bash
+gurl https://example.com/script.sh | bash
+```
+
+For example:
+
+```bash
+gurl https://raw.githubusercontent.com/matveynator/sysadminscripts/main/label | bash
+```
+
+---
+
+### POST data
+
+```bash
+gurl -d "key=value&key2=value2" https://example.com
+```
+
+or:
+
+```bash
+gurl --data "key=value&key2=value2" https://example.com
+```
+
+When `-d` / `--data` is used, GURL automatically performs a POST request.
+
+---
+
+### Send JSON
+
+```bash
+gurl -H "Content-Type: application/json" -d '{"key":"value"}' https://example.com/api
+```
+
+---
+
+### Multipart form
+
+Text fields and files can be supplied in one `-F` argument separated by `&`:
+
+```bash
+gurl -F "name=test&file=@/tmp/file.txt" https://example.com/upload
+```
+
+---
+
+### Custom HTTP method
+
+```bash
+gurl -X DELETE https://example.com/api/item
+```
+
+```bash
+gurl -X PUT https://example.com/api/item
+```
+
+---
+
+### Custom header
+
+```bash
+gurl -H "Authorization: Bearer TOKEN" https://example.com/api
+```
+
+or:
+
+```bash
+gurl --header "Authorization: Bearer TOKEN" https://example.com/api
+```
+
+---
+
+### Cookies
+
+```bash
+gurl -b "session_id=abc123" https://example.com
+```
+
+or:
+
+```bash
+gurl --cookie "session_id=abc123" https://example.com
+```
+
+---
+
+### HEAD request
+
+```bash
+gurl -I https://example.com
+```
+
+or:
+
+```bash
+gurl --head https://example.com
+```
+
+---
+
+### Custom User-Agent
+
+```bash
+gurl -A "MyClient/1.0" https://example.com
+```
+
+or:
+
+```bash
+gurl --useragent "MyClient/1.0" https://example.com
+```
+
+---
+
+### Timeout
+
+```bash
+gurl -m 10s https://example.com
+```
+
+or:
+
+```bash
+gurl --timeout 10s https://example.com
+```
+
+The default timeout is **30 seconds**.
+
+---
+
+### Ignore TLS certificate verification
+
+Useful for self-signed certificates:
+
+```bash
+gurl -k https://192.168.1.1
+```
+
+or:
+
+```bash
+gurl --unsafe https://192.168.1.1
+```
+
+> **Warning:** disabling certificate verification reduces connection security.
+
+---
+
+### Fail on HTTP errors
+
+```bash
+gurl --fail https://example.com/not-found
+```
+
+For HTTP status `400` and above, GURL exits with error code `22`.
+
+This is useful in shell scripts:
+
+```bash
+gurl --fail https://example.com/file || echo "Download failed"
+```
+
+---
+
+### Redirects
+
+GURL follows HTTP redirects by default.
+
+```bash
+gurl https://example.com
+```
+
+The compatible `-L` / `--location` option is also available.
+
+---
+
+### Show version
+
+```bash
+gurl -V
+```
+
+or:
+
+```bash
+gurl --version
+```
+
+---
+
+## Flags / Флаги
+
+```text
+-V, --version       show GURL version
+
+-m, --timeout       request timeout
+                    default: 30s
+
+-A, --useragent     custom User-Agent
+                    default: GURL
+
+-k, --unsafe        disable TLS certificate verification
+
+-d, --data          send POST data
+
+-F                   multipart form:
+                     key=value
+                     key=@file
+                     multiple fields separated with "&"
+
+-b, --cookie        send Cookie header
+
+-I, --head          perform HEAD request
+
+-H, --header        send a custom HTTP header
+
+-o, --output        save response body to a file
+
+-L, --location      follow redirects
+                    enabled by default
+
+--fail               return an error for HTTP status >= 400
+
+-X                    custom HTTP method
+                     default: GET
+```
+
+---
+
+# Common Problems Solved by GURL
+
+These are typical situations where GURL is useful:
+
+* I need to download one file but `curl` is not installed.
+* I need HTTPS but OpenSSL is unavailable.
+* I need a standalone HTTP client with no external runtime dependencies.
+* I need to bootstrap a minimal server.
+* I need an HTTP client for an old or unusual operating system.
+* I need the same command-line utility on Linux, BSD, macOS, and Windows.
+* I need a small binary I can copy to another machine.
+* I need GET and POST requests without installing a large package.
+* I need to download scripts during server provisioning.
+* I need to send JSON from a shell script.
+* I need to upload a file using multipart/form-data.
+* I need to call an HTTP API from a rescue environment.
+* I need HTTP downloads before HTTPS tooling is configured.
+* I need a curl-like utility compiled with TLS support already included.
+* I need a simple HTTP client for automation.
+
+In short:
+
+> “I just need `curl`, but it isn't there.”
+
+That's what **GURL** is for.
+
+One binary.  
+No external libraries.  
+HTTP and HTTPS.  
+Runs on a lot of platforms.
+
+---
+
+## Build from source
+
+Clone the repository:
+
+```bash
+git clone https://github.com/matveynator/gurl.git
+cd gurl
+```
+
+Build:
+
+```bash
+go build -o gurl gurl.go
+```
+
+Run:
+
+```bash
+./gurl https://example.com
+```
+
+---
+
+## Source
+
+https://github.com/matveynator/gurl
+
+Contributions and fixes are welcome.
