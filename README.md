@@ -366,7 +366,7 @@ Every target has a direct download link and a ready-to-copy bootstrap command. T
 <summary>
   <img width="42" alt="Linux" src="https://github.com/user-attachments/assets/bf3141b6-4c93-4fd6-b2d1-421b79876dcb" />
   <b><big>Linux</big></b>
-  <sub>amd64 / arm64 / 386 / ARM / LoongArch / MIPS / PPC64 / RISC-V / s390x</sub>
+  <br><sub>amd64 / arm64 / 386 / ARM / LoongArch / MIPS / PPC64 / RISC-V / s390x</sub>
 </summary>
 
 <br>
@@ -483,7 +483,7 @@ if [ "$(id -u 2>/dev/null)" = "0" ]; then DESTDIR="/bin"; else DESTDIR="$HOME/.l
 <summary>
   <img width="36" alt="macOS" src="https://github.com/user-attachments/assets/946102b8-f043-494d-809a-a589e536ee9a" />
   <b><big>macOS</big></b>
-  <sub>Intel / Apple Silicon</sub>
+  <br><sub>Intel / Apple Silicon</sub>
 </summary>
 
 <br>
@@ -512,7 +512,7 @@ if [ "$(id -u 2>/dev/null)" = "0" ]; then DESTDIR="/bin"; else DESTDIR="$HOME/.l
 <summary>
   <img width="42" alt="Windows" src="https://github.com/user-attachments/assets/f6044001-95b0-4500-a4f6-1c3b08eb65fb" />
   <b><big>Windows</big></b>
-  <sub>amd64 / arm64 / 386 / ARM</sub>
+  <br><sub>amd64 / arm64 / 386 / ARM</sub>
 </summary>
 
 <br>
@@ -559,7 +559,7 @@ The command uses `System.Net.WebClient`, which works with older Windows PowerShe
 <summary>
   <img width="42" alt="FreeBSD" src="https://github.com/user-attachments/assets/d35baaac-d296-41b1-a281-55dc761328e9" />
   <b><big>FreeBSD</big></b>
-  <sub>amd64 / arm64 / 386 / ARM / RISC-V</sub>
+  <br><sub>amd64 / arm64 / 386 / ARM / RISC-V</sub>
 </summary>
 
 <br>
@@ -612,7 +612,7 @@ if [ "$(id -u 2>/dev/null)" = "0" ]; then DESTDIR="/bin"; else DESTDIR="$HOME/.l
 <summary>
   <img width="42" alt="OpenBSD" src="https://github.com/user-attachments/assets/11633d7e-5744-46da-ad2f-6e49c69e51de" />
   <b><big>OpenBSD</big></b>
-  <sub>amd64 / arm64 / 386 / ARM / PPC64 / RISC-V</sub>
+  <br><sub>amd64 / arm64 / 386 / ARM / PPC64 / RISC-V</sub>
 </summary>
 
 <br>
@@ -672,7 +672,7 @@ if [ "$(id -u 2>/dev/null)" = "0" ]; then DESTDIR="/bin"; else DESTDIR="$HOME/.l
 <details>
 <summary>
   <b><big>Android</big></b>
-  <sub>arm64</sub>
+  <br><sub>arm64</sub>
 </summary>
 
 <br>
@@ -692,7 +692,7 @@ if [ "$(id -u 2>/dev/null)" = "0" ]; then DESTDIR="/bin"; else DESTDIR="$HOME/.l
 <details>
 <summary>
   <b><big>NetBSD</big></b>
-  <sub>amd64 / 386 / ARM / arm64</sub>
+  <br><sub>amd64 / 386 / ARM / arm64</sub>
 </summary>
 
 <br>
@@ -736,7 +736,7 @@ if [ "$(id -u 2>/dev/null)" = "0" ]; then DESTDIR="/bin"; else DESTDIR="$HOME/.l
 <details>
 <summary>
   <b><big>Solaris</big></b>
-  <sub>amd64</sub>
+  <br><sub>amd64</sub>
 </summary>
 
 <br>
@@ -756,7 +756,7 @@ if [ "$(id -u 2>/dev/null)" = "0" ]; then DESTDIR="/bin"; else DESTDIR="$HOME/.l
 <details>
 <summary>
   <b><big>Plan 9</big></b>
-  <sub>amd64 / 386 / ARM</sub>
+  <br><sub>amd64 / 386 / ARM</sub>
 </summary>
 
 <br>
@@ -797,7 +797,7 @@ hget http://files.zabiyaka.net/gurl/latest/plan9/arm/gurl >gurl
 <details>
 <summary>
   <b><big>Illumos</big></b>
-  <sub>amd64</sub>
+  <br><sub>amd64</sub>
 </summary>
 
 <br>
@@ -817,7 +817,7 @@ if [ "$(id -u 2>/dev/null)" = "0" ]; then DESTDIR="/bin"; else DESTDIR="$HOME/.l
 <details>
 <summary>
   <b><big>DragonFly BSD</big></b>
-  <sub>amd64</sub>
+  <br><sub>amd64</sub>
 </summary>
 
 <br>
@@ -837,7 +837,7 @@ if [ "$(id -u 2>/dev/null)" = "0" ]; then DESTDIR="/bin"; else DESTDIR="$HOME/.l
 <details>
 <summary>
   <b><big>AIX</big></b>
-  <sub>ppc64</sub>
+  <br><sub>ppc64</sub>
 </summary>
 
 <br>
@@ -859,7 +859,7 @@ if [ "$(id -u 2>/dev/null)" = "0" ]; then DESTDIR="/bin"; else DESTDIR="$HOME/.l
 <details>
 <summary>
   <b><big>WebAssembly</big></b>
-  <sub>js / wasm</sub>
+  <br><sub>js / wasm</sub>
 </summary>
 
 <br>
@@ -881,7 +881,7 @@ if command -v wget >/dev/null 2>&1; then wget -O gurl.wasm http://files.zabiyaka
 <details>
 <summary>
   <b><big>WASI</big></b>
-  <sub>wasip1 / wasm</sub>
+  <br><sub>wasip1 / wasm</sub>
 </summary>
 
 <br>
