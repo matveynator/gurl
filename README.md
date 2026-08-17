@@ -56,7 +56,7 @@ gurl example.com
 <details>
 <summary>
   <b><big>Universal installer / Универсальная установка</big></b>
-  <sub>auto-detect OS/ARCH · root → /bin · user → ~/.local/bin</sub>
+  <br><sub>auto-detect OS/ARCH · root → /bin · user → ~/.local/bin</sub>
 </summary>
 
 <br>
