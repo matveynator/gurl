@@ -665,10 +665,6 @@ func classifyRequestError(err error) int {
 	if errors.As(err, &dnsError) {
 		return exitResolveHost
 	}
-	var verificationError *tls.CertificateVerificationError
-	if errors.As(err, &verificationError) {
-		return exitCertificate
-	}
 	var unknownAuthorityError x509.UnknownAuthorityError
 	if errors.As(err, &unknownAuthorityError) {
 		return exitCertificate

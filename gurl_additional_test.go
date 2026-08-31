@@ -287,7 +287,6 @@ func TestRequestErrorClassification(t *testing.T) {
 		{err: context.DeadlineExceeded, exitCode: exitTimeout},
 		{err: timeoutError{}, exitCode: exitTimeout},
 		{err: &net.DNSError{Err: "missing", Name: "invalid.example"}, exitCode: exitResolveHost},
-		{err: &tls.CertificateVerificationError{Err: x509.UnknownAuthorityError{}}, exitCode: exitCertificate},
 		{err: x509.UnknownAuthorityError{}, exitCode: exitCertificate},
 		{err: x509.HostnameError{Host: "example.com"}, exitCode: exitCertificate},
 		{err: x509.CertificateInvalidError{Reason: x509.Expired}, exitCode: exitCertificate},
