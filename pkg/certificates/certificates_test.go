@@ -20,3 +20,9 @@ func TestEmbeddedCertificateBundle(t *testing.T) {
 		t.Fatalf("embedded root count = %d", rootCount)
 	}
 }
+
+func TestInvalidCertificateBundle(t *testing.T) {
+	if _, err := poolFromPEM([]byte("not a certificate")); err == nil {
+		t.Fatal("invalid certificate bundle was accepted")
+	}
+}

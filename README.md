@@ -15,6 +15,10 @@ One file. Zero SSL dependencies.
 ![Cross Platform](https://img.shields.io/badge/cross--platform-yes-green)
 
 [![Go Report Card](https://goreportcard.com/badge/github.com/matveynator/gurl)](https://goreportcard.com/report/github.com/matveynator/gurl)
+[![Go Reference](https://pkg.go.dev/badge/github.com/matveynator/gurl.svg)](https://pkg.go.dev/github.com/matveynator/gurl)
+[![Quality](https://github.com/matveynator/gurl/actions/workflows/quality.yml/badge.svg)](https://github.com/matveynator/gurl/actions/workflows/quality.yml)
+[![codecov](https://codecov.io/gh/matveynator/gurl/graph/badge.svg)](https://app.codecov.io/gh/matveynator/gurl)
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](LICENSE)
 
 </div>
 
@@ -1183,6 +1187,33 @@ Run:
 ```bash
 ./gurl https://example.com
 ```
+
+---
+
+## Test
+
+Run the complete test suite, race detector, and coverage report:
+
+```bash
+go test -count=1 -race -coverprofile=coverage.out ./...
+go tool cover -func=coverage.out
+```
+
+The same checks run in GitHub Actions. Coverage reports are published to
+[Codecov](https://app.codecov.io/gh/matveynator/gurl).
+
+Release binaries can be cross-compiled with the standalone release utility:
+
+```bash
+go run scripts/crosscompile/crosscompile.go
+```
+
+---
+
+## License
+
+GURL is distributed under the [GNU General Public License v3.0](LICENSE). The
+embedded Mozilla CA bundle is separately distributed under MPL 2.0.
 
 ---
 

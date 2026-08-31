@@ -1,8 +1,4 @@
-// Matvey Gladkikh is the author and contributors are welcome!
-// https://github.com/matveynator/gurl
-// You are free to modify, use and distribute this software.
-// Distributed under GNU General public license.
-
+// Command gurl is a standalone HTTP and HTTPS client with embedded CA roots.
 package main
 
 import (
@@ -26,7 +22,7 @@ import (
 	"strings"
 	"time"
 
-	"gurl/pkg/certificates"
+	"github.com/matveynator/gurl/pkg/certificates"
 )
 
 var version = "dev"

@@ -1,3 +1,8 @@
+//go:build ignore
+
+// Command crosscompile builds GURL for every supported Go target and can deploy
+// the resulting directory tree. It is an explicitly invoked release utility,
+// not a package in the GURL module.
 package main
 
 import (

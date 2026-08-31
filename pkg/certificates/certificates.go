@@ -16,8 +16,12 @@ var certificateBundle []byte
 
 // Pool returns a new certificate pool so each request owns its TLS state.
 func Pool() (*x509.CertPool, error) {
+	return poolFromPEM(certificateBundle)
+}
+
+func poolFromPEM(certificatePEM []byte) (*x509.CertPool, error) {
 	pool := x509.NewCertPool()
-	if !pool.AppendCertsFromPEM(certificateBundle) {
+	if !pool.AppendCertsFromPEM(certificatePEM) {
 		return nil, fmt.Errorf("embedded CA bundle contains no certificates")
 	}
 	return pool, nil
