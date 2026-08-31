@@ -20,6 +20,26 @@ One file. Zero SSL dependencies.
 
 ---
 
+# Common Problems Solved by GURL
+
+These are typical situations where GURL is useful:
+
+* I need to download one file but `curl` is not installed.
+* I need HTTPS but OpenSSL is unavailable.
+* I need a standalone HTTP client with no external runtime dependencies.
+* I need an HTTP client for an old or unusual operating system.
+* I need the same command-line utility on Linux, BSD, macOS, and Windows.
+* I need a curl-like utility compiled with TLS support already included.
+
+That's what **GURL** is for.
+
+One binary.  
+No external libraries.  
+HTTP and HTTPS.  
+Runs on a lot of platforms.
+
+---
+
 ## What is GURL?
 
 **GURL** is a small, standalone command-line HTTP/HTTPS client written in Go.
@@ -48,6 +68,7 @@ gurl example.com
 ```
 
 ---
+
 
 <details>
 <summary>
@@ -1139,25 +1160,6 @@ To update the built-in roots, download a new `cacert.pem` from that source into
 the pinned checksum and root count in `pkg/certificates/certificates_test.go`
 and this section. Run `go test ./...` before publishing binaries.
 
----
-
-# Common Problems Solved by GURL
-
-These are typical situations where GURL is useful:
-
-* I need to download one file but `curl` is not installed.
-* I need HTTPS but OpenSSL is unavailable.
-* I need a standalone HTTP client with no external runtime dependencies.
-* I need an HTTP client for an old or unusual operating system.
-* I need the same command-line utility on Linux, BSD, macOS, and Windows.
-* I need a curl-like utility compiled with TLS support already included.
-
-That's what **GURL** is for.
-
-One binary.  
-No external libraries.  
-HTTP and HTTPS.  
-Runs on a lot of platforms.
 
 ---
 
