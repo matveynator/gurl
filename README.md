@@ -26,7 +26,9 @@ One file. Zero SSL dependencies.
 
 It is designed for situations where you just need to download a new software on an old system, call an HTTPS endpoint, send POST data, or make a simple request — without installing `curl`, OpenSSL, or a collection of shared libraries.
 
-TLS support is built into the binary through Go's standard library.
+TLS support is built into the binary through Go's standard library. GURL also
+embeds the Mozilla CA bundle published by curl, so certificate verification does
+not depend on an old or missing CA store on the host operating system.
 
 This makes GURL especially useful for:
 
@@ -997,7 +999,7 @@ gurl -A "MyClient/1.0" https://example.com
 or:
 
 ```bash
-gurl --useragent "MyClient/1.0" https://example.com
+gurl --user-agent "MyClient/1.0" https://example.com
 ```
 
 ---
@@ -1005,16 +1007,18 @@ gurl --useragent "MyClient/1.0" https://example.com
 ### Timeout
 
 ```bash
-gurl -m 10s https://example.com
+gurl -m 10 https://example.com
 ```
 
 or:
 
 ```bash
-gurl --timeout 10s https://example.com
+gurl --connect-timeout 10 https://example.com
 ```
 
-The default timeout is **30 seconds**.
+`-m` / `--max-time` limits the complete transfer. `--connect-timeout` limits
+connection establishment. Values use curl-compatible seconds and may be
+fractional. There is no total transfer timeout by default.
 
 ---
 
@@ -1054,13 +1058,12 @@ gurl --fail https://example.com/file || echo "Download failed"
 
 ### Redirects
 
-GURL follows HTTP redirects by default.
+Like curl, GURL does not follow HTTP redirects by default. Use `-L` when the
+redirect target should be requested:
 
 ```bash
-gurl https://example.com
+gurl -L https://example.com
 ```
-
-The compatible `-L` / `--location` option is also available.
 
 ---
 
@@ -1081,39 +1084,60 @@ gurl --version
 ## Flags / Флаги
 
 ```text
--V, --version       show GURL version
-
--m, --timeout       request timeout
-                    default: 30s
-
--A, --useragent     custom User-Agent
-                    default: GURL
-
--k, --unsafe        disable TLS certificate verification
-
--d, --data          send POST data
-
--F                   multipart form:
-                     key=value
-                     key=@file
-                     multiple fields separated with "&"
-
--b, --cookie        send Cookie header
-
--I, --head          perform HEAD request
-
--H, --header        send a custom HTTP header
-
--o, --output        save response body to a file
-
--L, --location      follow redirects
-                    enabled by default
-
---fail               return an error for HTTP status >= 400
-
--X                    custom HTTP method
-                     default: GET
+-s, --silent                    silent mode
+-D, --dump-header <file>        write received headers to a file
+-4, --ipv4                      use IPv4 only
+-6, --ipv6                      use IPv6 only
+-L, --location                  follow redirects
+    --trace-ascii <file>        write an ASCII request/response trace
+    --capath <directory>        use certificates from a CA directory
+    --cacert <file>             use a CA certificate bundle
+-g, --globoff                   disable URL globbing (GURL never expands it)
+-k, --insecure                  disable TLS certificate verification
+-I, --head                      perform a HEAD request and print headers
+-A, --user-agent <name>        set User-Agent
+-X, --request <method>          set the HTTP method
+-H, --header <header>           add a header; may be repeated
+-d, --data <contents>           send request data; may be repeated
+    --connect-timeout <seconds> limit DNS, TCP, and TLS connection time
+-m, --max-time <seconds>        limit the complete transfer
+-o, --output <file>             save the response body
+-f, --fail                      return exit code 22 for HTTP errors
+-F, --form <field>              send a multipart field or field=@file
+-b, --cookie <cookies>          send the Cookie header
+-V, --version                   show GURL version
 ```
+
+The historical `--useragent`, `--unsafe`, and duration-based `--timeout` names
+remain available for existing GURL scripts. Curl-compatible names should be
+used in new scripts.
+
+---
+
+## Replacing curl for acme.sh
+
+GURL accepts the complete curl option set emitted by acme.sh 3.1.5. The binary
+may be copied or linked under the name `curl`; no wrapper or argument translation
+is required:
+
+```bash
+install -m 0755 gurl /usr/local/bin/curl
+curl --silent --dump-header /root/.acme.sh/http.header -L \
+  --connect-timeout 10 --user-agent 'acme.sh/3.1.5' \
+  -H '' https://acme.zerossl.com/v2/DV90
+```
+
+The embedded CA file is the Mozilla bundle published at
+<https://curl.se/docs/caextract.html>, revision 2026-08-13, SHA-256
+`f66dff1bdf8f96060b8177976f8b7d9254bc89bc4db933d769f7384d28480bc9`.
+It is distributed under MPL 2.0. `--cacert` or `--capath` replaces the embedded
+trust roots for that invocation. `--insecure` remains explicit and should only
+be used for controlled diagnostics.
+
+To update the built-in roots, download a new `cacert.pem` from that source into
+`pkg/certificates`, verify it against the published `.sha256` file, then update
+the pinned checksum and root count in `pkg/certificates/certificates_test.go`
+and this section. Run `go test ./...` before publishing binaries.
 
 ---
 

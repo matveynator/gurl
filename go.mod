@@ -1,3 +1,3 @@
 module gurl
 
-go 1.11
+go 1.16
