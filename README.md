@@ -17,7 +17,7 @@ One file. Zero SSL dependencies.
 [![Go Report Card](https://goreportcard.com/badge/github.com/matveynator/gurl)](https://goreportcard.com/report/github.com/matveynator/gurl)
 [![Go Reference](https://pkg.go.dev/badge/github.com/matveynator/gurl.svg)](https://pkg.go.dev/github.com/matveynator/gurl)
 [![Quality](https://github.com/matveynator/gurl/actions/workflows/quality.yml/badge.svg)](https://github.com/matveynator/gurl/actions/workflows/quality.yml)
-[![codecov](https://codecov.io/gh/matveynator/gurl/graph/badge.svg)](https://app.codecov.io/gh/matveynator/gurl)
+[![Coverage Status](https://coveralls.io/repos/github/matveynator/gurl/badge.svg?branch=master)](https://coveralls.io/github/matveynator/gurl?branch=master)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](LICENSE)
 
 </div>
@@ -1200,7 +1200,7 @@ go tool cover -func=coverage.out
 ```
 
 The same checks run in GitHub Actions. Coverage reports are published to
-[Codecov](https://app.codecov.io/gh/matveynator/gurl).
+[Coveralls](https://coveralls.io/github/matveynator/gurl?branch=master).
 
 Release binaries can be cross-compiled with the standalone release utility:
 
