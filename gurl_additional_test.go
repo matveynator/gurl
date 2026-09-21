@@ -76,6 +76,20 @@ func TestCommandLineLegacyAndFileOptions(t *testing.T) {
 	}
 }
 
+func TestInsecureLegacyAliases(t *testing.T) {
+	for _, flag := range []string{"--insecure", "--unsafe", "-unsafe"} {
+		t.Run(flag, func(t *testing.T) {
+			options, err := parseCommandLine([]string{flag, "example.com"})
+			if err != nil {
+				t.Fatal(err)
+			}
+			if !options.insecure {
+				t.Fatalf("%s did not enable insecure mode", flag)
+			}
+		})
+	}
+}
+
 func TestShortValueOptions(t *testing.T) {
 	options, err := parseCommandLine([]string{
 		"-Dheaders.txt", "-Aagent", "-XPATCH", "-HOne: first", "-H", "One: second",
