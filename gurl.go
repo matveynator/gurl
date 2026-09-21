@@ -102,6 +102,10 @@ func parseCommandLine(arguments []string) (commandOptions, error) {
 			stopOptions = true
 			continue
 		}
+		if argument == "-unsafe" {
+			options.insecure = true
+			continue
+		}
 		if strings.HasPrefix(argument, "--") {
 			optionName, optionValue, hasValue := splitLongOption(argument)
 			if optionNeedsValue(optionName) && !hasValue {
